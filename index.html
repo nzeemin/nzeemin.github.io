@@ -40,6 +40,7 @@
         table.main-table {
             table-layout: fixed;
             margin: 10px 0;
+            width: 100%;
         }
 
             table.main-table tr {
@@ -57,7 +58,7 @@
             text-align: center;
             margin-top: 8px;
         }
-        
+
         #navbar ul {
             list-style: none;
             padding: 0;
@@ -77,59 +78,107 @@
                 <td id="navbar" width="300">
                     <div class="box">
                         <h2>Nikita Zimin</h2>
-                        <div class="userpic"><img src="nzeemin.png" width="96" height="96" /></div>
-                        <ul class="nav nav-pills nav-stacked">
+                        <div class="userpic">
+                            <img src="nzeemin.png" width="96" height="96" />
+                        </div>
+                        <ul>
                             <li><a href="https://github.com/nzeemin">nzeemin at GitHub</a></li>
                             <li><a href="http://nzeemin.livejournal.com/">nzeemin.livejournal.com</a></li>
                             <li><a href="http://ru.wikipedia.org/wiki/%D0%A3%D1%87%D0%B0%D1%81%D1%82%D0%BD%D0%B8%D0%BA:Nzeemin">Участник Википедии</a></li>
                         </ul>
                     </div>
-                </td>
+                    <div class="box">
+                        <h2>Проекты</h2>
+                        <ul>
+                            <li>UKNCBTL - эмулятор УКНЦ</li>
+                            <li>BKBTL - эмулятор БК</li>
+                            <li>NemigaBTL - эмулятор Немига</li>
+                            <li>MS0515BTL - эмулятор МС 0515</li>
+                            <li>Эмулятор Интеллект-02</li>
+                            <li>Портирование Lode Runner</li>
+                            <li>Портирование Stop the Express</li>
+                        </ul>
+                    </div>
+                </td><!--navbar end-->
                 <td>
                     <div class="box">
-                        <h2>2017-06 WebAssembly probes</h2>
+                        <h2>2017-06 - WebAssembly probes</h2>
                         <div class="entry">
                             <ul>
-                                <li role="presentation"><a href="/bkbtl-wasm/index.html">bkbtl-wasm demo</a></li>
-                                <li role="presentation"><a href="/ukncbtl-wasm/index.html">ukncbtl-wasm demo</a></li>
+                                <li><a href="/bkbtl-wasm/index.html">bkbtl-wasm demo</a></li>
+                                <li><a href="/ukncbtl-wasm/index.html">ukncbtl-wasm demo</a></li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="box">
-                        <h2>Older works</h2>
+                        <h2>2017-02 - Эмулятор MS0515BTL</h2>
+                        <div class="entry">
+                            Эмулятор советского компьютера "Электроника МС 0515":<br/>
+                            <a href="https://github.com/nzeemin/ms0515btl">github.com/nzeemin/ms0515btl</a><br/>
+                            <a href="http://zx-pk.ru/threads/27427-emulyator-ms-0515-back-to-life!.html">zx-pk.ru - Эмулятор МС-0515 - Back to Life!</a><br/>
+                            <a href="http://www.emuverse.ru/wiki/%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0_%D0%9C%D0%A10515">Emuverse.ru - Электроника МС0515</a>
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <h2>2016-08 - Эмулятор шахматного компьютера Интеллект-02</h2>
                         <div class="entry">
                             <p>
-                                2016-08 -
                                 Эмулятор шахматного компьютера Интеллект-02 -- картридж Шахматы, до играбельного уровня<br />
-                                https://github.com/nzeemin/intellekt02
-                                http://zx-pk.ru/threads/26864-emulyator-shakhmatnogo-kompyutera-intellekt-02.html
-                                http://www.emuverse.ru/wiki/%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82-02
+                                <a href="https://github.com/nzeemin/intellekt02">github.com/nzeemin/intellekt02</a><br />
+                                <a href="http://zx-pk.ru/threads/26864-emulyator-shakhmatnogo-kompyutera-intellekt-02.html">zx-pk.ru - Эмулятор шахматного компьютера Интеллект-02</a><br />
+                                <a href="http://www.emuverse.ru/wiki/%D0%98%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82-02">emuverse.ru - Интеллект-02</a>
                             </p>
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <h2>2016-06-08 - NemigaBTL 1.0.26</h2>
+                        <div class="entry">
                             <p>
-                                2016-06-08 -
-                                NemigaBTL 1.0.26 -
-                                http://zx-pk.ru/threads/20590-emulyator-nemiga.html?p=873717&viewfull=1#post873717
+                                NemigaBTL 1.0.26<br />
+                                <a href="http://zx-pk.ru/threads/20590-emulyator-nemiga.html?p=873717&viewfull=1#post873717">zx-pk.ru - NemigaBTL 1.0.26</a>
                             </p>
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <h2>2016-05-31 - Утилита Sav2Cart для эмулятора УКНЦ</h2>
+                        <div class="entry">
                             <p>
-                                2016-05-31 -
                                 Утилита Sav2Cart для эмулятора УКНЦ<br />
-                                http://zx-pk.ru/threads/26703-utilita-sav2cart.html
+                                <a href="http://zx-pk.ru/threads/26703-utilita-sav2cart.html">zx-pk.ru - Утилита SAV2CART</a>
                             </p>
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <h2>2016-05 - Портирование Lode Runner на Немига</h2>
+                        <div class="entry">
                             <p>
-                                2016-05 -
                                 Портирование Lode Runner на Немига:<br />
-                                https://github.com/nzeemin/nemiga-loderunner
+                                <a href="https://github.com/nzeemin/nemiga-loderunner">github.com/nzeemin/nemiga-loderunner</a>
                             </p>
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <h2>2016-04-26 - Эмулятор NemigaBTL выложен на GitHub</h2>
+                        <div class="entry">
                             <p>
-                                2016-04-26 -
                                 Эмулятор NemigaBTL выложен на GitHub:<br />
-                                https://github.com/nzeemin/nemigabtl
+                                <a href="https://github.com/nzeemin/nemigabtl">github.com/nzeemin/nemigabtl</a>
                             </p>
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <h2>2015-10 - Пробы портирования Bruce Lee на УКНЦ</h2>
+                        <div class="entry">
                             <p>
-                                2015-10 -
                                 Пробы портирования Bruce Lee на УКНЦ<br />
-                                http://zx-pk.ru/threads/26033-uknts-brucelee-skriny.html
+                                <a href="http://zx-pk.ru/threads/26033-uknts-brucelee-skriny.html">zx-pk.ru - УКНЦ brucelee скрины</a>
                             </p>
                         </div>
                     </div>
