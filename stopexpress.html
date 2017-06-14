@@ -1,0 +1,151 @@
+﻿<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Портирование Stop the Express - nzeemin.github.io</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+
+    <style>
+        body {
+            background-color: rgb(191, 216, 255);
+            font-family: Tahoma;
+            margin: 0;
+        }
+
+        header {
+            width: 100%;
+            color: gray;
+            background-color: rgb(0, 48, 64);
+            padding: 0.5em;
+            font-weight: bold;
+        }
+
+            header a {
+                color: white;
+                text-decoration: none;
+            }
+
+        .box h2 {
+            font-size: 1em;
+            background: #6fb7ff;
+            color: black;
+            padding: 3px;
+            margin: 0;
+        }
+
+        .box .entry {
+            margin: 1em;
+        }
+
+        table.main-table {
+            table-layout: fixed;
+            margin: 10px 0;
+            width: 100%;
+        }
+
+            table.main-table tr {
+                vertical-align: top;
+            }
+
+        .box {
+            border: 1px solid black;
+            margin: 1em;
+            background: white;
+            color: black;
+        }
+
+        .userpic {
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        #navbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0.5em;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a class="header-brand" href="/">nzeemin.github.io</a> /
+        Портирование Stop the Express
+    </header>
+
+    <table class="main-table" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td id="navbar" width="300">
+                    <div class="box">
+                        <h2>Содержание</h2>
+                        <ul>
+                            <li>Оригинал на ZX Spectrum</li>
+                            <li>Stop the Express на Электроника МС 0515</li>
+                            <li>Портирование на УКНЦ</li>
+                        </ul>
+                    </div>
+                </td><!--navbar end-->
+
+                <td>
+                    <div class="box">
+                        <h2>Оригинал на ZX Spectrum</h2>
+                        <div class="entry">
+                            <p>
+                                <a href="http://www.worldofspectrum.org/infoseekid.cgi?id=0004916">"Stop the Express" на World of Spectrum</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <h2>Stop the Express на Электроника МС 0515</h2>
+                        <div class="entry">
+                            <p>
+                                В начале 1990-х во Львове на компьютер &laquo;Электроника МС 0515&raquo; был портирован ряд программ с компьютера
+                                ZX Spectrum, в частности, игра &laquo;Stop the Express&raquo;.
+                                &laquo;Электроника МС 0515&raquo; имеет организацию экрана, сходную с экраном ZX Spectrum, но совершенно другой
+                                процессор &mdash; 16-разрядный, с системой команд PDP-11.
+                                Поэтому такое портирование скорее представляло собой полное дизассемблирование и по-командное переписывание кода игры.
+                            </p>
+                            <ul>
+                                <li>
+                                    <a href="https://github.com/nzeemin/uknc-stopexpress/blob/master/original/expres.lst">expres.lst</a>
+                                    &mdash; восстановленный комментированный код игры
+                                </li>
+                            </ul>
+                            <p>
+                                Скриншот экрана &laquo;Электроника МС 0515&raquo; &mdash; до пиксела совпадает с версией для ZX Spectrum:
+                            </p>
+                            <img src="https://github.com/nzeemin/uknc-stopexpress/raw/master/screenshot/original-ms0515.png" alt="" style="max-width:100%;">
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <h2>Портирование на УКНЦ</h2>
+                        <div class="entry">
+                            <ul>
+                                <li><a href="https://github.com/nzeemin/uknc-stopexpress">github.com/nzeemin/uknc-stopexpress</a> &mdash; репозиторий кода</li>
+                            </ul>
+                            <p>
+                                Скриншоты портированой версии:<br />
+                                <img src="https://github.com/nzeemin/uknc-stopexpress/raw/master/screenshot/demoscreen.png" alt="" style="max-width:100%;">
+                                <br />
+                                <img src="https://github.com/nzeemin/uknc-stopexpress/raw/master/screenshot/demoscreen2.png" alt="" style="max-width:100%;">
+                            </p>
+                            <p>
+                                Демо-режим:<br />
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/66ETuJ9uO6s" frameborder="0" allowfullscreen></iframe>
+                            </p>
+                            <p>
+                                На реальном УКНЦ (спасибо hobot с форума zx-pk.ru):<br />
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/sc0jTqVKd_8" frameborder="0" allowfullscreen></iframe>
+                            </p>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
