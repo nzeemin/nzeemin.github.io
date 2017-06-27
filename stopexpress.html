@@ -3,68 +3,7 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Портирование Stop the Express - nzeemin.github.io</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-
-    <style>
-        body {
-            background-color: rgb(191, 216, 255);
-            font-family: Tahoma;
-            margin: 0;
-        }
-
-        header {
-            width: 100%;
-            color: gray;
-            background-color: rgb(0, 48, 64);
-            padding: 0.5em;
-            font-weight: bold;
-        }
-
-            header a {
-                color: white;
-                text-decoration: none;
-            }
-
-        .box h2 {
-            font-size: 1em;
-            background: #6fb7ff;
-            color: black;
-            padding: 3px;
-            margin: 0;
-        }
-
-        .box .entry {
-            margin: 1em;
-        }
-
-        table.main-table {
-            table-layout: fixed;
-            margin: 10px 0;
-            width: 100%;
-        }
-
-            table.main-table tr {
-                vertical-align: top;
-            }
-
-        .box {
-            border: 1px solid black;
-            margin: 1em;
-            background: white;
-            color: black;
-        }
-
-        .userpic {
-            text-align: center;
-            margin-top: 8px;
-        }
-
-        #navbar ul {
-            list-style: none;
-            padding: 0;
-            margin: 0.5em;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
@@ -106,6 +45,19 @@
                                 &laquo;Электроника МС 0515&raquo; имеет организацию экрана, сходную с экраном ZX Spectrum, но совершенно другой
                                 процессор &mdash; 16-разрядный, с системой команд PDP-11.
                                 Поэтому такое портирование скорее представляло собой полное дизассемблирование и по-командное переписывание кода игры.
+                            </p>
+                            <p>
+                                Как игра устроена внутри.<br/>
+                                Игровой экран имеет размер 32&times;24 тайла, тайлы 8x8 пикселей плюс атрибут. Т.е. экран 256&times;192 = экран Спектрума.
+                                В памяти мы храним экран в виде индексов тайлов два раза, я их назвал &laquo;экран план&raquo; и &laquo;экран факт&raquo;.
+                                Если мы хотим что-то вывести на экран &mdash; меняем всегда только экран план. Допустим хотим вывести строку &mdash;
+                                просто копируем символы этой строки на экран план.
+                                Регулярно выполняется процедура актуализации экрана. Она бежит по экрану план, для каждого тайла сравнивает
+                                есть ли различие с тайлом экран факт.
+                                Только если различие есть, то делаем изменение на экране, и обновляем номер тайла в экране факт.
+                                Сами тайлы это 9 байт &mdash; 8 байт на пиксели плюс один байт на атрубут, всего 256 тайлов.
+                                Если обратите внимание, большинство строк на экране в горизонтальном направлении почти одинаковы.
+                                Поэтому даже когда выполняется вроде бы большое скроллирование (поезд уезжает), реально изменений на экране не так уж и много.
                             </p>
                             <ul>
                                 <li>
