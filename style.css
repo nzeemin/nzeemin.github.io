@@ -1,4 +1,10 @@
-﻿body {
+﻿html {
+    overflow-y: scroll;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+body {
     background-color: #f6f8fa;
     font-family: Tahoma;
     margin: 0;
@@ -6,7 +12,7 @@
 
 header {
     width: 100%;
-    color: gray;
+    color: #bbb;
     background-color: #24292e;
     padding: 0.5em;
     font-weight: bold;
@@ -58,6 +64,12 @@ table.main-table {
 #navbar ul {
     list-style: none;
     padding: 0;
+    margin: 0.5em;
+}
+
+#navbar ul.contents {
+    list-style: square;
+    padding-left: 1.5em;
     margin: 0.5em;
 }
 
