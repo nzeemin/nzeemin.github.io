@@ -37,6 +37,10 @@ header {
     margin: 1em;
 }
 
+.box .entry {
+    margin: 0;
+}
+
 table.main-table {
     table-layout: fixed;
     margin: 10px 0;
