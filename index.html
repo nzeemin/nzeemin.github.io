@@ -4,6 +4,17 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>nzeemin.github.io</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+    	.grid { margin: 16px; }
+    	.grid-item { width: 96px; margin-bottom: 10px; border: 1px solid #888; background: white; color: black; border-radius: 3px; box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.18); }
+		.grid-item--width2 { width: 208px; margin-bottom: 16px; }
+		.grid-item--width3 { width: 320px; margin-bottom: 16px; }
+		.grid-item--width4 { width: 432px; margin-bottom: 16px; }
+    	.grid-item h2 { font-size: 1em; font-weight: 800; background: #B5E0FF; color: black; margin: 0; padding: 4px 4px 6px 8px; }
+    	.grid-item .entry { margin: 1em; }
+    	.grid-item .entryimg { margin: 0; }
+    	.aboutbox ul { list-style: none; padding: 0; margin: 1em; }
+    </style>
 </head>
 <body>
     <script>
@@ -15,144 +26,128 @@
         ga('send', 'pageview');
     </script>
 
+    <script src="/js/masonry.pkgd.min.js"></script>
+
     <header>
         <a class="header-brand" href="/">nzeemin.github.io</a>
     </header>
 
-    <table class="main-table" cellpadding="0" cellspacing="0">
-        <tbody>
-            <tr>
-                <td id="navbar" width="300">
-                    <div class="box">
-                        <h2>Nikita Zimin</h2>
-                        <div class="userpic">
-                            <img src="nzeemin.png" width="96" height="96" />
-                        </div>
-                        <ul>
-                            <li><a href="https://github.com/nzeemin">nzeemin at GitHub</a></li>
-                            <li><a href="http://nzeemin.livejournal.com/">nzeemin.livejournal.com</a></li>
-                            <li><a href="http://ru.wikipedia.org/wiki/%D0%A3%D1%87%D0%B0%D1%81%D1%82%D0%BD%D0%B8%D0%BA:Nzeemin">Участник Википедии</a></li>
-                        </ul>
-                    </div>
-                    <!--<div class="box">
-                        <h2>Projects / Проекты</h2>
-                        <ul>
-                        </ul>
-                    </div>-->
-                    <div class="box">
-                        <h2>Поддержать</h2>
-                        <div class="entry">
-                        	<p>На поддержку и развитие проектов:</p>
-	                        <iframe src="https://money.yandex.ru/quickpay/button-widget?targets=%D0%9D%D0%B0%20%D0%BF%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D1%83%20%D0%B8%20%D1%80%D0%B0%D0%B7%D0%B2%D0%B8%D1%82%D0%B8%D0%B5%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BE%D0%B2&default-sum=100&button-text=12&yamoney-payment-type=on&button-size=s&button-color=white&successURL=&quickpay=small&account=4100186141657&" width="200" height="25" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
+	<div class="grid">
+		<div class="grid-item grid-item--width2 aboutbox">
+            <h2>Nikita Zimin</h2>
+            <div class="userpic">
+                <img src="nzeemin.png" width="96" height="96" />
+            </div>
+            <ul>
+                <li><a href="https://github.com/nzeemin">nzeemin at GitHub</a></li>
+                <li><a href="http://nzeemin.livejournal.com/">nzeemin.livejournal.com</a></li>
+                <li><a href="http://ru.wikipedia.org/wiki/%D0%A3%D1%87%D0%B0%D1%81%D1%82%D0%BD%D0%B8%D0%BA:Nzeemin">Участник Википедии</a></li>
+            </ul>
+		</div>
+
+		<div class="grid-item grid-item--width2">
+            <h2>Поддержать</h2>
+            <div class="entry">
+            	<p>На поддержку и развитие проектов:</p>
+                <iframe src="https://money.yandex.ru/quickpay/button-widget?targets=%D0%9D%D0%B0%20%D0%BF%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D1%83%20%D0%B8%20%D1%80%D0%B0%D0%B7%D0%B2%D0%B8%D1%82%D0%B8%D0%B5%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BE%D0%B2&default-sum=100&button-text=12&yamoney-payment-type=on&button-size=s&button-color=white&successURL=&quickpay=small&account=4100186141657&" width="200" height="25" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
 				<p><a href="https://www.paypal.me/nzeemin">paypal.me/nzeemin</a>
-                        </div>
-                    </div>
+            </div>
+        </div>
 
-                    <!--<div class="ad">
-                    </div>-->
-                </td><!--navbar end-->
+		<div class="grid-item grid-item--width4">
+            <h2><a href="/ukncbtl.html">UKNCBTL &ndash; эмулятор УКНЦ</a></h2>
+            <div class="entry">
+            	<img src="images/ukncbtl.png" />
+            </div>
+        </div>
 
-                <td width="50%">
-                    <div class="box">
-                        <h2><a href="/ukncbtl.html">UKNCBTL &ndash; эмулятор УКНЦ</a></h2>
-                        <div class="entry">
-                        	<img src="images/ukncbtl.png" />
-                        </div>
-                    </div>
+		<div class="grid-item grid-item--width4">
+            <h2><a href="/bkbtl.html">BKBTL &ndash; эмулятор БК</a></h2>
+            <div class="entry">
+            	<img src="images/bkbtl.png" />
+            </div>
+        </div>
 
-                    <div class="box">
-                        <h2><a href="/bkbtl.html">BKBTL &ndash; эмулятор БК</a></h2>
-                        <div class="entry">
-                        	<img src="images/bkbtl.png" />
-                        </div>
-                    </div>
+        <div class="grid-item grid-item--width4">
+            <h2><a href="/ms0515btl.html">MS0515BTL &ndash; эмулятор Электроника МС 0515</a></h2>
+            <div class="entry">
+                Эмулятор советского компьютера "Электроника МС 0515":<br />
+                <a href="https://github.com/nzeemin/ms0515btl">github.com/nzeemin/ms0515btl</a><br />
+                <a href="http://zx-pk.ru/threads/27427-emulyator-ms-0515-back-to-life!.html">zx-pk.ru - Эмулятор МС-0515 - Back to Life!</a><br />
+                <a href="http://www.emuverse.ru/wiki/%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0_%D0%9C%D0%A10515">Emuverse.ru - Электроника МС0515</a>
+            </div>
+        </div>
 
-                    <div class="box">
-                        <h2><a href="/ms0515btl.html">MS0515BTL &ndash; эмулятор Электроника МС 0515</a></h2>
-                        <div class="entry">
-                            Эмулятор советского компьютера "Электроника МС 0515":<br />
-                            <a href="https://github.com/nzeemin/ms0515btl">github.com/nzeemin/ms0515btl</a><br />
-                            <a href="http://zx-pk.ru/threads/27427-emulyator-ms-0515-back-to-life!.html">zx-pk.ru - Эмулятор МС-0515 - Back to Life!</a><br />
-                            <a href="http://www.emuverse.ru/wiki/%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0_%D0%9C%D0%A10515">Emuverse.ru - Электроника МС0515</a>
-                        </div>
-                    </div>
+        <div class="grid-item grid-item--width4">
+            <h2>NemigaBTL &ndash; эмулятор "Немига"</h2>
+            <div class="entry">
+                <p>
+                    NemigaBTL 1.0.26<br />
+                    <a href="http://zx-pk.ru/threads/20590-emulyator-nemiga.html?p=873717&viewfull=1#post873717">zx-pk.ru - NemigaBTL 1.0.26</a><br />
+                    <a href="https://github.com/nzeemin/nemigabtl">github.com/nzeemin/nemigabtl</a>
+                </p>
+            </div>
+        </div>
 
-                    <div class="box">
-                        <h2>NemigaBTL &ndash; эмулятор "Немига"</h2>
-                        <div class="entry">
-                            <p>
-                                NemigaBTL 1.0.26<br />
-                                <a href="http://zx-pk.ru/threads/20590-emulyator-nemiga.html?p=873717&viewfull=1#post873717">zx-pk.ru - NemigaBTL 1.0.26</a><br />
-                                <a href="https://github.com/nzeemin/nemigabtl">github.com/nzeemin/nemigabtl</a>
-                            </p>
-                        </div>
-                    </div>
+        <div class="grid-item grid-item--width4">
+            <h2><a href="/intellekt02.html">Эмулятор шахматного компьютера Интеллект-02</a></h2>
+            <div class="entry">
+            	<img src="images/intellekt02.png" />
+            </div>
+        </div>
 
-                    <div class="box">
-                        <h2><a href="/intellekt02.html">Эмулятор шахматного компьютера Интеллект-02</a></h2>
-                        <div class="entry">
-                        	<img src="images/intellekt02.png" />
-                        </div>
-                    </div>
+        <div class="grid-item grid-item--width4">
+            <h2>Утилиты для эмулятора УКНЦ</h2>
+            <div class="entry">
+                <ul>
+                	<li>rt11dsk</li>
+                	<li>sav2wav</li>
+                	<li>ESCParser</li>
+                    <li>sav2cart: <a href="http://zx-pk.ru/threads/26703-utilita-sav2cart.html">zx-pk.ru - Утилита SAV2CART</a></li>
+                </ul>
+            </div>
+        </div>
 
-                    <div class="box">
-                        <h2>Утилиты для эмулятора УКНЦ</h2>
-                        <div class="entry">
-                            <ul>
-                            	<li>rt11dsk</li>
-                            	<li>sav2wav</li>
-                            	<li>ESCParser</li>
-                                <li>sav2cart: <a href="http://zx-pk.ru/threads/26703-utilita-sav2cart.html">zx-pk.ru - Утилита SAV2CART</a></li>
-                            </ul>
-                        </div>
-                    </div>
+        <div class="grid-item grid-item--width4">
+            <h2>WebAssembly probes</h2>
+            <div class="entry">
+                <ul>
+                    <li><a href="/bkbtl-wasm/index.html">bkbtl-wasm demo</a></li>
+                    <li><a href="/ukncbtl-wasm/index.html">ukncbtl-wasm demo</a></li>
+                </ul>
+            </div>
+        </div>
 
-                    <div class="box">
-                        <h2>WebAssembly probes</h2>
-                        <div class="entry">
-                            <ul>
-                                <li><a href="/bkbtl-wasm/index.html">bkbtl-wasm demo</a></li>
-                                <li><a href="/ukncbtl-wasm/index.html">ukncbtl-wasm demo</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </td>
+        <div class="grid-item grid-item--width3">
+            <h2><a href="/loderunner.html">Портирование Lode Runner</a></h2>
+            <div class="entryimg">
+                <img src="images/uknc-loderunner.png" />
+            </div>
+        </div>
 
-                <td width="354">
-                    <div class="box">
-                        <h2><a href="/loderunner.html">Портирование Lode Runner</a></h2>
-                        <div class="entryimg">
-                            <img src="images/uknc-loderunner.png" />
-                        </div>
-                    </div>
+        <div class="grid-item grid-item--width3">
+            <h2><a href="/stopexpress.html">Портирование Stop the Express</a></h2>
+            <div class="entryimg">
+                <img src="images/uknc-stopexpress.png" />
+            </div>
+        </div>
 
-                    <div class="box">
-                        <h2><a href="/stopexpress.html">Портирование Stop the Express</a></h2>
-                        <div class="entryimg">
-                            <img src="images/uknc-stopexpress.png" />
-                        </div>
-                    </div>
+        <div class="grid-item grid-item--width3">
+            <h2><a href="/highwayencounter.html">Портирование Highway Encounter</a></h2>
+            <div class="entryimg">
+                <img src="images/uknc-highwayencounter.png" />
+            </div>
+        </div>
 
-                    <div class="box">
-                        <h2><a href="/highwayencounter.html">Портирование Highway Encounter</a></h2>
-                        <div class="entryimg">
-                            <img src="images/uknc-highwayencounter.png" />
-                        </div>
-                    </div>
-				</td>
-			</tr>
-			<tr>
-				<td></td>
-				<td colspan="2">
-                    <div class="ad">
-                    	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-						<!-- adaptive1 -->
-						<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5284662784280164" data-ad-slot="5270262306" data-ad-format="auto"></ins>
-						<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-                    </div>
-				</td>
-            </tr>
-        </tbody>
-    </table>
+	</div>
+
+    <script>
+    	var elem = document.querySelector('.grid');
+		var msnry = new Masonry( elem, {
+		  itemSelector: '.grid-item',
+		  columnWidth: 96,
+		  gutter: 16
+		});
+    </script>
 
 </body>
