@@ -5,15 +5,16 @@
     <title>nzeemin.github.io</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <style>
-    	.grid { margin: 16px; }
-    	.grid-item { width: 96px; margin-bottom: 10px; border: 1px solid #888; background: white; color: black; border-radius: 3px; box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.18); }
-		.grid-item--width2 { width: 208px; margin-bottom: 16px; }
-		.grid-item--width3 { width: 320px; margin-bottom: 16px; }
-		.grid-item--width4 { width: 432px; margin-bottom: 16px; }
-    	.grid-item h2 { font-size: 1em; font-weight: 800; background: #B5E0FF; color: black; margin: 0; padding: 4px 4px 6px 8px; }
-    	.grid-item .entry { margin: 1em; }
-    	.grid-item .entryimg { margin: 0; }
-    	.aboutbox ul { list-style: none; padding: 0; margin: 1em; }
+        .grid { margin: 16px; }
+        .grid-item { width: 96px; margin-bottom: 10px; border: 1px solid #888; background: white; color: black; border-radius: 3px; box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.18); }
+        .grid-item--width2 { width: 208px; margin-bottom: 16px; }
+        .grid-item--width3 { width: 320px; margin-bottom: 16px; }
+        .grid-item--width4 { width: 432px; margin-bottom: 16px; }
+        .grid-item h2 { font-size: 1em; font-weight: 800; background: #B5E0FF; color: black; margin: 0; padding: 4px 4px 6px 8px; }
+        .grid-item .entry { margin: 1em; }
+        .grid-item .entryimg { margin: 0; }
+        .grid-item .entryimg img { vertical-align: bottom; }
+        .aboutbox ul { list-style: none; padding: 0; margin: 1em; }
     </style>
 </head>
 <body>
@@ -69,12 +70,21 @@
         </div>
 
         <div class="grid-item grid-item--width4">
+            <h2>Утилиты для эмулятора УКНЦ</h2>
+            <div class="entry">
+                <ul>
+                    <li>rt11dsk</li>
+                    <li>sav2wav</li>
+                    <li>ESCParser</li>
+                    <li>sav2cart: <a href="http://zx-pk.ru/threads/26703-utilita-sav2cart.html">zx-pk.ru - Утилита SAV2CART</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="grid-item grid-item--width4">
             <h2><a href="/ms0515btl.html">MS0515BTL &ndash; эмулятор Электроника МС 0515</a></h2>
             <div class="entry">
-                Эмулятор советского компьютера "Электроника МС 0515":<br />
-                <a href="https://github.com/nzeemin/ms0515btl">github.com/nzeemin/ms0515btl</a><br />
-                <a href="http://zx-pk.ru/threads/27427-emulyator-ms-0515-back-to-life!.html">zx-pk.ru - Эмулятор МС-0515 - Back to Life!</a><br />
-                <a href="http://www.emuverse.ru/wiki/%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0_%D0%9C%D0%A10515">Emuverse.ru - Электроника МС0515</a>
+                <img src="images/ms0515btl.png" />
             </div>
         </div>
 
@@ -93,18 +103,6 @@
             <h2><a href="/intellekt02.html">Эмулятор шахматного компьютера Интеллект-02</a></h2>
             <div class="entry">
             	<img src="images/intellekt02.png" />
-            </div>
-        </div>
-
-        <div class="grid-item grid-item--width4">
-            <h2>Утилиты для эмулятора УКНЦ</h2>
-            <div class="entry">
-                <ul>
-                	<li>rt11dsk</li>
-                	<li>sav2wav</li>
-                	<li>ESCParser</li>
-                    <li>sav2cart: <a href="http://zx-pk.ru/threads/26703-utilita-sav2cart.html">zx-pk.ru - Утилита SAV2CART</a></li>
-                </ul>
             </div>
         </div>
 
@@ -142,12 +140,14 @@
 	</div>
 
     <script>
-    	var elem = document.querySelector('.grid');
-		var msnry = new Masonry( elem, {
-		  itemSelector: '.grid-item',
-		  columnWidth: 96,
-		  gutter: 16
-		});
+        window.onload = function() {
+            var elem = document.querySelector('.grid');
+            var msnry = new Masonry( elem, {
+              itemSelector: '.grid-item',
+              columnWidth: 96,
+              gutter: 16
+            });
+        };
     </script>
 
 </body>
