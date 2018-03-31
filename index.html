@@ -7,6 +7,7 @@
     <style>
         .grid { margin: 16px; }
         .grid-item { width: 96px; margin-bottom: 10px; border: 1px solid #888; background: white; color: black; border-radius: 3px; box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.18); }
+        .aboutbox { width: 96px; margin-bottom: 10px; border: none; background: none; color: black; border-radius: 3px; box-shadow: none; }
         .grid-item--width2 { width: 208px; margin-bottom: 16px; }
         .grid-item--width3 { width: 320px; margin-bottom: 16px; }
         .grid-item--width4 { width: 432px; margin-bottom: 16px; }
@@ -14,6 +15,7 @@
         .grid-item .entry { margin: 1em; }
         .grid-item .entryimg { margin: 0; }
         .grid-item .entryimg img { vertical-align: bottom; }
+        .aboutbox h2 { font-size: 1em; font-weight: 800; background: none; color: black; margin: 0; padding: 4px 4px 6px 8px; }
         .aboutbox ul { list-style: none; padding: 0; margin: 1em; }
     </style>
 </head>
@@ -34,26 +36,33 @@
     </header>
 
 	<div class="grid">
-		<div class="grid-item grid-item--width2 aboutbox">
-            <h2>Nikita Zimin</h2>
-            <div class="userpic">
-                <img src="nzeemin.png" width="96" height="96" />
-            </div>
-            <ul>
-                <li><a href="https://github.com/nzeemin">nzeemin at GitHub</a></li>
-                <li><a href="http://nzeemin.livejournal.com/">nzeemin.livejournal.com</a></li>
-                <li><a href="http://ru.wikipedia.org/wiki/%D0%A3%D1%87%D0%B0%D1%81%D1%82%D0%BD%D0%B8%D0%BA:Nzeemin">Участник Википедии</a></li>
-            </ul>
+		<div class="grid-item grid-item--width4 aboutbox">
+            <table style="width: 400px;">
+                <tbody>
+                    <tr>
+                        <td style="width: 200px;">
+                            <h2>Nikita Zimin</h2>
+                            <div class="userpic">
+                                <img src="nzeemin.png" width="96" height="96" />
+                            </div>
+                            <ul>
+                                <li><a href="https://github.com/nzeemin">nzeemin at GitHub</a></li>
+                                <li><a href="http://nzeemin.livejournal.com/">nzeemin.livejournal.com</a></li>
+                                <li><a href="http://ru.wikipedia.org/wiki/%D0%A3%D1%87%D0%B0%D1%81%D1%82%D0%BD%D0%B8%D0%BA:Nzeemin">Участник Википедии</a></li>
+                            </ul>
+                        </td>
+                        <td style="width: 200px; border-left: 1px solid #bbb; vertical-align: top">
+                            <!--h2>Поддержать</h2-->
+                            <div class="entry">
+                                <p>На поддержку и развитие проектов:</p>
+                                <iframe src="https://money.yandex.ru/quickpay/button-widget?targets=%D0%9D%D0%B0%20%D0%BF%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D1%83%20%D0%B8%20%D1%80%D0%B0%D0%B7%D0%B2%D0%B8%D1%82%D0%B8%D0%B5%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BE%D0%B2&default-sum=100&button-text=12&yamoney-payment-type=on&button-size=s&button-color=white&successURL=&quickpay=small&account=4100186141657&" width="200" height="25" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
+                                <p><a href="https://www.paypal.me/nzeemin">paypal.me/nzeemin</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 		</div>
-
-		<div class="grid-item grid-item--width2">
-            <h2>Поддержать</h2>
-            <div class="entry">
-            	<p>На поддержку и развитие проектов:</p>
-                <iframe src="https://money.yandex.ru/quickpay/button-widget?targets=%D0%9D%D0%B0%20%D0%BF%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D1%83%20%D0%B8%20%D1%80%D0%B0%D0%B7%D0%B2%D0%B8%D1%82%D0%B8%D0%B5%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BE%D0%B2&default-sum=100&button-text=12&yamoney-payment-type=on&button-size=s&button-color=white&successURL=&quickpay=small&account=4100186141657&" width="200" height="25" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
-				<p><a href="https://www.paypal.me/nzeemin">paypal.me/nzeemin</a>
-            </div>
-        </div>
 
 		<div class="grid-item grid-item--width4">
             <h2><a href="/ukncbtl.html">UKNCBTL &ndash; эмулятор УКНЦ</a></h2>
@@ -117,23 +126,20 @@
         </div>
 
         <div class="grid-item grid-item--width3">
-            <h2><a href="/loderunner.html">Портирование Lode Runner</a></h2>
             <div class="entryimg">
-                <img src="images/uknc-loderunner.png" />
+                <a href="/loderunner.html"><img src="images/uknc-loderunner.png" alt="Портирование Lode Runner" /></a>
             </div>
         </div>
 
         <div class="grid-item grid-item--width3">
-            <h2><a href="/stopexpress.html">Портирование Stop the Express</a></h2>
             <div class="entryimg">
-                <img src="images/uknc-stopexpress.png" />
+                <a href="/stopexpress.html"><img src="images/uknc-stopexpress.png" alt="Портирование Stop the Express" /></a>
             </div>
         </div>
 
         <div class="grid-item grid-item--width3">
-            <h2><a href="/highwayencounter.html">Портирование Highway Encounter</a></h2>
             <div class="entryimg">
-                <img src="images/uknc-highwayencounter.png" />
+                <a href="/highwayencounter.html"><img src="images/uknc-highwayencounter.png" alt="Портирование Highway Encounter" /></a>
             </div>
         </div>
 
