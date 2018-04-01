@@ -60,6 +60,16 @@ table.main-table {
     box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.18);
 }
 
+.box-nobox {
+    border: none;
+    background: none;
+    box-shadow: none;
+}
+
+.box-nobox h2 {
+    background: none;
+}
+
 .userpic {
     text-align: center;
     margin-top: 8px;
