@@ -1,0 +1,130 @@
+﻿<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Утилиты для эмулятора УКНЦ - nzeemin.github.io</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+    <header>
+        <a class="header-brand" href="/">nzeemin.github.io</a> /
+        Утилиты для эмулятора УКНЦ
+    </header>
+
+    <table class="main-table" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td id="navbar" width="300">
+                    <div class="box box-nobox">
+                        <h2>Утилиты для эмулятора УКНЦ</h2>
+                    </div>
+
+                    <div class="box">
+                        <h2>Содержание</h2>
+                        <ul class="contents">
+                            <li>rt11dsk</li>
+                            <li>ESCParser</li>
+                            <li>sav2wav</li>
+                            <li>Sav2Cartridge</li>
+                            <li>UkncComSender</li>
+                        </ul>
+                    </div>
+                </td><!--navbar end-->
+
+                <td>
+                    <div class="box">
+                        <h2>rt11dsk</h2>
+                        <div class="entry">
+                            <p>
+                            	Утилита командной строки для работы с образами дисков УКНЦ.
+                            </p>
+                            <pre>
+Usage:
+    Disk image commands:
+        rt11dsk l &lt;ImageFile&gt;  - list image contents
+        rt11dsk e &lt;ImageFile&gt; &lt;FileName&gt;  - extract file
+        rt11dsk x &lt;ImageFile&gt;  - extract all files
+        rt11dsk a &lt;ImageFile&gt; &lt;FileName&gt;  - add file
+        rt11dsk d &lt;ImageFile&gt; &lt;FileName&gt;  - delete file
+        rt11dsk xu &lt;ImageFile&gt;  - extract all unused space
+    Hard disk image commands:
+        rt11dsk hi &lt;HddImage&gt;  - invert HDD image file
+        rt11dsk hl &lt;HddImage&gt;  - list HDD image partitions
+        rt11dsk hx &lt;HddImage&gt; &lt;Partn&gt; &lt;FileName&gt;  - extract partition to file
+        rt11dsk hu &lt;HddImage&gt; &lt;Partn&gt; &lt;FileName&gt;  - update partition from the file
+        rt11dsk hpl &lt;HddImage&gt; &lt;Partn&gt;  - list partition contents
+        rt11dsk hpe &lt;HddImage&gt; &lt;Partn&gt; &lt;FileName&gt;  - extract file from the partition
+        rt11dsk hpa &lt;HddImage&gt; &lt;Partn&gt; &lt;FileName&gt;  - add file to the partition
+    Parameters:
+        &lt;ImageFile&gt; is UKNC disk image in .dsk or .rtd format
+        &lt;HddImage&gt;  is UKNC hard disk image file name
+        &lt;Partn&gt;     is hard disk image partition number, 0..23
+        &lt;FileName&gt;  is a file name to read from or save to
+    Options:
+        -oXXXXX  Set start offset to XXXXX; 0 by default
+                            </pre>
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <h2>ESCParser</h2>
+                        <div class="entry">
+                            <p>
+                            	ESCParser &mdash; это утилита с интерфейсом командной строки, эмулятор принтера с системой команд ESC/P. Текущая реализация ближе всего к принтеру Robotron CM 6329.01M (в свою очередь, его система команд основана на Epson LX-800 с некоторыми командами FX-800). Для печати символов используется шрифт, полученный из ПЗУ этого принтера.
+                            </p>
+                            <pre>
+Usage:
+        ESCParser [options] InputFile &gt; OutputFile
+Options:
+        -ps     PostScript output with multipage support
+        -svg    SVG output, no multipage support
+        -pdf    PDF output with multipage support
+                            </pre>
+                            <p>
+                            	Результат прогона тестового примера:<br />
+                            	<img src="https://github.com/nzeemin/ukncbtl-utils/raw/master/ESCParser/ESCParser.png" />
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <h2>sav2wav</h2>
+                        <div class="entry">
+                            <p>
+                            	Утилита командной строки для преобразования .SAV-файлов RT-11 в .WAV-файлы, которые можно загрузить через магнитофонный вход УКНЦ.
+                            </p>
+                            <pre>
+Usage: sav2wav &lt;inputfile.SAV&gt; &lt;outputfile.WAV&gt;
+                            </pre>
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <h2>Sav2Cartridge</h2>
+                        <div class="entry">
+                            <p>
+                                Утилита командной строки, позволяющая сделать из .SAV-файла RT-11 образ картриджа УКНЦ.
+                                <a href="http://zx-pk.ru/threads/26703-utilita-sav2cart.html">zx-pk.ru - Утилита SAV2CART</a>
+                            </p>
+                            <pre>
+Usage: Sav2Cart &lt;inputfile.SAV&gt; &lt;outputfile.BIN&gt;
+                            </pre>
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <h2>UkncComSender</h2>
+                        <div class="entry">
+                            <p>
+                            	Экспериментальная утилита, позволяющая загрузиться в эмуляторе УКНЦ с последовательного порта (Стык С2).
+                            </p>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
