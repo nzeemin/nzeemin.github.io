@@ -58,7 +58,8 @@
                         <div class="entry">
                             <p>
                                 В начале 1990-х во Львове на компьютер &laquo;Электроника МС 0515&raquo; был портирован ряд программ с компьютера
-                                ZX Spectrum, в частности, игра &laquo;Stop the Express&raquo;.
+                                ZX Spectrum, в частности, игра &laquo;Stop the Express&raquo;
+                                (мне неизвестно кто именно выполнил эту работу, есть только подпись &laquo;Lwow Soft&raquo;).
                                 &laquo;Электроника МС 0515&raquo; имеет организацию экрана, сходную с экраном ZX Spectrum, но совершенно другой
                                 процессор &ndash; 16-разрядный, с системой команд PDP-11.
                                 Поэтому такое портирование скорее представляло собой полное дизассемблирование и по-командное переписывание кода игры.
@@ -99,6 +100,35 @@
                             <p>
                                 На реальном УКНЦ (спасибо hobot с форума zx-pk.ru):<br />
                                 <iframe width="560" height="315" src="https://www.youtube.com/embed/sc0jTqVKd_8" frameborder="0" allowfullscreen></iframe>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <h2>Портирование на БК-0010 (незакочено)</h2>
+                        <ul>
+                                <li><a href="https://github.com/nzeemin/bk0010-stopexpress">github.com/nzeemin/bk0010-stopexpress</a> &ndash; репозиторий кода</li>
+                                <li><a href="https://zx-pk.ru/threads/29555-portirovanie-stop-the-express-na-bk-0010.html">Обсуждение на форуме zx-pk.ru</a></li>
+                            </ul>
+                        <div class="entry">
+                            <p>
+                                Портирование начато в сентябре 2018 года.
+                            </p>
+                            <p>
+                                Доступной памяти под программу у БК-0010 всего 16 КБ, поэтому многое убрано:
+                                <ul>
+                                    <li>убрана последовательность демо-режима, поэтому в демо главный герой просто стоит;</li>
+                                    <li>большинство тайлов имеют размер 8x4 пикселов, 4 цвета; тайлы символов и цифр 8x5 в 4 цвета;</li>
+                                    <li>убран блок тайлов и сами тайлы локомотива, это используется после прохождения уровней;</li>
+                                    <li>экран описания показывается только один раз в начале игры, потом это место используется;</li>
+                                    <li>нет звука.</li>
+                                </ul>
+                            </p>
+                            <p>
+                                Скриншоты портированой версии:<br />
+                                <img src="/images/bk0010-stopexpress-titlescreen.png" alt="" style="max-width:100%;">
+                                <br />
+                                <img src="/images/bk0010-stopexpress-demoscreen.png" alt="" style="max-width:100%;">
                             </p>
                         </div>
                     </div>
