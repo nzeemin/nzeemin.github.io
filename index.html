@@ -20,14 +20,6 @@
     </style>
 </head>
 <body>
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-19744382-5', 'auto');
-        ga('send', 'pageview');
-    </script>
 
     <script src="/js/masonry.pkgd.min.js"></script>
 
@@ -41,7 +33,7 @@
                 <tbody>
                     <tr>
                         <td style="width: 200px;">
-                            <h2>Nikita Zimin</h2>
+                            <h2>Никита Зимин</h2>
                             <div class="userpic">
                                 <img src="nzeemin.png" width="96" height="96" />
                             </div>
@@ -61,7 +53,7 @@
 		<div class="grid-item grid-item--width4">
             <h2><a href="/ukncbtl.html">UKNCBTL &ndash; эмулятор УКНЦ</a></h2>
             <div class="entry">
-            	<img src="images/ukncbtl.png" />
+            	<img src="images/ukncbtl.png" height="378" />
             </div>
         </div>
 
@@ -81,46 +73,46 @@
 		<div class="grid-item grid-item--width3">
             <h2><a href="/bkbtl.html">BKBTL &ndash; эмулятор БК</a></h2>
             <div class="entry">
-            	<img src="images/bkbtl.png" />
+            	<img src="images/bkbtl.png" height="185" />
             </div>
         </div>
 
         <div class="grid-item grid-item--width3">
             <h2><a href="/ms0515btl.html">MS0515BTL &ndash; эмулятор МС 0515</a></h2>
             <div class="entry">
-                <img src="images/ms0515btl.png" />
+                <img src="images/ms0515btl.png" height="224" />
             </div>
         </div>
 
         <div class="grid-item grid-item--width3">
             <h2><a href="/nemigabtl.html">NemigaBTL &ndash; эмулятор Немига</a></h2>
             <div class="entry">
-                <img src="images/nemigabtl.png" />
+                <img src="images/nemigabtl.png" height="281" />
             </div>
         </div>
 
         <div class="grid-item grid-item--width3">
             <h2><a href="/intellekt02.html">Эмулятор шахматного компьютера Интеллект-02</a></h2>
             <div class="entry">
-            	<img src="images/intellekt02.png" />
+            	<img src="images/intellekt02.png" height="240" />
             </div>
         </div>
 
         <div class="grid-item grid-item--width3">
             <div class="entryimg">
-                <a href="/loderunner.html"><img src="images/uknc-loderunner.png" title="Портирование Lode Runner" /></a>
+                <a href="/loderunner.html"><img src="images/uknc-loderunner.png" title="Портирование Lode Runner" height="216" /></a>
             </div>
         </div>
 
         <div class="grid-item grid-item--width3">
             <div class="entryimg">
-                <a href="/stopexpress.html"><img src="images/uknc-stopexpress.png" title="Портирование Stop the Express" /></a>
+                <a href="/stopexpress.html"><img src="images/uknc-stopexpress.png" title="Портирование Stop the Express" height="216" /></a>
             </div>
         </div>
 
         <div class="grid-item grid-item--width3">
             <div class="entryimg">
-                <a href="/highwayencounter.html"><img src="images/uknc-highwayencounter.png" title="Портирование Highway Encounter" /></a>
+                <a href="/highwayencounter.html"><img src="images/uknc-highwayencounter.png" title="Портирование Highway Encounter" height="216" /></a>
             </div>
         </div>
 
@@ -148,14 +140,25 @@
 	</div>
 
     <script>
+        // initialize masonry
+        var msnry = new Masonry( '.grid', {
+            itemSelector: '.grid-item',
+            columnWidth: 96,
+            gutter: 16
+        });
+        // update masonry layout
         window.onload = function() {
-            var elem = document.querySelector('.grid');
-            var msnry = new Masonry( elem, {
-              itemSelector: '.grid-item',
-              columnWidth: 96,
-              gutter: 16
-            });
+            msnry.layout();
         };
+    </script>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-19744382-5', 'auto');
+        ga('send', 'pageview');
     </script>
 
 </body>
