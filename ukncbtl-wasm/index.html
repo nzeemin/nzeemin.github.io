@@ -348,7 +348,7 @@
                 <area shape="rect" coords="416,145,444,172" alt="0154" href="javascript:void(0)" onmousedown="emulatorKeyPress(108)" onmouseup="emulatorKeyRelease(108)"/>
                 <area shape="rect" coords="416,174,444,201" alt="0134" href="javascript:void(0)" onmousedown="emulatorKeyPress(92)" onmouseup="emulatorKeyRelease(92)"/>
                 <area shape="rect" coords="446,145,473,201" alt="0133" href="javascript:void(0)" onmousedown="emulatorKeyPress(91)" onmouseup="emulatorKeyRelease(91)"/>
-                <!--TODO: numpad-->
+                <!-- Numpad-->
                 <area shape="rect" coords="506,056,534,083" alt="0131" href="javascript:void(0)" onmousedown="emulatorKeyPress(89)" onmouseup="emulatorKeyRelease(89)"/>
                 <area shape="rect" coords="536,056,563,083" alt="0025" href="javascript:void(0)" onmousedown="emulatorKeyPress(21)" onmouseup="emulatorKeyRelease(21)"/>
                 <area shape="rect" coords="565,056,593,083" alt="0005" href="javascript:void(0)" onmousedown="emulatorKeyPress(5)" onmouseup="emulatorKeyRelease(5)"/>
@@ -364,7 +364,6 @@
                 <area shape="rect" coords="506,174,534,201" alt="0126" href="javascript:void(0)" onmousedown="emulatorKeyPress(86)" onmouseup="emulatorKeyRelease(86)"/>
                 <area shape="rect" coords="536,174,563,201" alt="0146" href="javascript:void(0)" onmousedown="emulatorKeyPress(102)" onmouseup="emulatorKeyRelease(102)"/>
                 <area shape="rect" coords="565,174,593,201" alt="0166" href="javascript:void(0)" onmousedown="emulatorKeyPress(118)" onmouseup="emulatorKeyRelease(118)"/>
-
             </map>
         </div>
         <textarea class="emupanel-output" id="output" rows="8"></textarea>
@@ -374,6 +373,32 @@
         var statusElement = document.getElementById('status');
         var progressElement = document.getElementById('progress');
         var spinnerElement = document.getElementById('spinner');
+
+        // Цифры, латинские буквы, '[', ']'
+        // Enter (не различает Numpad Enter)
+        // Space, arrow keys, Tab, Backspace
+        // Numpad цифры
+        // НР = Shift
+        // УПР = Ctrl
+        var keyCodeToUkncScanLat = new Array(
+            /*     0    1    2    3    4    5    6    7    8    9    a    b    c    d    e    f  */
+            /*0*/ 000, 000, 000, 000, 000, 000, 000, 000,  90,  22, 000, 000, 000, 107, 000, 000,
+            /*1*/  69,  38, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000,
+            /*2*/  75, 000, 000, 000, 000,  78, 108,  91,  92, 000, 000, 000, 000, 000, 000, 000,
+            /*3*/ 126,  24,  25,  26,  11,  28,  29,  14,  15, 127, 000, 000, 000, 000, 000, 000,
+            /*4*/ 000,  58,  62,  40,  47,  27,  39,  45, 110,  59,  23,  42,  46,  74,  44,  61,
+            /*5*/  43,  55,  60,  73,  76,  41,  95,  57,  77,  56, 111, 000, 000, 000, 000, 000,
+            /*6*/  86,  87, 103, 119,  88, 104, 120,  85, 101, 117, 000, 000, 000, 000, 000, 000,
+            /*7*/ 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000,
+            /*8*/ 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000,
+            /*9*/ 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000,
+            /*a*/ 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000,
+            /*b*/ 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000,
+            /*c*/ 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000,
+            /*d*/ 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000,  30, 000,  31, 000, 000,
+            /*e*/ 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000,
+            /*f*/ 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000, 000
+        );
 
         var Module = {
             preRun: [
@@ -424,13 +449,23 @@
 
                     document.addEventListener('keydown', function(event) {
                         //TODO: if emulator not running - don't process
-                        console.log(event.keyCode);
+                        //console.log(event.keyCode.toString(16));
                         //TODO: Emulator_GetKeyboardRegister()
-                        //TODO: map event.keyCode to UKNC scancode
-                        //TODO: if we have scancode - call Module.keyDownEvent()
-                        //event.preventDefault();
-                    }, false);
-                    //TODO: document.addEventListener('keyup', function(event) {
+                        var scan = keyCodeToUkncScanLat[event.keyCode];
+                        if (scan != 0) {
+                            Module.emulatorKeyEvent(scan, true);
+                            event.preventDefault();
+                        }
+                    }, true);
+                    document.addEventListener('keyup', function(event) {
+                        //TODO: if emulator not running - don't process
+                        //TODO: Emulator_GetKeyboardRegister()
+                        var scan = keyCodeToUkncScanLat[event.keyCode];
+                        if (scan != 0) {
+                            Module.emulatorKeyEvent(scan, false);
+                            event.preventDefault();
+                        }
+                    }, true);
                 }
             ],
             print: (function () {
@@ -492,9 +527,6 @@
             monitorRunDependencies: function (left) {
                 this.totalDependencies = Math.max(this.totalDependencies, left);
                 Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies - left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
-            },
-            keyDownEvent : function (event) {
-                //TODO
             },
             emulatorStart: function () {
                 Module.ccall('Emulator_Start', null, null, null);
@@ -603,7 +635,7 @@
                 return;
 
             Module.systemFrame();
-            Module.systemFrame();
+            Module.systemFrame(); //TODO
 
             Module.drawScreen();
 
