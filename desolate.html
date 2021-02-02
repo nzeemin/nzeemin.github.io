@@ -39,18 +39,67 @@
                     <div class="box">
                         <h2>Оригинал на TI-83 Plus</h2>
                         <div class="entry">
+                            <ul>
+                                <li>Desolate <a href="https://www.ticalc.org/archives/files/fileinfo/331/33153.html" target="_blank">для TI-83</a> и
+                                    <a href="https://www.ticalc.org/archives/files/fileinfo/348/34879.html" target="_blank">для TI-83/84 Plus</a> на ticalc.org</li>
+                                <li><a href="https://youtu.be/5UHqPMxeZnY" target="_blank">Видео геймплея игры</a></li>
+                            </ul>
+                            <p>
+                                Это игра в жанре &laquo;adventure/RPG&raquo;, в научно-фантастическом сеттинге, с видом сверху-вниз.<br />
+                                Автор игры &ndash; Patrick Prendergast (tr1p1ea) &ndash; написал и выпустил её в 2004 году для научных калькуляторов TI-83/84 Plus.<br />
+                                Безусловно, это одна из лучших игр для этих устройств, если не самая лучшая.
+                            </p>
+                            <p><img src="/images/desolate-original-room1.png" alt="" style="max-width:100%;"></p>
+                            <p>
+                                Поиграть в оригинал проще всего с помощью эмулятора, я использовал для этого эмулятор <a href="http://wabbitemu.org/" target="_blank">Wabbitemu</a>.
+                            </p>
+                            <p>Шаги по запуску игры в эмуляторе:
+                                <ul>
+                                    <li>Запустите Wabbitemu, выберите ROM-файл</li>
+                                    <li>File Open, <code>DesData.8xp</code></li>
+                                    <li>MEM, выберите Archive; PRGM, выберите DesData; ENTER</li>
+                                    <li>File Open <code>Desolate.8xp</code></li>
+                                    <li>File Open <code>MIRAGEOS.8xk</code></li>
+                                    <li>APPS, выберите MirageOS</li>
+                                    <li>Выберите Main, Desolate</li>
+                                </ul>
+                            </p>
                         </div>
                     </div>
 
                     <div class="box">
                         <h2>Портирование на ZX Spectrum (незакочено)</h2>
                         <div class="entry">
+                            <ul>
+                                <li><a href="https://github.com/nzeemin/spectrum-desolate" target="_blank">github.com/nzeemin/spectrum-desolate</a> &ndash; репозиторий кода</li>
+                                <li><a href="https://zx-pk.ru/threads/32431-desolate-port-s-ti-83-plus.html" target="_blank">Обсуждение на форуме zx-pk.ru</a></li>
+                            </ul>
+                            <p>
+                                В октябре 2020 я начал с разбора и комментирования кода оригинальной игры, на это ушло около двух недель.
+                                Затем я занялся подготовкой кода для портированной версии.
+                                Начал с того, что разработал свой пропорциональный шрифт, похожий на тот что используется на этих научных калькуляторах,
+                                плюс написал код для вывода символов этого шрифта.
+                                Дальше занимался последовательным переносом кода на ассемблер Z80, и конвертацией данных из оригинала.
+                            </p>
+                            <p>
+                                Скриншоты портированой версии:<br />
+                                <img src="/images/spectrtum-desolate-room1.png" alt="" style="max-width:100%;">
+                            </p>
                         </div>
                     </div>
 
                     <div class="box">
-                        <h2>Портирование на Вектор-06Ц (незакочено)</h2>
+                        <h2>Портирование на Вектор-06Ц</h2>
                         <div class="entry">
+                            <ul>
+                                <li><a href="https://github.com/nzeemin/vector06c-desolate" target="_blank">github.com/nzeemin/vector06c-desolate</a> &ndash; репозиторий кода</li>
+                                <li><a href="https://zx-pk.ru/threads/32499-portirovanie-desolate-na-vektor-06ts.html" target="_blank">Обсуждение на форуме zx-pk.ru</a></li>
+                            </ul>
+                            <p>
+                                Скриншоты портированой версии:<br />
+                                <img src="/images/vector06c-desolate-room1.png" alt="" style="max-width:100%;">
+                                <img src="/images/vector06c-desolate-doorlock.png" alt="" style="max-width:100%;">
+                            </p>
                         </div>
                     </div>
 
@@ -63,10 +112,22 @@
                                 <li><a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/desolate.uknc&run=1" target="_blank">Запустить игру в онлайн-эмуляторе UKNCBTL WASM</a></li>
                             </ul>
                             <p>
+                                После того как я детально разобрался с устройством оригинальной игры и практически завершил порт на ZX Spectrum,
+                                появилось желание сделать порт на УКНЦ. Основная сложность здесь была в конвертации кода для 8-разрядного процессора Z80
+                                на совершенно другую архитектуру  &ndash; DEC PDP-11, а точнее, под советский процессор К1801ВМ2.
+                                На полную конвертацию кода ушло ровно две недели (~4230 строк исходного кода для Z80 преобразованы в ~3580 строк кода на MACRO-11),
+                                затем ещё несколько дней на поиск и устранение ошибок, плюс небольшие доработки.<br/>
+                                Всю эту работу я провёл в декабре 2020 года, релиз выложил 27 декабря 2020.
+                            </p>
+                            <p>
                                 Скриншоты портированой версии:<br />
                                 <img src="/images/uknc-desolate-story1.png" alt="" style="max-width:100%;">
                                 <img src="/images/uknc-desolate-room1.png" alt="" style="max-width:100%;">
                             </p>
+                            <p>
+                                Проверено, что игра запускается и работает на реальной машине (спасибо BlaireCas и hobot с форума zx-pk.ru):<br>
+                            </p>
+                            <img src="/images/uknc-desolate-room1-real.jpg" alt="" style="max-width:100%;">
                         </div>
                     </div>
 
