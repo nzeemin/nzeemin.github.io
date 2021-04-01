@@ -44,29 +44,29 @@
                             	Утилита командной строки для работы с образами дисков УКНЦ.
                             </p>
                             <pre>
-Usage:
-    Disk image commands:
-        rt11dsk l &lt;ImageFile&gt;  - list image contents
-        rt11dsk e &lt;ImageFile&gt; &lt;FileName&gt;  - extract file
-        rt11dsk x &lt;ImageFile&gt;  - extract all files
-        rt11dsk a &lt;ImageFile&gt; &lt;FileName&gt;  - add file
-        rt11dsk d &lt;ImageFile&gt; &lt;FileName&gt;  - delete file
-        rt11dsk xu &lt;ImageFile&gt;  - extract all unused space
-    Hard disk image commands:
-        rt11dsk hi &lt;HddImage&gt;  - invert HDD image file
-        rt11dsk hl &lt;HddImage&gt;  - list HDD image partitions
-        rt11dsk hx &lt;HddImage&gt; &lt;Partn&gt; &lt;FileName&gt;  - extract partition to file
-        rt11dsk hu &lt;HddImage&gt; &lt;Partn&gt; &lt;FileName&gt;  - update partition from the file
-        rt11dsk hpl &lt;HddImage&gt; &lt;Partn&gt;  - list partition contents
-        rt11dsk hpe &lt;HddImage&gt; &lt;Partn&gt; &lt;FileName&gt;  - extract file from the partition
-        rt11dsk hpa &lt;HddImage&gt; &lt;Partn&gt; &lt;FileName&gt;  - add file to the partition
-    Parameters:
-        &lt;ImageFile&gt; is UKNC disk image in .dsk or .rtd format
-        &lt;HddImage&gt;  is UKNC hard disk image file name
-        &lt;Partn&gt;     is hard disk image partition number, 0..23
-        &lt;FileName&gt;  is a file name to read from or save to
-    Options:
-        -oXXXXX  Set start offset to XXXXX; 0 by default
+Использование:
+Команды работы с образом дискеты:
+    rt11dsk l &lt;ImageFile&gt;  - показать содержимое диска, подобно команде DIR
+    rt11dsk e &lt;ImageFile&gt; &lt;FileName&gt;  - извлечь файл
+    rt11dsk x &lt;ImageFile&gt;  - извлечь все файлы в текущую директорию
+    rt11dsk a &lt;ImageFile&gt; &lt;FileName&gt;  - добавить файл в образ
+    rt11dsk d &lt;ImageFile&gt; &lt;FileName&gt;  - удалить файл из образа
+    rt11dsk xu &lt;ImageFile&gt;  - извлечь все неиспользуемые области
+Команды работы с образом жёсткого диска:
+    rt11dsk hi &lt;HddImage&gt;  - инвертировать образ жёсткого диска
+    rt11dsk hl &lt;HddImage&gt;  - перечислить разделы жёсткого диска
+    rt11dsk hx &lt;HddImage&gt; &lt;Partn&gt; &lt;FileName&gt;  - извлечь раздел в файл
+    rt11dsk hu &lt;HddImage&gt; &lt;Partn&gt; &lt;FileName&gt;  - обновить раздел из файла
+    rt11dsk hpl &lt;HddImage&gt; &lt;Partn&gt;  - показать содержимое раздела
+    rt11dsk hpe &lt;HddImage&gt; &lt;Partn&gt; &lt;FileName&gt;  - извлечь файл из раздела
+    rt11dsk hpa &lt;HddImage&gt; &lt;Partn&gt; &lt;FileName&gt;  - добавить файл в раздел
+Параметры:
+    &lt;ImageFile&gt; - имя файла образа диска УКНЦ disk image в формате .dsk или .rtd
+    &lt;HddImage&gt;  - имя файла образа жёсткого диска УКНЦ
+    &lt;Partn&gt;     - номер раздела жёсткого диска, 0..23
+    &lt;FileName&gt;  - имя файла из которого читаем или в который сохраняем данные
+Опции:
+    -oXXXXX  Использовать смещение XXXXXX от начала образа, по умолчанию 0
                             </pre>
                         </div>
                     </div>
@@ -75,15 +75,18 @@ Usage:
                         <h2>ESCParser</h2>
                         <div class="entry">
                             <p>
-                            	ESCParser &ndash; это утилита с интерфейсом командной строки, эмулятор принтера с системой команд ESC/P. Текущая реализация ближе всего к принтеру Robotron CM 6329.01M (в свою очередь, его система команд основана на Epson LX-800 с некоторыми командами FX-800). Для печати символов используется шрифт, полученный из ПЗУ этого принтера.
+                            	ESCParser &ndash; это утилита с интерфейсом командной строки, эмулятор принтера с системой
+                                команд ESC/P. Текущая реализация ближе всего к принтеру Robotron CM 6329.01M (в свою очередь,
+                                его система команд основана на Epson LX-800 с некоторыми командами FX-800).
+                                Для печати символов используется шрифт, полученный из ПЗУ этого принтера.
                             </p>
                             <pre>
-Usage:
-        ESCParser [options] InputFile &gt; OutputFile
-Options:
-        -ps     PostScript output with multipage support
-        -svg    SVG output, no multipage support
-        -pdf    PDF output with multipage support
+Использование:
+    ESCParser [опции] InputFile &gt; OutputFile
+Опуции:
+    -ps     Выдать PostScript, с поддержкой многостраничной печати
+    -svg    Выдать SVG, без поддержки многостраничной печати
+    -pdf    Выдать PDF, с поддержкой многостраничной печати
                             </pre>
                             <p>
                             	Результат прогона тестового примера:<br />
@@ -96,11 +99,19 @@ Options:
                         <h2>sav2wav</h2>
                         <div class="entry">
                             <p>
-                            	Утилита командной строки для преобразования .SAV-файлов RT-11 в .WAV-файлы, которые можно загрузить через магнитофонный вход УКНЦ.
+                            	Утилита командной строки для преобразования .SAV-файлов RT-11 в .WAV-файлы, которые можно
+                                загрузить через магнитофонный вход УКНЦ.
+                                Конечно, загруженные таким образом программы смогут нормально работать, только если работают
+                                с ресурсами машины напрямую, и не пользуются системными вызовами операционной системы.
                             </p>
                             <pre>
-Usage: sav2wav &lt;inputfile.SAV&gt; &lt;outputfile.WAV&gt;
+Использование:
+    sav2wav &lt;inputfile.SAV&gt; &lt;outputfile.WAV&gt;
                             </pre>
+                            <p>
+                                Первоначально эта утилита была написана Александром Александровым на Delphi.
+                                Я сконвертировал её на C++.
+                            </p>
                         </div>
                     </div>
 
@@ -109,11 +120,26 @@ Usage: sav2wav &lt;inputfile.SAV&gt; &lt;outputfile.WAV&gt;
                         <div class="entry">
                             <p>
                                 Утилита командной строки, позволяющая сделать из .SAV-файла RT-11 образ картриджа УКНЦ.
-                                <a href="http://zx-pk.ru/threads/26703-utilita-sav2cart.html" target="_blank">zx-pk.ru - Утилита SAV2CART</a>
+                                Картридж для УКНЦ имеет размер 24 Кб = 24576 байт. Это &laquo;естественное&raquo; ограничение
+                                на размер файла, который можно преобразовать в формат картриджа.
+                                Если .SAV-файл оказывается слишком большой для картриджа, то утилита пытается сжать этот файл
+                                с помощью алгоритмов сжатия.
                             </p>
                             <pre>
-Usage: Sav2Cart &lt;inputfile.SAV&gt; &lt;outputfile.BIN&gt;
+Использование:
+    Sav2Cart [опции] &lt;inputfile.SAV&gt; &lt;outputfile.BIN&gt;
+Опции:
+    /none - попробовать без сжатия
+    /rle  - попробовать сжатие RLE
+    /lzss - попробовать сжатие LZSS
+    /lz4  - попробовать сжатие LZ4
+    /lzsa1 - попробовать сжатие LZSA1                                                                                                                                                                      
+    /lzsa2 - попробовать сжатие LZSA2
+    (без опций сжатия) - пробовать одно за другим, пока не влезет
                             </pre>
+                            <p>
+                                См. также обсуждение <a href="http://zx-pk.ru/threads/26703-utilita-sav2cart.html" target="_blank">zx-pk.ru - Утилита SAV2CART</a>
+                            </p>
                         </div>
                     </div>
 
@@ -121,7 +147,8 @@ Usage: Sav2Cart &lt;inputfile.SAV&gt; &lt;outputfile.BIN&gt;
                         <h2>UkncComSender</h2>
                         <div class="entry">
                             <p>
-                            	Экспериментальная утилита, позволяющая загрузиться в эмуляторе УКНЦ с последовательного порта (Стык С2).
+                            	Экспериментальная утилита, позволяющая загрузиться в эмуляторе УКНЦ с последовательного порта
+                                (Стык С2).
                             </p>
                         </div>
                     </div>
