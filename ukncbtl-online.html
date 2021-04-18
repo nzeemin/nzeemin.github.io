@@ -4,12 +4,27 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Эмулятор УКНЦ онлайн - nzeemin.github.io</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        .grid { margin: 16px; }
+        .grid-item { width: 96px; margin-bottom: 10px; border: 1px solid #888; background: white; color: black; border-radius: 3px; box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.18); }
+        .aboutbox { width: 96px; margin-bottom: 10px; border: none; background: none; color: black; border-radius: 3px; box-shadow: none; }
+        .grid-item--width2 { width: 208px; margin-bottom: 16px; }
+        .grid-item--width3 { width: 320px; margin-bottom: 16px; }
+        .grid-item--width4 { width: 432px; margin-bottom: 16px; }
+        .grid-item h2 { font-size: 1em; font-weight: 800; background: #B5E0FF; color: black; margin: 0; padding: 4px 4px 6px 8px; }
+        .grid-item .entry { margin: 1em; }
+        .grid-item .entryimg { margin: 0; }
+        .grid-item .entryimg img { vertical-align: bottom; }
+        a[target="_blank"]:after { content: none; margin-left: 0; }
+    </style>
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
          (adsbygoogle = window.adsbygoogle || []).push({ google_ad_client: "ca-pub-5284662784280164", enable_page_level_ads: true });
     </script>
 </head>
 <body>
+
+    <script src="/js/masonry.pkgd.min.js"></script>
 
     <header>
         <a class="header-brand" href="/">nzeemin.github.io</a> /
@@ -22,95 +37,166 @@
                 <td id="navbar" width="300">
                     <div class="box box-nobox">
                         <h2>Эмулятор УКНЦ онлайн</h2>
-                    </div>
-
-                    <div class="box">
-                        <h2>Содержание</h2>
-                        <ul class="contents">
-                            <li>Эмулятор UKNCBTL на WebAssembly</li>
-                        </ul>
+                        <p>
+                            <div style="padding-bottom: 12px">Эмулятор UKNCBTL на WebAssembly:</div>
+                            <a href="/ukncbtl-wasm/index.html?run=1" target="_blank" class="bigbluebutton"
+                                >Эмулятор UKNCBTL</a>
+                        </p>
+                        <p>
+                            Скриншоты справа это ссылки на онлайн-эмулятор УКНЦ с сохранённым состоянием работы эмулятора.
+                        </p>
                     </div>
                 </td><!--navbar end-->
 
                 <td>
-                    <div class="box">
-                        <h2>Эмулятор UKNCBTL на WebAssembly</h2>
-                        <div class="entry">
-                            <p>
-                                <a href="/ukncbtl-wasm/index.html?run=1" target="_blank" class="bigbluebutton"
-                                    >Открыть онлайн-эмулятор UKNCBTL</a>
-                            </p>
-                            <p>
-                                Скриншоты ниже это ссылки на онлайн-эмулятор УКНЦ с сохранённым состоянием работы эмулятора.
-                            </p>
-                            <hr />
-                            <p>
-                                Бейсик Вильнюс:<br/>
+                    <div class="grid">
+                        <div class="grid-item grid-item--width3">
+                            <h2>Бейсик Вильнюс</h2>
+                            <div class="entryimg">
                                 <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/romctr_basic.uknc&run=1" target="_blank">
                                     <img src="/ukncbtl/romctr_basic.png" alt="Бейсик Вильнюс, версия из картриджа"></a>
-                            </p>
-                            <p>
-                                Игра Замок Гоблинов:<br/>
+                                </div>
+                        </div>
+                        <div class="grid-item grid-item--width3">
+                            <h2>Замок Гоблинов</h2>
+                            <div class="entryimg">
                                 <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/zamok_goblinov.uknc&run=1" target="_blank">
                                     <img src="/ukncbtl/zamok_goblinov.png" alt="Замок гоблинов"></a>
-                            </p>
-                            <p>
-                                Игра Королевство Эйфория (KINGOM):<br/>
-                                <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/kingom.uknc&disk0=https://nzeemin.github.io/ukncbtl/disk2.dsk&run=1" target="_blank">
-                                    <img src="/ukncbtl/kingom.png" alt="Королевство Эйфория"></a>
-                            </p>
-                            <p>
-                                Сталкер (STALK):<br/>
-                                <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/stalk.uknc&run=1" target="_blank">
-                                    <img src="/ukncbtl/stalk.png" alt="Сталкер"></a>
-                            </p>
-                            <p>
-                                Игры ASP Corp.:<br/>
-                                <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/asp-castle.uknc&run=1" target="_blank">
-                                    <img src="/ukncbtl/asp-castle.png" alt="Castle by ASP Corp."></a>
-                                <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/asp-garden.uknc&run=1" target="_blank">
-                                    <img src="/ukncbtl/asp-garden.png" alt="Garden by ASP Corp."></a>
-                                <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/asp-land.uknc&run=1" target="_blank">
-                                    <img src="/ukncbtl/asp-land.png" alt="Land by ASP Corp."></a>
-                                <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/asp-vert.uknc&run=1" target="_blank">
-                                    <img src="/ukncbtl/asp-vert.png" alt="Military Marathon by ASP Corp."></a>
-                            </p>
-                            <p>
-                                Пакет Игрушка 1 от ИТО:<br/>
-                                <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/igrushka1-conan.uknc&disk2=https://nzeemin.github.io/ukncbtl/igrushka1.dsk&run=1" target="_blank">
-                                    <img src="/ukncbtl/igrushka1-conan.png" alt="Пакет Игрушка 1 - Conan"></a>
-                                <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/igrushka1-sammy.uknc&disk2=https://nzeemin.github.io/ukncbtl/igrushka1.dsk&run=1" target="_blank">
-                                    <img src="/ukncbtl/igrushka1-sammy.png" alt="Пакет Игрушка 1 - Sammy"></a>
-                                <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/igrushka1-knight.uknc&disk2=https://nzeemin.github.io/ukncbtl/igrushka1.dsk&run=1" target="_blank">
+                                </div>
+                        </div>
+                        <div class="grid-item grid-item--width3">
+                            <h2>Королевство Эйфория (KINGOM)</h2>
+                                <div class="entryimg">
+                                    <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/kingom.uknc&disk0=https://nzeemin.github.io/ukncbtl/disk2.dsk&run=1" target="_blank">
+                                        <img src="/ukncbtl/kingom.png" alt="Королевство Эйфория"></a>
+                                </div>
+                        </div>
+                            <div class="grid-item grid-item--width3">
+                                <h2>Сталкер (STALK)</h2>
+                                <div class="entryimg">
+                                    <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/stalk.uknc&run=1" target="_blank">
+                                        <img src="/ukncbtl/stalk.png" alt="Сталкер"></a>
+                                </div>
+                            </div>
+                            <div class="grid-item grid-item--width3">
+                                <h2>Castle</h2>
+                                <div class="entryimg">
+                                    <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/asp-castle.uknc&run=1" target="_blank">
+                                        <img src="/ukncbtl/asp-castle.png" alt="Castle by ASP Corp."></a>
+                                </div>
+                            </div>
+                            <div class="grid-item grid-item--width3">
+                                <h2>Garden</h2>
+                                <div class="entryimg">
+                                    <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/asp-garden.uknc&run=1" target="_blank">
+                                        <img src="/ukncbtl/asp-garden.png" alt="Garden by ASP Corp."></a>
+                                </div>
+                            </div>
+                            <div class="grid-item grid-item--width3">
+                                <h2>Land</h2>
+                                <div class="entryimg">
+                                    <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/asp-land.uknc&run=1" target="_blank">
+                                        <img src="/ukncbtl/asp-land.png" alt="Land by ASP Corp."></a>
+                                </div>
+                            </div>
+                            <div class="grid-item grid-item--width3">
+                                <h2>Military Marathon</h2>
+                                <div class="entryimg">
+                                    <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/asp-vert.uknc&run=1" target="_blank">
+                                        <img src="/ukncbtl/asp-vert.png" alt="Military Marathon by ASP Corp."></a>
+                                </div>
+                            </div>
+                            <div class="grid-item grid-item--width3">
+                                <h2>Conan (Игрушка-1)</h2>
+                                <div class="entryimg">
+                                    <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/igrushka1-conan.uknc&disk2=https://nzeemin.github.io/ukncbtl/igrushka1.dsk&run=1" target="_blank">
+                                        <img src="/ukncbtl/igrushka1-conan.png" alt="Пакет Игрушка 1 - Conan"></a>
+                                </div>
+                            </div>
+                            <div class="grid-item grid-item--width3">
+                                <h2>Sammy (Игрушка-1)</h2>
+                                <div class="entryimg">
+                                    <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/igrushka1-sammy.uknc&disk2=https://nzeemin.github.io/ukncbtl/igrushka1.dsk&run=1" target="_blank">
+                                        <img src="/ukncbtl/igrushka1-sammy.png" alt="Пакет Игрушка 1 - Sammy"></a>
+                                </div>
+                            </div>
+                            <div class="grid-item grid-item--width3">
+                                <h2>Knight (Игрушка-1)</h2>
+                                <div class="entryimg">
+                                    <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/igrushka1-knight.uknc&disk2=https://nzeemin.github.io/ukncbtl/igrushka1.dsk&run=1" target="_blank">
                                     <img src="/ukncbtl/igrushka1-knight.png" alt="Пакет Игрушка 1 - Knight"></a>
-                                <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/igrushka1-loderunner.uknc&disk2=https://nzeemin.github.io/ukncbtl/igrushka1.dsk&run=1" target="_blank">
-                                    <img src="/ukncbtl/igrushka1-loderunner.png" alt="Пакет Игрушка 1 - Lode Runner"></a><br/>
-                                Пакет Игрушка 2 от ИТО:<br/>
-                                <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/igrushka2-puckman.uknc&disk3=https://nzeemin.github.io/ukncbtl/igrushka2.dsk&run=1" target="_blank">
-                                    <img src="/ukncbtl/igrushka2-puckman.png" alt="Пакет Игрушка 2 - Puckman"></a>
-                                <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/igrushka2-arkanoid.uknc&disk3=https://nzeemin.github.io/ukncbtl/igrushka2.dsk&run=1" target="_blank">
-                                    <img src="/ukncbtl/igrushka2-arkanoid.png" alt="Пакет Игрушка 2 - Arkanoid"></a>
-                                <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/igrushka2-roadfighter.uknc&disk3=https://nzeemin.github.io/ukncbtl/igrushka2.dsk&run=1" target="_blank">
-                                    <img src="/ukncbtl/igrushka2-roadfighter.png" alt="Пакет Игрушка 2 - Road Fighter"></a>
-                            </p>
-                            <p>
-                                Мои порты прошлых лет: <a href="/loderunner.html">Lode Runner</a>, <a href="/stopexpress.html">Stop the Express</a> и <a href="/highwayencounter.html">Highway Encounter</a><br/>
-                                <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/loderunner.uknc&run=1" target="_blank">
-                                    <img src="/ukncbtl/loderunner.png" alt="Lode Runner"></a>
-                                <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/stopexpress.uknc&run=1" target="_blank">
-                                    <img src="/ukncbtl/stopexpress.png" alt="Stop the Express"></a>
-                                <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/hwyenc62.uknc&run=1" target="_blank">
-                                    <img src="/ukncbtl/hwyenc62.png" alt="Highway Encounter"></a>
-                            </p>
-                            <p>
-                                Игры 2020 года: River Raid и Krakout от BlaireCas, а также <a href="/desolate.html">порт Desolate</a><br/>
-                                <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/blairecas-krk.uknc&disk0=https://nzeemin.github.io/ukncbtl/blairecas-krk.dsk&run=1" target="_blank">
-                                    <img src="/ukncbtl/blairecas-krk.png" alt="Krakout by BlaireCas"></a>
-                                <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/blairecas-riv.uknc&disk0=https://nzeemin.github.io/ukncbtl/blairecas-riv.dsk&run=1" target="_blank">
-                                    <img src="/ukncbtl/blairecas-riv.png" alt="River Raid by BlaireCas"></a>
-                                <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/desolate.uknc&run=1" target="_blank">
-                                    <img src="/ukncbtl/desolate.png" alt="Desolate"></a>
-                            </p>
+                                </div>
+                            </div>
+                            <div class="grid-item grid-item--width3">
+                                <h2>Lode Runner (Игрушка-1)</h2>
+                                <div class="entryimg">
+                                    <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/igrushka1-loderunner.uknc&disk2=https://nzeemin.github.io/ukncbtl/igrushka1.dsk&run=1" target="_blank">
+                                        <img src="/ukncbtl/igrushka1-loderunner.png" alt="Пакет Игрушка 1 - Lode Runner"></a><br/>
+                                </div>
+                            </div>
+                            <div class="grid-item grid-item--width3">
+                                <h2>Puckman (Игрушка-2)</h2>
+                                <div class="entryimg">
+                                    <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/igrushka2-puckman.uknc&disk3=https://nzeemin.github.io/ukncbtl/igrushka2.dsk&run=1" target="_blank">
+                                        <img src="/ukncbtl/igrushka2-puckman.png" alt="Пакет Игрушка 2 - Puckman"></a>
+                                </div>
+                            </div>
+                            <div class="grid-item grid-item--width3">
+                                <h2>Arkanoid (Игрушка-2)</h2>
+                                <div class="entryimg">
+                                    <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/igrushka2-arkanoid.uknc&disk3=https://nzeemin.github.io/ukncbtl/igrushka2.dsk&run=1" target="_blank">
+                                        <img src="/ukncbtl/igrushka2-arkanoid.png" alt="Пакет Игрушка 2 - Arkanoid"></a>
+                                </div>
+                            </div>
+                            <div class="grid-item grid-item--width3">
+                                <h2>Road Fighter (Игрушка-2)</h2>
+                                <div class="entryimg">
+                                    <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/igrushka2-roadfighter.uknc&disk3=https://nzeemin.github.io/ukncbtl/igrushka2.dsk&run=1" target="_blank">
+                                        <img src="/ukncbtl/igrushka2-roadfighter.png" alt="Пакет Игрушка 2 - Road Fighter"></a>
+                                </div>
+                            </div>
+                            <div class="grid-item grid-item--width3">
+                                <h2><a href="/loderunner.html">Lode Runner</a></h2>
+                                <div class="entryimg">
+                                    <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/loderunner.uknc&run=1" target="_blank">
+                                        <img src="/ukncbtl/loderunner.png" alt="Lode Runner"></a>
+                                </div>
+                            </div>
+                            <div class="grid-item grid-item--width3">
+                                <h2><a href="/stopexpress.html">Stop the Express</a></h2>
+                                <div class="entryimg">
+                                    <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/stopexpress.uknc&run=1" target="_blank">
+                                        <img src="/ukncbtl/stopexpress.png" alt="Stop the Express"></a>
+                                </div>
+                            </div>
+                            <div class="grid-item grid-item--width3">
+                                <h2><a href="/highwayencounter.html">Highway Encounter</a></h2>
+                                <div class="entryimg">
+                                    <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/hwyenc62.uknc&run=1" target="_blank">
+                                        <img src="/ukncbtl/hwyenc62.png" alt="Highway Encounter"></a>
+                                </div>
+                            </div>
+                            <div class="grid-item grid-item--width3">
+                                <h2>Krakout by BlaireCas</h2>
+                                <div class="entryimg">
+                                    <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/blairecas-krk.uknc&disk0=https://nzeemin.github.io/ukncbtl/blairecas-krk.dsk&run=1" target="_blank">
+                                        <img src="/ukncbtl/blairecas-krk.png" alt="Krakout by BlaireCas"></a>
+                                </div>
+                            </div>
+                            <div class="grid-item grid-item--width3">
+                                <h2>River Raid by BlaireCas</h2>
+                                <div class="entryimg">
+                                    <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/blairecas-riv.uknc&disk0=https://nzeemin.github.io/ukncbtl/blairecas-riv.dsk&run=1" target="_blank">
+                                        <img src="/ukncbtl/blairecas-riv.png" alt="River Raid by BlaireCas"></a>
+                                </div>
+                            </div>
+                            <div class="grid-item grid-item--width3">
+                                <h2><a href="/desolate.html">Desolate</a></h2>
+                                <div class="entryimg">
+                                    <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/desolate.uknc&run=1" target="_blank">
+                                        <img src="/ukncbtl/desolate.png" alt="Desolate"></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -118,6 +204,19 @@
             </tr>
         </tbody>
     </table>
+
+    <script>
+        // initialize masonry
+        var msnry = new Masonry( '.grid', {
+            itemSelector: '.grid-item',
+            columnWidth: 96,
+            gutter: 16
+        });
+        // update masonry layout
+        window.onload = function() {
+            msnry.layout();
+        };
+    </script>
 
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
