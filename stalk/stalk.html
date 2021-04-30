@@ -1,0 +1,1722 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>СТАЛКЕР</title>
+    <style>
+        @font-face { font-family: "robotronfontpica"; font-weight: normal; font-style: normal; src: url("robotronfontpica.woff") format('woff'); }
+        body {
+            font-family: robotronfontpica; font-size: 12pt;
+            background-color: black; color: white;
+            margin: 8px 12px 8px 12px;
+        }
+        .title {
+            font-family: robotronfontpica; font-size: 24pt;
+            color: #AAA;
+        }
+        .helpsign {
+            position: absolute; left: 640pt; top: 16pt;
+            color: #AAA;
+            cursor: pointer;
+        }
+        #credits {
+            position: absolute; left: 24pt; top: 16pt;
+            padding: 12px; margin: 0px;
+            border: 1px solid #080;
+            color: #DDD; background-color: black;
+            width: 640pt;
+        }
+        #credits a { color: #88A; }
+        .creditsclose {
+            position: absolute; left: 624pt; top: 8pt;
+            color: white;
+            cursor: pointer;
+        }
+        pre#terminal {
+            font-family: robotronfontpica;
+            color: #DDD;
+            padding: 12px; margin: 0px;
+            border: 1px solid #080;
+            border-radius: 8px;
+            width: 640pt;
+            height: 320pt;
+            background-image: radial-gradient(rgba(0, 60, 0, 0.75), black 120%);
+        }
+        .keyhints {
+            padding: 12px;
+            width: 54em; line-height: 180%;
+        }
+        .keyhints a {
+            color: gray;
+            padding: 2pt 4pt 1pt 4pt;
+            margin: 2pt;
+            border: 1pt solid #444;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .keyhints a:hover { color: #DDD; background-color: #222; }
+    </style>
+</head>
+<body>
+    <div class="title">&nbsp;STALK</div>
+    <div class="helpsign" onclick="document.getElementById('credits').style.display='block'">[?]</div>
+    <div id="credits" style="display:none">
+        <div class="creditsclose" onclick="this.parentElement.style.display='none'">[X]</div>
+        STALK на HTML/JS v0.1<br/>
+        Исходный код на HTML/JS: <a href="https://github.com/nzeemin/nzeemin.github.io/stalk" target="_blank">github.com/nzeemin/nzeemin.github.io/stalk</a><br/>
+        Исходный код на Паскале: <a href="https://github.com/nzeemin/uknc-various/tree/master/STALK-PASCAL" target="_blank">github.com/nzeemin/uknc-various/tree/master/STALK-PASCAL</a><br/>
+        Используемый шрифт: <a href="https://github.com/nzeemin/robotron-dotmatrix-font" target="_blank">github.com/nzeemin/robotron-dotmatrix-font</a><br/>
+        Спасибо участникам форума <a href="https://zx-pk.ru/forums/66-dvk-uknts.html" target="_blank">zx-pk.ru</a> за помощь и поддержку!<br/>
+    </div>
+<pre id="terminal">
+Загрузка...
+</pre>
+<!-- 
+0         1         2         3         4         5         6         7
+01234567890123456789012345678901234567890123456789012345678901234567890123456789
+-->
+    
+<script>
+    'use strict';
+    const termCols = 80;
+    const termRows = 24;
+    const termCursorChar = '_';
+    var termctl = document.getElementById('terminal');
+    var termarr = new Array(termRows);
+    var termr = 0, termc = 0;  // cursor position
+    var termWaitTimerId = -1;
+    var termCursorShown = false;
+    var termWaitKeysetName = null;
+    var termWaitKeyPressed = null;  // key name
+    var termWaitNextHandler = null;
+
+    var things = [  // справочник предметов - для торговли и рюкзака
+        { 'key': '%', 'name': 'Лестница' },
+        { 'key': '*', 'name': 'Золото' },
+        { 'key': ',', 'name': 'Волшебная кирка' },
+        { 'key': '$', 'name': 'Бутылка' },
+        { 'key': '+', 'name': 'Бутылка' },
+        { 'key': ' ', 'name': 'Черная дыра' },
+        { 'key': '=', 'name': 'Кольцо' },
+        { 'key': '^', 'name': 'Ведьмин студень' },
+        { 'key': '(', 'name': 'Доспех' },
+        { 'key': ')', 'name': 'Доспех' },
+        { 'key': '[', 'name': 'Оружие' },
+        { 'key': ']', 'name': 'Оружие' },
+        { 'key': '?', 'name': 'Свисток' },
+        { 'key': ':', 'name': 'Еда' },
+        { 'key': ';', 'name': 'Еда' },
+        { 'key': '/', 'name': 'ВП' },
+        { 'key': '\\', 'name': 'ВП' },
+        { 'key': '<', 'name': 'Батареи' },
+        { 'key': '>', 'name': 'Батареи' },
+        { 'key': '"', 'name': 'Комариная плешь' },
+        { 'key': '\'', 'name': 'Комариная плешь' },
+        { 'key': '&', 'name': 'Папирус' },
+        { 'key': 'b', 'name': 'Надпись' },
+        { 'key': 'c', 'name': 'Груда камней' },
+        { 'key': 'd', 'name': 'Метла бабы яги' },
+        { 'key': 'e', 'name': 'Череп' },
+        { 'key': 'f', 'name': 'Странствующий скелет' },
+        { 'key': 'g', 'name': 'Стадо бродячих живых трупов' },
+        { 'key': 'h', 'name': 'Кусочек Ноева ковчега' },
+        { 'key': 'i', 'name': 'Записка' },
+        { 'key': 'j', 'name': 'Черный ящик' },
+        { 'key': 'k', 'name': 'Лужа машинного масла' },
+        { 'key': 'l', 'name': 'Раздолбанный ZX SPECTRUM' },
+        { 'key': 'm', 'name': 'Дохлый морлок' },
+        { 'key': 'n', 'name': 'Зуда' },
+        { 'key': 'o', 'name': 'Пустышка' },
+        { 'key': 'p', 'name': 'Куча сепулек' },
+        { 'key': 'r', 'name': 'Разложившийся труп' },
+        { 'key': 's', 'name': 'Надпись' },
+        { 'key': 't', 'name': 'Отрезанная голова Сталкера' },
+        { 'key': 'u', 'name': 'Зачитанный журнал' },
+        { 'key': 'v', 'name': 'Артефакт' },
+        { 'key': 'w', 'name': 'Надпись' },
+        { 'key': 'x', 'name': 'Окровавленная бензопила' },
+        { 'key': 'y', 'name': 'Что-то очень мерзкое' },
+        { 'key': 'z', 'name': 'Следы пикника' },
+        { 'key': 'q', 'name': 'Кладбище снусмумриков' },
+        { 'key': '~', 'name': 'Черт-те что' },
+        { 'key': '|', 'name': 'Пережаренный зелюк' },
+        { 'key': '`', 'name': 'Мышелот (в собственном соку)' },
+        { 'key': '@', 'name': 'Призрак' },
+    ];
+
+    function termUpdate() {
+        termctl.innerText = termarr.join('\r\n');
+    }
+    function termClear() {
+        for (var i = 0; i < termRows; i++) {
+            termarr[i] = '';
+        }
+        termr = 0;
+        termc = 0;
+        termUpdate();
+    }
+    function termCursorTo(r, c) {
+        termr = r;
+        termc = c;
+    }
+    function termPutChar(ch) {
+        if (termc >= termCols) {
+            termc = 0; termr++;
+            //TODO: scroll if termr >= termRows
+            if (termr >= termRows) return;//STUB
+        }
+        // prepare the row
+        if (!termarr[termr]) {
+            if (termc == 0) {
+                termarr[termr] = '';
+            } else {
+                termarr[termr] = ' '.repeat(termc);
+            }
+        }
+        if (termarr[termr].length < termc) {
+            termarr[termr] += ' '.repeat(termc - termarr[termr].length);
+        }
+        // put the char
+        if (termarr[termr].length == termc) {
+            termarr[termr] += ch;
+        } else {
+            termarr[termr] = termarr[termr].substr(0,termc) + ch + termarr[termr].substr(termc + 1);
+        }
+        termc++;
+        termUpdate();
+    }
+    function termWriteCR() {
+        if (termc > 0) {
+            termc = 0;
+            termarr[termr] = '';
+            termUpdate();
+        }
+    }
+    function termWrite(str, pos) {
+        if (!str) {
+            return;
+        }
+        if (pos) {
+            var spaces = pos - str.length;
+            if (spaces > 0) {
+                for (var i = 0; i < spaces; i++) {
+                    termPutChar(' ');
+                }
+            }
+        }
+        for (var i = 0; i < str.length; i++) {
+            termPutChar(str[i]);
+        }
+    }
+    function termWriteLine(str, pos) {
+        if (str != undefined) {
+            termWrite(str, pos);
+        }
+        termc = 0; termr++;
+        //TODO: scroll if termr >= termRows
+    }
+    function termClearEndOfLine() {
+        if (termc == 0) {
+            termarr[termr] = '';
+        } else {
+            termarr[termr] = termarr[termr].substr(0, termc);
+        }
+    }
+    function createKeylinkElement(text) {
+        var elem = document.createElement('a');
+        elem.className = 'keylink';
+        elem.setAttribute('href', '#');
+        elem.innerText = text;
+        elem.addEventListener('click', keylinkClickHandler);
+        return elem;
+    }
+    function termWait(keysetname, next) {
+        var keysets = document.getElementsByClassName('keyhints');
+        for (var i = 0; i < keysets.length; i++) {
+            keysets[i].style.display = 'none';
+        }
+        var keyset = document.getElementById('keyset' + keysetname);
+        // Для выбора из рюкзака - показываем именно то что есть в рюкзаке
+        if (keysetname == 'ruksak') {
+            keyset.innerHTML = '';  // remove all children
+            for (var k = 1; k <= 6; k++) {
+                var r = RUKSAK[k];
+                if (r != '.') {
+                    var item = null;
+                    for (var i = 0; i < things.length; i++) {
+                        if (things[i].key == r) {
+                            item = things[i];
+                            break;
+                        }
+                    }
+                    var elem = createKeylinkElement(r);
+                    if (item != null) { elem.innerText += ' - ' + item.name; }
+                    keyset.appendChild(elem);
+                    keyset.append(' ');
+                }
+            }
+            keyset.appendChild(createKeylinkElement('. - Ничего'));
+        }
+        // Выбор предмета для покупки - показываем все предметы
+        else if (keysetname == 'buy') {
+            keyset.innerHTML = '';  // remove all children
+            for (var i = 0; i < things.length; i++) {
+                var item = things[i];
+                var elem = createKeylinkElement(item.key + ' - ' + item.name);
+                keyset.appendChild(elem);
+                keyset.append(' ');
+            }
+        }
+        // Завершаем подготовку к ожиданию
+        keyset.style.display = 'block';
+        termWaitKeyPressed = null;
+        termWaitKeysetName = keysetname;
+        termWaitNextHandler = next;
+        termWaitTimerId = window.setInterval(termWaitTimerHandler, 333);
+    }
+    function termWaitTimerHandler() {
+        if (termCursorShown) {  // hide the cursor
+            termPutChar(' ');
+            termc--;
+            termCursorShown = false;
+        } else {
+            termPutChar(termCursorChar);
+            termc--;
+            termCursorShown = true;
+        }
+    }
+    function termWaitCallNext() {
+        window.clearInterval(termWaitTimerId);
+        if (termCursorShown) {  // hide the cursor
+            termPutChar(' ');
+            termc--;
+            termCursorShown = false;
+        }
+        if (!termWaitNextHandler) {
+            return;
+        }
+
+        var keyset = document.getElementById('keyset' + termWaitKeysetName);
+        keyset.style.display = 'none';  // hide the keyset
+
+        var next = termWaitNextHandler;
+        termWaitNextHandler = null;
+        termWaitKeysetName = null;
+        
+        window.setTimeout(next, 10);  // executing the next part
+    }
+
+    function termKeyPressed(key) {
+        if (!termWaitKeysetName || !termWaitNextHandler) {
+            return;
+        }
+
+        console.log('termKeyPressed: ' + key);
+        
+        switch (termWaitKeysetName) {
+            case 'any':
+                break;
+            case 'all':
+            case 'ruksak':
+                termWaitKeyPressed = key;
+                break;
+            case 'yesno':
+                if (key == 'ENTER') { key = 'Y'; }
+                if (key != 'Y' && key != 'N') {
+                    return;
+                }
+                termWaitKeyPressed = key;
+                break;
+        }
+        termWaitCallNext();
+    }
+
+    function termKeyDownHandler(event) {
+        if (event.altKey || event.ctrlKey || event.metaKey || event.repeat) {
+            return;
+        }
+        termKeyPressed(event.key.toUpperCase());
+    }
+    function keylinkClickHandler(event) {
+        var text = event.srcElement.innerText;
+        termKeyPressed(text[0]);
+        event.preventDefault();
+    }
+
+    function WRITE(str, pos) {
+        termWrite(str, pos);
+    }
+    function WRITELN(str) {
+        termWriteLine(str);
+    }
+
+    window.onload = function () {
+        document.addEventListener('keydown', termKeyDownHandler);
+
+        var keylinks = document.getElementsByClassName('keylink');
+        for (var i = 0; i < keylinks.length; i++) {
+            keylinks[i].addEventListener('click', keylinkClickHandler);
+        }
+
+        termClear();
+        WRITELN('   -= С Т А Л К Е Р =-');
+        WRITELN();
+        WRITELN('Это игра в жанре "рогалик" (Rogue-like), бродилка по подземельям,');
+        WRITELN('по мотивам повести Стругацких "Пикник на обочине". Игра называлась');
+        WRITELN('"Зона" или "Сталкер" - файл игры назывался STALK.SAV, PIKNIK.SAV или ZONA.SAV,');
+        WRITELN('и предназначался для советских PDP11-совместимых машин - таких как ДВК и УКНЦ.');
+        WRITELN();
+        WRITELN('По-видимому, игра создана в конце 1980-х, автор - неизвестный программист');
+        WRITELN('из Ульяновска - первоначально программа выводила копирайт:');
+        WRITELN('*** (С)УЛЬЯНОВСК УЛПИ "ГОЛОГРАФИЯ"***');
+        WRITELN();
+        WRITELN('Из исполнимого файла был восстановлен код, сначала на MACRO-11,');
+        WRITELN('а затем и исходник на Паскале. Данный вариант игры написан на JavaScript,');
+        WRITELN('по паскалевскому коду.');
+        WRITELN();
+        WRITELN('Приятной игры и удачи в подземелье. Она вам понадобится...');
+        WRITELN();
+        WRITELN();
+        WRITE('Начинаем? ');
+        DUNGEON = 1;
+        termWait('any', gameplayStart1);
+    };
+
+    var DUNGEON = 1;  // Номер подземелья
+    var VAR2 = 0, VAR4 = 0, VAR6 = 0, VAR10 = 0, VAR12 = 0, VAR14 = 0, VAR16 = 0, VAR20 = 0, VAR22 = 0, VAR24 = 0,
+        VAR26 = 0, VAR30 = 0, VAR32 = 0, VAR34 = 0, VAR36 = 0, VAR40 = 0,
+        VAR46 = false, VAR47 = false, VAR50 = false, VAR51 = false,
+        VAR52, VAR53, VAR54, VAR55;
+    var IND = [null,0,0,0,0,0];  // Индикаторы справа: 1 - Рейтинг, 2 - Энергия, 3 - Оружие, 4 - Защита, 5 - В банке денег
+    var F = new Array(8 * 16 * 32);
+    var V11070, V11072;  // Указатели на клетку в F
+    var F2 = new Array(8 * 16 * 32);
+    var V33074, V33076;  // Указатели на клетку в F2
+    var RUKSAK = [null,'.','.','.','.','.','.'];
+    var V33106 = [null,0,0,0,0,0,0];
+    var V33122 = [null,'','','',''];
+    var V33126 = [null,0,0,0,0,0,0];
+    var V33136 = [null,0,0,0,0,0,0];
+    var V33146 = [null,0,0,0,0,0,0];
+    var V33156 = false;
+
+    function getFIndex(V, Y, X) {
+        return (V-1)*16*32 + (Y-1)*32 + X;
+    }
+    function getF(V, Y, X) {
+        return F[getFIndex(V, Y, X)];
+    }
+    function setF(V, Y, X, value) {
+        F[getFIndex(V, Y, X)] = value;
+    }
+    function getF2(V, Y, X) {
+        return F2[getFIndex(V, Y, X)];
+    }
+    function setF2(V, Y, X, value) {
+        F2[getFIndex(V, Y, X)] = value;
+    }
+
+    function RANDOM(A, B) {
+        return Math.round(A + (B - A) * Math.random());
+    }
+    function CURSORTO(Y, X) {
+        termCursorTo(Y, X * 2);
+    }
+    function CLEARMSG() {
+	    for (VAR16 = 1; VAR16 <= 7; VAR16++) {
+            CURSORTO(16+VAR16,0);
+		    termClearEndOfLine();
+        }
+	    CURSORTO(17,0);
+    }
+    function L01460(A, B, C) {
+        for (var I = -1 ; I <= 1 ; I++ ) {
+            for (var J = -1 ; J <= 1 ; J++ ) {
+                VAR22 = B + I;
+                VAR24 = C + J;
+                if ((getF(A,VAR22,VAR24) == '^') && ((getF2(A,VAR22,VAR24) & 6) != 4))
+                {
+                    CURSORTO(VAR22, VAR24);
+                    WRITE('.');
+                }
+                else
+                {
+                    setF2(A,VAR22,VAR24, getF2(A,VAR22,VAR24) | 0o100);
+                    CURSORTO(VAR22, VAR24);
+                    WRITE(getF(A,VAR22,VAR24));
+                }
+            }
+        }
+    }
+    function RUKSEEK(A, B) {
+        var K = 1;
+        while (RUKSAK[K] != A && RUKSAK[K] != B && K < 7) {
+            K++;
+        }
+        V33156 = true;
+        return K;
+    }
+    function NELZYA() {
+        WRITELN(' Н е л ь з я ! ! !');
+    }
+    function ZVERX(V, Y, X) {
+        var FV = getF(V, Y, X);
+        var FV2 = getF2(V, Y, X);
+        WRITELN('З в е р ь !');
+        if ((FV2 & 4) != 0) {
+            if ((FV != V33122[1]) && (FV != V33122[2]) && (FV != V33122[3])) {
+                VAR16 = 0;
+                for ( VAR20 = 1; VAR20 <= 3; VAR20++ ) {
+                    VAR16++;
+                    if (V33122[VAR16] == ' ') {
+                        return;
+                    }
+                }
+                V33122[VAR16] = FV;
+                V33126[VAR16] = FV2;
+                V33136[VAR16] = Y;
+                V33146[VAR16] = X;
+            }
+        }
+    }
+    function ZAKLYATIE() {
+        WRITELN('На этой штуке заклятие');
+    }
+    // Параметр: 'J' - обновить экран; '.' - вверх; '5' - вниз
+    function L03362(A) {
+        V33156 = true;
+        if (A != 'J') {
+            var doexit = true;
+            if (F[V11070] == '%') {  // Мы стоим на лестнице?
+                for (VAR16 = 1; VAR16 <= 4; VAR16++) {
+                    V33122[VAR16] = ' ';
+                }
+                if ((A =='.') && (VAR4 != 0)) {
+                    VAR4--;  // Этаж вниз
+                    IND[2] -= 2;  // Энергия минус 2
+                    doexit = false;
+                } else if (VAR4 != 8) {
+                    VAR4++;
+                    IND[1] += 3;
+                    doexit = false;
+                }
+                V11070 = getFIndex(VAR4, VAR12, VAR14);
+                V33074 = getFIndex(VAR4, VAR12, VAR14);
+                V11072 = getFIndex(VAR4, VAR6, VAR10);
+                V33076 = getFIndex(VAR4, VAR6, VAR10);
+            } else {  // не на лестнице
+                WRITELN(' Без лестницы?');
+            }
+            if (doexit) {
+                return;
+            }
+        }
+        termClear();
+        WRITE('       Подземелье ');
+        WRITE(DUNGEON.toString(), 5);  // Номер подземелья
+        termCursorTo(1,65); WRITE('Рейтинг');
+        termCursorTo(2,65); WRITE('Энергия');
+        termCursorTo(3,65); WRITE('Оружие');
+        termCursorTo(4,65); WRITE('Защита');
+        termCursorTo(5,65); WRITE('В банке');
+        termCursorTo(7,65); WRITE('Вредность');
+        termCursorTo(9,65); WRITE(' Рюкзак:');
+        for (VAR16 = 1; VAR16 <= 5; VAR16++) {
+            CURSORTO(VAR16, 37);
+		    WRITE(IND[VAR16].toString(), 3);
+		    WRITE(' ');
+        }
+        CURSORTO(7,37);
+        WRITE(VAR30.toString(), 3);  // Вредность
+        CURSORTO(10,33);
+        for (VAR16 = 1; VAR16 <= 6; VAR16++) {  // выводим содержимое рюкзака
+            WRITE(RUKSAK[VAR16], 2);
+        }
+        CURSORTO(0,0);
+        for (VAR16 = 1; VAR16 <= 16; VAR16++) {
+            for (VAR20 = 1; VAR20 <= 32; VAR20++) {
+                if ((getF2(VAR4,VAR16,VAR20) & 0o100) != 0) {
+                    CURSORTO(VAR16,VAR20);
+                    WRITE(getF(VAR4,VAR16,VAR20));
+                }
+            }
+        }
+        CLEARMSG();
+    }
+    function L05370(DY, DX) {
+        var C = getF(VAR4, VAR12 + DY, VAR14 + DX);
+        if (C != '!' && C != '-') {  // Если не стенка
+            VAR12 = VAR12 + DY;
+		    VAR14 = VAR14 + DX;
+		    V11070 = getFIndex(VAR4,VAR12,VAR14);
+		    V33074 = getFIndex(VAR4,VAR12,VAR14);
+        }
+        else {
+            NELZYA();
+        }
+    }
+    function L05702(A) {
+        VAR12 = RANDOM(2,15);
+	    VAR14 = RANDOM(2,31);
+	    setF(VAR4,VAR12,VAR14, A);
+	    setF2(VAR4,VAR12,VAR14, RANDOM(0,32767) & 0o177677);
+    }
+    // Начало игры, или рестарт на следующем подземелье
+    function gameplayStart1() {
+        termClear();
+        CURSORTO(10,1);
+        for (VAR4 = 0; VAR4 <= 8; VAR4++) {  // цикл по этажам
+            VAR22 = RANDOM(0,88);
+            for (VAR20 = 1; VAR20 <= 32; VAR20++) {
+                setF(VAR4,1,VAR20, '-');  // стенка вверху
+            }
+            for (VAR16 = 2; VAR16 <= 15; VAR16++) {
+                setF(VAR4,VAR16,1, '!');  // стенка слева
+                for (VAR20 = 2; VAR20 <= 31; VAR20++) {
+                    setF(VAR4,VAR16,VAR20, '.');
+                    setF2(VAR4,VAR16,VAR20, VAR22);
+                }
+                setF(VAR4,VAR16,32, '!');  // стенка справа
+            }
+            for (VAR20 = 1; VAR20 <= 32; VAR20++) {
+                setF(VAR4,16,VAR20, '-');  // стенка снизу
+            }
+        }
+        WRITELN('   Для подсказки нажимайте "H" ');
+        for (VAR4 = 1; VAR4 <= 8; VAR4++) {  // цикл по этажам
+            VAR16 = RANDOM(2,7);
+            while (VAR16 < 16) {
+                VAR22 = 2;
+                VAR24 = RANDOM(1,7);
+                while (VAR24 < 32) {
+                    for (VAR20 = VAR22; VAR20 <= VAR24; VAR20++) {
+                        setF(VAR4,VAR16,VAR20, '-');
+                    }
+                    VAR22 = RANDOM(1,5) + VAR24;
+                    VAR24 = RANDOM(3,10) + VAR24;
+                }
+                VAR16 = RANDOM(0,7) + VAR16;
+            }
+        }
+        // Пауза перед следующим сообщением
+        window.setTimeout(gameplayStart2, 1500);
+    }
+    function gameplayStart2() {
+        termWriteCR();
+        WRITE('		Темный  коридор ...     ');
+        for (VAR4 = 1; VAR4 <= 8; VAR4++) {  // цикл по этажам
+            VAR20 = RANDOM(2,7);
+            while (VAR20 < 32) {
+                VAR22 = 2;
+                VAR24 = RANDOM(1,7);
+                while (VAR24 < 16) {
+                    for (VAR16 = VAR22; VAR16 <= VAR24; VAR16++) {
+                        if (getF(VAR4,VAR16,VAR20) == '.') {
+                            setF(VAR4,VAR16,VAR20, '!');
+                        }
+                        else {
+                            setF(VAR4,VAR16,VAR20, '#');
+                        }
+                    }
+                    VAR22 = RANDOM(1,5) + VAR24;
+                    VAR24 = RANDOM(2,7) + VAR24;
+                }
+                VAR20 = RANDOM(2,5) + VAR20;
+            }
+        }
+        // Пауза перед следующим сообщением
+        window.setTimeout(gameplayStart3, 1500);
+    }
+    function gameplayStart3() {
+        termWriteCR();
+        WRITE('		С к е л е т ы . . .   ');
+        for (VAR20 = 1; VAR20 <= DUNGEON; VAR20++) {
+            for (VAR16 = 32; VAR16 <= 127; VAR16++) {
+                VAR4 = RANDOM(0,8);
+		        L05702(String.fromCharCode(VAR16));
+            }
+        }
+        // Пауза перед следующим сообщением
+        window.setTimeout(gameplayStart4, 2000);
+    }
+    function gameplayStart4() {
+        termWriteCR();
+        WRITE('	a-a-a-a-a-a-a-a-a-a-a-a-a . . . . . . .');
+        for (VAR4 = 0; VAR4 <= 8; VAR4++) {
+            L05702('^');
+	        L05702('*');
+	        L05702('%');
+        }
+        VAR4 = 8;
+        L05702('%');
+        L05702(',');
+        if (DUNGEON == 1) {
+            for (VAR16 = 1; VAR16 <= 6; VAR16++) {
+                RUKSAK[VAR16] = '.';
+            }
+            RUKSAK[1] = ']';
+	        RUKSAK[2] = '(';
+	        RUKSAK[3] = '<';
+            for (VAR16 = 1; VAR16 <= 5; VAR16++) {
+                IND[VAR16] = 0;  // Очищаем индикаторы
+            }
+            // Инициализация переменных
+            IND[2] = 25;  // Энергия
+            VAR47 = false;  // Фонарь не горит
+            VAR51 = false;
+            VAR50 = false;
+            VAR40 = 0;
+            VAR32 = 400;  // Заряд батарей
+            VAR26 = 0;  // Усталость = 0
+            V33156 = true;
+        }
+        for (VAR16 = 1; VAR16 <= 6; VAR16++) {
+            V33106[VAR16] = RANDOM(0,8191) & 0o175777;
+        }
+        VAR46 = false;
+        for (VAR16 = 1; VAR16 <= 4; VAR16++) {
+            V33122[VAR16] = ' ';
+        }
+        // Пауза перед показом основного экрана
+        window.setTimeout(gameplayStart5, 1500);
+    }
+    function gameplayStart5() {
+        VAR4 = 0;  // Этаж = 0
+        L03362('J');
+        CLEARMSG();
+        WRITELN('Прогнивший пол провалился...');  //NOTE: В оригинале здесь WRITE
+        VAR2 = 0;
+        VAR12 = 2; // Позиция Y игрока = 2
+        VAR14 = 2; // Позиция X игрока = 2
+        VAR30 = 1;
+        // Начало игрового цикла
+        window.setTimeout(gameplayLoop1, 1500);
+    }
+    // Первая часть игрового цикла - проверка того что вокруг
+    function gameplayLoop1() {
+        V11070 = getFIndex(VAR4,VAR12,VAR14);
+        V33074 = getFIndex(VAR4,VAR12,VAR14);
+        for (VAR16 = -1; VAR16 <= 1; VAR16++) {
+            for (VAR20 = -1; VAR20 <= 1; VAR20++) {
+                VAR6 = VAR12 + VAR16;  // новый Y
+                VAR10 = VAR14 + VAR20;  // новый X
+                V11072 = getFIndex(VAR4,VAR6,VAR10);
+                V33076 = getFIndex(VAR4,VAR6,VAR10);
+                switch (F[V11072]) {
+                    case '%': WRITE('Лестница.'); break;
+                    case '*': WRITE('Золото.'); break;
+        		    case ',':
+				        if (VAR4 == 8) {
+					        WRITE('Золотой шар!!!');
+					        VAR46 = true;
+				        }
+                        else {
+					        WRITE('Волшебная кирка.');
+			            }
+                        break;
+		            case '$':
+                    case '+':
+                        WRITELN('Бутылка с надписью "Drink me!"');
+                        break;
+                    case ' ':
+                        WRITELN('Черная дыра');
+                        if ((VAR16 == 0) && (VAR20 == 0)) {
+                            if (VAR46 != false) {
+                                if (VAR4 > 0)
+                                    VAR4 = VAR4 - 1;  // Этаж вниз
+                            }
+                            else {
+                                if (VAR4 < 8)
+                                    VAR4 = VAR4 + 1;  // Этаж вверх
+                            }
+                            IND[2] = IND[2] - 3;  // Энергия минус 3
+                            VAR30 = VAR30 + 7;  // Вредность увеличиваем на 7
+                            L03362('J');
+                            WRITELN('Ой, как больно!...');
+                        }
+                        break;
+                    case '=':  WRITE( 'Кольцо.' ); break;
+            		case '^':
+                        if ((VAR16 == 0 ) && ( VAR20 == 0 ) ) {
+                            WRITELN('Ведьмин студень!');
+                            IND[2] = IND[2] - RANDOM(3,15);
+                            VAR30 = VAR30 + RANDOM(0,5);
+                            F2[V33076] = 4;
+                        }
+                        break;
+                    case "#":
+                        if (  ( VAR16 == 0 ) && ( VAR20 == 0 ) ) {
+                            if (RANDOM(1,2) == 1) {
+                                F[V11070] = "!";
+                            }
+                            else {
+                                F[V11070] = "-";
+                            }
+                        }
+                        break;
+                    case '(': case ')': WRITE('Доспехи.'); break;
+                    case '[': case ']': WRITE('Оружие.'); break;
+                    case '?': WRITE('Свисток.'); break;
+                    case ':': case ';': WRITE('Еда!!!'); break;
+                    case '\\': case '/': WRITE('"ВП".'); break;
+                    case '<': case '>': WRITE('Батареи.'); break;
+                    case '"': case '\'':
+                        WRITELN('Комариная плешь');
+                        VAR12 = VAR6;
+                        VAR14 = VAR10;
+                        V11070 = getFIndex(VAR4, VAR12, VAR14);
+                        V33074 = getFIndex(VAR4, VAR12, VAR14);
+                        if (VAR46)
+                            F[V11070] = '.';
+                        break;
+                    case '&': WRITE('Папирус.'); break;
+                    case 'C': case 'H': case 'J': case 'T':
+                        //TODO: bell
+                        WRITELN('Холодная, скользкая рука схватила вас за ногу ...');
+                        IND[2] = IND[2] - RANDOM(2,8);  // Энергия уменьшается
+                        F[V11072] = '.';
+                        break;
+                    case 'D': case 'E': case 'F': case 'G': case 'I': case 'K': case 'L': case 'M':
+                    case 'N': case 'O': case 'P': case 'Q': case 'R': case 'S': case 'U': case 'V':
+                    case 'W': case 'X': case 'Y': case 'Z':
+                        if (VAR16 == 0 && VAR20 == 0) {
+                            if ((F2[V33074] & 6) == 0) {
+                                F2[V33076] |= 6;
+                                WRITELN('Ну, сейчас он вам покажет...');
+                            }
+                            else if ((F2[V33076] & 6) == 2) {
+                                VAR22 = RANDOM(1,3) - 2 + VAR12;
+					            VAR24 = RANDOM(1,3) - 2 + VAR14;
+                                if (getF(VAR4,VAR22,VAR24) != '!' && getF(VAR4,VAR22,VAR24) != '-') {
+                                    VAR53 = F[V11070];
+                                    F[V11070] = '.';
+                                    setF(VAR4,VAR22,VAR24, VAR53);
+                                    setF2(VAR4,VAR22,VAR24, F2[V33074]);
+                                }
+                            }
+                            else if (!VAR51) {
+                                if (!VAR50) {
+                                    if (IND[4] > 1) {
+                                        IND[4] -= RANDOM(2,15);
+                                    }
+                                    else {
+                                        IND[2] -= RANDOM(2,15);  // Энергия уменьшается
+                                    }
+                                    //TODO: bell
+                                    WRITELN('Защищайтесь же!!!');
+                                }
+                                else {
+                                    IND[3] -= RANDOM(2,11);
+                                    IND[4] -= 2;
+                                    VAR50 = false;
+                                    VAR54 = '.';
+                                    //TODO: bell
+                                    WRITELN('Готов!');
+                                    IND[1] += 10;
+                                    if (IND[4] < 0) {
+                                        IND[2] += IND[4];
+                                        IND[4] = 0;
+                                    }
+                                    if (IND[3] < 0) {
+                                        IND[1] += IND[3];
+                                        IND[3] = 0;
+                                    }
+                                    VAR16 = 1;
+                                    while ((V33122[VAR16] != F[V11070]) && (VAR16 < 4)) {
+                                        VAR16++;
+                                    }
+                                    V33122[VAR16] = ' ';
+                                    F[V11070] = 'm';
+                                }
+                            }
+                        }
+                        else {
+                            ZVERX(VAR4,VAR6,VAR10);
+                        }
+                        break;
+                    case '0': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
+                    case '{': case '}':
+                        if (VAR16 == 0 && VAR20 == 0) {
+                            VAR22 = RANDOM(-7,7);
+                            IND[2] += VAR22;
+                            if (VAR22 > 0) {
+                                WRITELN('Недурственно!');
+                                F[V11070] = 'z';
+                            }
+                            else {
+                                WRITELN('Тьфу...');
+                                F[V11070] = 'y';
+                            }
+                        }
+                        else {
+                            WRITELN('Свертoк. съедим?');
+                        }
+                        break;
+                    case '!': case '-': case '.':  break;  // Стенки и пустая клетка
+                    case 'b': WRITELN('Надпись "Здесь был Вася"(здесь Вася и остался)'); break;
+                    case 'c': WRITE('Груда камней.'); break;
+                    case 'd': WRITELN('Метла бабы яги (сломана)'); break;
+                    case 'e': WRITE('Череп.'); break;
+                    case 'f': WRITELN('Странствующий скелет'); break;
+                    case 'g': WRITELN('Стадо бродячих живых трупов. '); break;
+                    case 'h': WRITELN('Кусочек Ноева ковчега'); break;
+                    case 'i': WRITELN('Записка:" Зря ты сюда полез, парень... Автор. "'); break;
+                    case 'j': WRITE('Черный ящик.'); break;
+                    case 'k': WRITELN('Лужа машинного масла'); break;
+                    case 'l': WRITELN('Раздолбанный компьютер ZX SPECTRUM - 128.'); break;
+                    case 'm': WRITE('Дохлый морлок'); break;
+                    case 'n': WRITE('Зуда.'); break;
+                    case 'o': WRITE('Пустышка.'); break;
+                    case 'p': WRITE('Куча сепулек.'); break;
+                    case 'r': WRITELN('Разложившийся труп девушки.'); break;
+                    case 's': WRITELN('Надпись: "Мы до тебя еще доберемся!!! "'); break;
+                    case 't': WRITELN('Отрезанная голова предыдущего Сталкера.'); break;
+                    case 'u': WRITELN('Зачитанный журнал "АКУШЕРСТВО И ГИНЕКОЛОГИЯ"'); break;
+                    case 'v': WRITE('Артефакт.'); break;
+                    case 'w': WRITELN('Надпись "Здесь-то мы его и съели"'); break;
+                    case 'x': WRITELN('Окровавленная бензопила'); break;
+                    case 'y': WRITELN('Что-то очень мерзкое'); break;
+                    case 'z': WRITE('Следы пикника.'); break;
+                    case 'q': WRITELN('Кладбище снусмумриков.'); break;
+                    case '~': WRITE('Черт-те что.'); break;
+                    case '1': case 'A': case 'B': WRITELN('Бродячий торговый автомат'); break;
+                    case '|':	WRITELN('Пережаренный зелюк.'); break;
+                    case '`':	WRITELN('Мышелот (в собственном соку)'); break;
+                    case '@':
+                        WRITE('Призрак.');
+                        VAR22 = RUKSEEK('.','.');
+                        if (VAR22 < 7) {
+					        VAR30++;
+                        }
+				        RUKSAK[VAR22] = '@';
+                        break;
+                    default:
+                        if (VAR16 == 0 && VAR20 == 0) {
+                            F[V11070] = String.fromCharCode(RANDOM(32,126));
+                            F2[V33074] = RANDOM(1,8191);
+                        }
+                        else {
+                            WRITELN('Мешок с надписью "Take me!"');
+                        }
+                }  // case of
+            }  // for VAR20
+        }  // for VAR16
+        VAR54 = F[V11070];  // Сохраняем символ, на который встал игрок
+        F[V11070] = '@';
+        if (VAR47) {  // Фонарь горит
+            L01460(VAR4,VAR12,VAR14);
+        }
+        else {
+            CURSORTO(VAR12,VAR14);
+            WRITE('@');  // игрок 
+            F2[V33074] = F2[V33074] | 0o100;
+            CURSORTO(VAR34,VAR36);
+            WRITE(VAR55);
+        }
+        F[V11070] = VAR54;
+        VAR34 = VAR12;  // Позиция Y игрока
+        VAR36 = VAR14;  // Позиция X игрока
+        VAR55 = VAR54;
+        CURSORTO(1,0);
+        WRITE(VAR4.toString(), 3);  // Этаж
+        for (VAR16 = 1; VAR16 <= 5; VAR16++) {
+            CURSORTO(VAR16, 37);
+            WRITE(IND[VAR16].toString(), 3);
+            WRITE(' ');
+        }
+        CURSORTO(7,37);
+        WRITE(VAR30.toString(), 3);  // Вредность
+        CURSORTO(10,33);  // Рюкзак
+        if (V33156) {
+            for (VAR16 = 1; VAR16 <= 6; VAR16++) {
+                WRITE(RUKSAK[VAR16], 2);
+            }
+        }
+        V33156 = false;
+        CURSORTO(0,0);
+        // Теперь ждём команды игрока
+        termWait('all', gameplayLoop2);
+    }
+    // Вторая часть игрового цикла - обработка команды игрока
+    function gameplayLoop2() {
+        VAR53 = termWaitKeyPressed;
+        CLEARMSG();
+        switch (VAR53) {
+            case '1':	L05370(1,-1);  break;  // влево-вниз
+            case '2':	L05370(1,0);   break;  // вниз
+            case '3':	L05370(1,1);   break;  // вправо-вниз
+            case '4':	L05370(0,-1);  break;  // влево
+            case '5':	L03362('5');   break;  // вниз по лестнице
+            case '6':	L05370(0,1);   break;  // вправо
+            case '7':	L05370(-1,-1); break;  // влево-вверх
+            case '8':	L05370(-1,0);  break;  // вверх
+            case '9':	L05370(-1,1);  break;  // вправо-вверх
+            case '0':	VAR26 = 0;     break;  // отдохнуть
+            case '.':	L03362('.');   break;  // вверх по лестнице
+            case 'Q':  // пить
+                VAR16 = RUKSEEK('$','+');
+                if (VAR16 < 7) {
+                    RUKSAK[VAR16] = '.';
+                    VAR30--;
+                    if ((V33106[VAR16] & 6) == 0) {
+                        //
+                        CLEARMSG();
+                    }
+                    else if ((V33106[VAR16] & 6) == 2) {
+                        IND[2] += 20;  // выпил
+                        VAR26 = 0;
+                        WRITELN('Чувствуете прилив сил?');
+                    }
+                    else if ((V33106[VAR16] & 6) == 4) {
+                        //
+                        CLEARMSG();
+                    }
+                    else {
+                        VAR40 = 20;
+                        WRITELN('Напился - сдай стеклотару!!!');
+                    }
+                }
+                else {
+                    WRITELN('Пить нечего');
+                }
+                break;
+            case 'D':  // выбросить предмет
+                WRITE('Что выбросить? ');
+                // ожидаем выбора предмета
+                termWait('ruksak', gameplayDropSelect);
+                return;
+            case 'Z':  // перевести деньги в банк на счёт пещеры
+                VAR16 = RUKSEEK('*','*');
+                if (VAR16 < 7) {
+                    IND[1]++;
+                    VAR30--;
+                    RUKSAK[VAR16] = '.';
+                    IND[5] += RANDOM(10,70);
+                    WRITELN('Там!');
+                }
+                else {
+                    WRITELN('Где золото-тo?');
+                }
+                break;
+            case 'S':  // свистнуть
+                VAR16 = RUKSEEK('?','?');  // Ищем в рюкзаке свисток
+                if (VAR16 < 7) {
+                    if ((V33106[VAR22] & 6) == 4) {
+                        //TODO: bell
+                    }
+                    else if ((V33106[VAR22] & 6) == 2) {
+                        for (VAR16 = -2; VAR16 <= 2; VAR16++) {
+                            for (VAR20 = -2; VAR20 <= 2; VAR20++) {
+                                var a = VAR12 + VAR16, b = VAR14 + VAR20;
+                                if ((a >= 2 && a <= 15) && (b >= 2 && b <= 31)) {
+							        setF(VAR4,VAR12+VAR16,VAR14+VAR20, ' ');
+                                }
+                            }
+                        }
+                        RUKSAK[VAR22] = '.';
+                    }
+                    else if ((V33106[VAR22] & 6) == 0) {
+                        WRITELN('Б А М - М - М ! ! !');
+                        VAR12 = RANDOM(2,15);
+                        VAR14 = RANDOM(2,31);
+                        V11070 = getFIndex(VAR4,VAR12,VAR14);
+                        V33074 = getFIndex(VAR4,VAR12,VAR14);
+                    }
+                    else {
+                        WRITELN('Уничтожение зверя');
+                        for (VAR16 = 1; VAR16 <= 4; VAR16++) {
+                            V33122[VAR16] = ' ';
+                        }
+                        for (VAR16 = -1; VAR16 <= 1; VAR16++) {
+                            for (VAR20 = -1; VAR20 <= 1; VAR20++) {
+                                var t = getF(VAR4,VAR12+VAR16,VAR14+VAR20);
+                                if (t >= 'A' && F <= 'Z') {
+                                    setF(VAR4,VAR12+VAR16,VAR14+VAR20, '*');
+                                }
+                            }
+                        }
+                    }
+                }
+                else {
+                    WRITELN('Однакo, свисток нужен');
+                }
+                break;
+            case 'E':  // поесть
+                VAR16 = RUKSEEK(':',';');
+                if (VAR16 < 7) {
+                    IND[2] += 18;  // Энергия
+			        RUKSAK[VAR16] = '.';
+			        VAR30--;
+			        WRITELN('Спасибо!');
+                }
+                else {
+                    WRITELN('Еды нет');
+                }
+                break;
+            case 'T':
+                VAR16 = RUKSEEK('.','.');  // Ищем место в рюкзаке
+                if (VAR16 < 7) {
+                    if (F[V11070] == '"' || F[V11070] == '\'') {
+                        NELZYA;  // Комариную плешь брать нельзя
+                    }
+                    else {
+                        WRITELN('Берем');
+                        VAR30++;
+                        RUKSAK[VAR16] = F[V11070];
+                        V33106[VAR16] = F2[V33074];
+                        F[V11070] = '.';
+                    }
+                }
+                else {
+                    WRITELN('Рюкзак полон');
+                }
+                break;
+            case 'P':  // надеть доспехи
+                VAR16 = RUKSEEK(')','(');
+                if (VAR16 < 7) {
+                    if (((V33106[VAR16]) & 0o2000) == 0) {
+				        RUKSAK[VAR16] = '.';
+				        IND[4] += 11;
+				        WRITELN('Доспехи надеты');
+                    } else {
+				        ZAKLYATIE();
+                    }
+                }
+                else {
+                    WRITELN('Нету');
+                }
+                break;
+            case 'L':  // включить фонарь
+                if (VAR32 > 0) {
+                    VAR47 = true;  // Фонарь горит
+                    WRITELN('Фонарь включен');
+                }
+                else {
+                    WRITELN('Батареи сели. Надо было экономить ... ');
+                }
+                break;
+            case 'O':  // выключить фонарь
+                VAR47 = false;  // Фонарь не горит
+                WRITELN('Фонарь выключен');
+                break;
+            case 'W':
+                VAR16 = RUKSEEK('/','\\');
+                if (VAR16 < 7) {
+                    if (((V33106[VAR16]) & 3) == 3) {
+				        WRITELN('Выпустили до госприемки...');
+                    }
+                    else if (((V33106[VAR16]) & 3) == 2) {
+                        for (VAR20 = 2; VAR20 <= 31; VAR20++) {
+                            for (VAR22 = 2; VAR22 <= 15; VAR22++) {
+                                CURSORTO(VAR22,VAR20);
+						        WRITE(F[VAR4,VAR22,VAR20]);
+						        setF2(VAR4,VAR22,VAR20, getF2(VAR4,VAR22,VAR20) | 0o100);
+                            }
+                        }
+                        RUKSAK[VAR16] = '.';
+                        CLEARMSG();
+				        WRITELN('"Да будет свет..."');
+                    }
+                    else if (((V33106[VAR16]) & 3) == 1) {
+                        if (VAR46) {
+                            VAR4 -= 3;
+                            if (VAR4 < 0) VAR4 = 0;
+                        }
+                        else {
+                            VAR4 += 3;
+                            if (VAR4 > 8) VAR4 = 8;
+                        }
+                        RUKSAK[VAR16] = '.';
+                        L03362('J');
+                        WRITELN('Пока Вы летели сквозь этажи, "ВП" потерялась');
+                        VAR30--;
+                    }
+                    else {
+                        WRITELN('Превращение догоняющего зверя');
+                        for (VAR22 = 1; VAR22 <= 3; VAR22++) {
+                            if (V33122[VAR22] != ' ') {
+                                V33122[VAR22] = ' ';
+						        setF(VAR4,V33136[VAR22],V33146[VAR22], CHR(RANDOM(36,63)));
+                            }
+                        }
+                    }
+                }
+                else {
+                    WRITELN('Махать-то нечем !');
+                }
+                break;
+            case '/': case '?':  // переложить вещи в рюкзаке
+                VAR52 = RUKSAK[6];
+                VAR20 = V33106[6];
+                for (VAR16 = 1; VAR16 <= 6; VAR16++) {
+                    RUKSAK[7 - VAR16] = RUKSAK[6 - VAR16];
+			        V33106[7 - VAR16] = V33106[6 - VAR16];
+                }
+                RUKSAK[1] = VAR52;
+		        V33106[1] = VAR20;
+		        V33156 = true;
+        		WRITELN('Перестройка в рюкзаке');
+                break;
+            case 'F':  // приготовиться к сражению
+                VAR50 = true;
+                WRITELN('У-р-р-р-а-a ! ! !');
+                break;
+            case 'X':  // закончить
+                WRITE('Закончить изволите? ');
+                termWait('yesno', gameplayExitConfirm);
+                return;
+            case 'M':  // приготовить оружие
+                VAR16 = RUKSEEK('[',']');
+                if (VAR16 < 7) {
+                    if ((V33106[VAR16] & 0o2000) == 0) {
+				        RUKSAK[VAR16] = '.';
+				        IND[3] += 15;
+				        WRITELN('Оружие приготовлено');
+                    }
+			        else {
+				        ZAKLYATIE();
+                    }
+                }
+                else {
+                    WRITELN('Нету!');
+                }
+                break;
+            case 'B':  // заменить батареи
+                VAR16 = RUKSEEK('<','>');
+                if (VAR16 < 7) {
+                    if ((V33106[VAR16] & 0o2000) == 0) {
+				        RUKSAK[VAR16] = '.';
+				        VAR30--;
+				        VAR32 = 400;
+				        WRITELN('Батареи заменены');
+                    }
+			        else {
+				        ZAKLYATIE;
+                    }
+                }
+                else {
+                    WRITELN('Батарей нет');
+                }
+                break;
+            case 'J': L03362('J'); break;  // обновить экран
+            case 'R':  // читать папирус
+                VAR16 = RUKSEEK('&','&');
+                if (VAR16 < 7) {
+                    if ((V33106[VAR16] & 6) == 0) {
+                        for (VAR20 = 1; VAR20 <= 6; VAR20++) {  //NOTE: в оригинале тут ошибка, цикл до 8 вместо 6
+                            V33106[VAR20] &= 0o175777;
+                        }
+                        WRITELN('"APCHXYZZYURR!!!"... Заклятие снято');
+                    }
+                    else if ((V33106[VAR16] & 6) == 2) {
+                        WRITELN('Надпись гласит: "Сам дурак"');
+                    }
+                    else if ((V33106[VAR16] & 6) == 4) {
+                        VAR22 = 2;
+                        while (VAR22 < 16) {
+                            VAR24 = 2;
+                            while (VAR24 < 32) {
+                                if (getF(VAR4,VAR22,VAR24) == '%') {
+                                    break;
+                                }
+                                else {
+                                    VAR24++;
+                                }
+                            }
+                            if (getF(VAR4,VAR22,VAR24) == '%') {
+                                break;
+                            }
+                            else {
+                                VAR22++;
+                            }
+                        }
+                        WRITE('Лестница -');
+				        WRITE(VAR22,4);
+				        WRITE(VAR24,4);
+				        WRITELN();
+                    }
+                    else {
+                        VAR22 = 2;
+                        while (VAR22 < 16) {
+                            VAR24 = 2;
+                            while (VAR24 < 32) {
+                                if (getF(8,VAR22,VAR24) == ',') {
+                                    break;
+                                }
+                                else {
+                                    VAR24++;
+                                }
+                            }
+                            if (getF(8,VAR22,VAR24) == ',') {
+                                break;
+                            }
+                            else {
+                                VAR22++;
+                            }
+                            if ((VAR22 == 16) && (VAR24 == 32)) {
+                                WRITELN('Золотой шар украден!')
+                            }
+                            else {
+                                WRITE('Золотой шар - 8');
+					            WRITE(VAR22,4);
+				                WRITE(VAR24,4);
+					            WRITELN;
+                            }
+                        }
+                    }
+                }
+                else {
+                    WRITELN('А читать-то и нечего');
+                }
+                break;
+            case 'I':  // надеть кольцо
+                VAR16 = RUKSEEK('=','=');
+                if (VAR16 < 7) {
+                    if ((V33106[VAR16] & 0o2000) == 0) {
+                        WRITELN('Силовое поле включено!');
+                        VAR51 = true;
+                        RUKSAK[VAR16] = '.';
+                    }
+                    else {
+                        ZAKLYATIE;
+                    }
+                }
+                else {
+                    WRITELN('Нету');
+                }
+                break;
+            case 'V':  // снять кольцо
+                if (VAR51) {
+                    VAR16 = RUKSEEK('.','.');  // ищем место в рюкзаке
+                    if (VAR16 < 7) {
+                        RUKSAK[VAR16] = '=';
+				        V33106[VAR16] = 0o2000;
+				        VAR51 = false;
+                    }
+                    else {
+                        WRITELN('Рюкзак полон');
+                    }
+                }
+                else {
+                    WRITELN('Кольца нет');
+                }
+                break;
+            case 'A':  // купить (на золото)
+                var t = F[V11070];
+                if (t == '1' || t == 'A' || t == 'B') {
+                    if (IND[5] > 0) {
+                        VAR16 = RUKSEEK('.','.');  // ищем место в рюкзаке
+                        if (VAR16 < 7) {  //NOTE: Эта проверка в оригинале стоит после покупки
+                            WRITE('Чего изволите? ');
+                            // ожидаем ввода символа - что купить
+                            termWait('buy', gameplayAutomatSelect);
+                            return;
+                        }
+                        else {
+                            WRITELN('Нет места в рюкзаке');  //NOTE: Этого сообщения нет в оригинале
+                        }
+                    }
+                    else {
+                        WRITELN('Подаю только по пятницам!');
+                    }
+                }
+                else {
+			        WRITELN('Подойди ближе к автомату!');
+                }
+                break;
+            case 'K':  // сломать стенку киркой
+                VAR16 = RUKSEEK(',',',');
+                if (VAR16 < 7) {
+                    WRITE('Направление? ');
+                    // ожидаем ввода символа - направление куда копать
+                    termWait('dir', gameplayKirkaSelect);
+                    return;
+                }
+                else {
+                    WRITELN('А стенку вы будете лбом прошибать?..');
+                }
+                break;
+            case 'Y':  // зажарить убегающего зверя
+                if (((F2[V33074] & 6) == 2) && (F[V11070] >= 'A' && F[V11070] <= 'Z')) {
+                    F[V11070] = ':';  // Зверь становится едой
+                }
+                else {
+                    NELZYA();
+                }
+                break;
+            case 'H':  // HELP
+                // покажем страницы помощи и вернёмся к завершению игрового цикла
+                window.setTimeout(gameplayHelpPage1, 10);
+                return;
+            case 'U':  // вызвать джинна
+                if (!VAR46) {
+                    WRITELN('Что, влип? ладно, попробую тебя перенести');
+                    WRITELN('отсюда. только дороговато это встанет...');
+                    WRITE('Ты готов? ');
+                    // ожидаем подтверждения о переброске джинном
+                    termWait('yesno', gameplayJinnConfirm);
+                    return;
+                }
+                else {
+                    WRITELN('Джинн в отгуле');
+                }
+                break;
+            default:
+                WRITELN('Что-что?');
+        }
+        // переходим к завершению хода
+        window.setTimeout(gameplayLoop3, 10);
+    }
+    function gameplayDropSelect() {
+        VAR53 = termWaitKeyPressed;
+        CLEARMSG();
+        VAR16 = RUKSEEK(VAR53,VAR53);  // ищем в рюкзаке
+        if (VAR16 < 7) {
+            if ((V33106[VAR16] & 0o2000) == 0) {
+                if (VAR53 != '.') {
+                    VAR30--;
+                    RUKSAK[VAR16] = '.';
+                    if (F[V11070] != '"' && F[V11070] != '\'') {
+                        F[V11070] = VAR53;
+						F2[V33074] = V33106[VAR16];
+                    }
+                }
+            }
+            else {
+                ZAKLYATIE();
+            }
+        }
+        else {
+            WRITELN('Нету');
+        }
+        // Закончили с дропом - переходим к завершению хода
+        window.setTimeout(gameplayLoop3, 10);
+    }
+    function gameplayKirkaSelect() {
+        VAR53 = termWaitKeyPressed;
+        CLEARMSG();
+        VAR22 = VAR12;
+		VAR24 = VAR14;
+        switch (VAR53) {
+            case '1': VAR22 = VAR12+1; VAR24 = VAR14-1; break;
+            case '2': VAR22 = VAR12+1; break;
+			case '3': VAR22 = VAR12+1; VAR24 = VAR14+1; break;
+			case '4': VAR24 = VAR14-1; break;
+			case '5': F[V11070] = ' '; break;
+			case '6': VAR24 = VAR14+1;
+			case '7': VAR22 = VAR12-1; VAR24 = VAR14-1; break;
+			case '8': VAR22 = VAR12-1; break;
+			case '9': VAR22 = VAR12-1; VAR24 = VAR14+1; break;
+            case '.':
+                if (VAR4 > 0) {
+                    setF(VAR4-1,VAR12,VAR14, ' ');
+					WRITELN('Кусок свода обрушился и раскололся о вашу глупую голову');
+                }
+                break;
+            default:
+                NELZYA();
+        }
+        var t = getF(VAR4,VAR22,VAR24);
+        if ((VAR22 >= 2 && VAR22 <= 15) && (VAR24 >= 2 && VAR24 <= 31) && (t =='!' || t == '-')) {
+            setF(VAR4,VAR22,VAR24, 'c');
+			IND[2]--;
+        }
+        else {
+            WRITELN('Ну, чего размахался?');
+        }
+        // переходим к завершению хода
+        window.setTimeout(gameplayLoop3, 10);
+    }
+    function gameplayJinnConfirm() {
+        VAR53 = termWaitKeyPressed;
+        if (VAR53 != 'N') {
+            for (VAR16 = 1; VAR16 <= 5; VAR16++) {
+                IND[VAR16] -= RANDOM(0,15);
+            }
+            VAR12 = RANDOM(2,15);
+            VAR14 = RANDOM(2,31);
+            VAR22 = RANDOM(0,8);
+            V11070 = getFIndex(VAR4,VAR12,VAR14);
+            V33074 = getFIndex(VAR4,VAR12,VAR14);
+            if (VAR22 > VAR4) {
+                VAR22 = VAR4;
+            }
+            VAR4 = VAR22;
+            L03362('J');  // Обновить экран
+        }
+        // переходим к завершению хода
+        window.setTimeout(gameplayLoop3, 10);
+    }
+    function gameplayAutomatSelect() {
+        VAR53 = termWaitKeyPressed;
+        VAR16 = RUKSEEK('.','.');
+        if (VAR16 < 6) {
+            RUKSAK[VAR16] = VAR53;
+            V33106[VAR16] = RANDOM(1,8191);
+            IND[5] -= RANDOM(10,250);
+            termClearEndOfLine();
+            WRITELN('П о л у ч и т е !');
+            F[V11070] = 'k';
+        }
+        // переходим к завершению хода
+        window.setTimeout(gameplayLoop3, 10);
+    }
+    function gameplayExitConfirm() {
+        VAR53 = termWaitKeyPressed;
+        if (VAR53 != 'D' && VAR53 != 'Y') {
+            // отказались от выхода - переходим к завершению хода
+            window.setTimeout(gameplayLoop3, 10);
+            return;
+        }
+        // выход подтверждён
+        WRITELN('А ведь предупреждали...');
+        // переходим на завершение
+        window.setTimeout(gameplayTheEnd, 10);
+    }
+    function gameplayHelpPage1() {
+        termClear();
+        WRITELN('Ладно, я кое-что подскажу. Итак: здесь творится черт знает что,');
+        WRITELN('но на восьмом уровне лежит золотой шар. Только достав его, Вы');
+        WRITELN('сможете выйти из подземелья,придя на то же место, откуда вы вышли');
+        WRITELN('вначале. Своим глазам не всегда стоит доверять!');
+        WRITELN();
+        WRITELN(' Вы можете использовать команды:');
+        WRITELN('A - Купить (на золото)');
+        WRITELN('B - Заменить батареи');
+        WRITELN('D - Выбросить предмет');
+        WRITELN('E - Поесть');
+        WRITELN('F - Приготовиться к сражению');
+        WRITELN('H - HELP (этот текст)');
+        WRITELN('I - Надеть кольцо');
+        WRITELN('J - Обновить экран');
+        WRITELN('K - Сломать стенку (киркой)');
+        WRITELN('L - Включить фонарь');
+        WRITELN('M - Приготовить оружие');
+        WRITELN('O - Выключить фонарь');
+        WRITELN('P - Надеть доспехи');
+        WRITELN('Q - Пить');
+        WRITELN('R - Читать папирус');
+        WRITELN('S - Свистнуть');
+        WRITELN('T - Взять предмет, на котором стоишь');
+        WRITE('U - Вызвать джинна (только в безнадежном случае!)...	Дальше? ');
+        // Ожидаем нажатие любой клавиши и переходим ко второй странице помощи
+        termWait('any', gameplayHelpPage2);
+    }
+    function gameplayHelpPage2() {
+        VAR53 = termWaitKeyPressed;
+        termClear();
+        WRITELN('V - Снять кольцо');
+        WRITELN('W - Взмахнуть волшебной палочкой (ВП)');
+        WRITELN('X - Закончить игру');
+        WRITELN('Y - Зажарить убегающего зверя');
+        WRITELN('Z - Перевести деньги в банк на счет пещеры');
+        WRITELN('/ - Переложить вещи в рюкзаке');
+        WRITELN();
+        WRITELN('   П Е Р Е Д В И Ж Е Н И Е:');
+        WRITELN();
+        WRITELN('        7 8 9');
+        WRITELN('        4   6  - Движение по уровню');
+        WRITELN('        1 2 3');
+        WRITELN('5 - Вниз по лестнице');
+        WRITELN('. - Вверх по лестнице');
+        WRITELN('0 - Отдыхать.');
+        WRITELN();
+        WRITELN('Использовать можно лишь вещи, лежащие в рюкзаке.');
+        WRITELN('Примечание:');
+        WRITELN('    Волшебная кирка вынесет вас из "комариной плеши" при ударе ей вниз.');
+        WRITELN('');
+        WRITE('Ну, что, пойдем дальше? ');
+        // Ожидаем нажатие любой клавиши и заканчиваем с помощью
+        termWait('any', gameplayHelpEnding);
+    }
+    function gameplayHelpEnding() {
+        L03362('J');  // Обновить экран
+        IND[1] -= 2;  // Рейтинг
+        // Закончили с помощью - переходим к завершению хода
+        window.setTimeout(gameplayLoop3, 10);
+    }
+    // Третья часть игрового цикла - завершение хода и возврат к началу игрового цикла
+    function gameplayLoop3() {
+        if (VAR40 > 0) {
+            VAR22 = VAR12 + RANDOM(1,3) - 2;
+	        VAR24 = VAR14 + RANDOM(1,3) - 2;
+            if (VAR22 >= 2 && VAR22 <= 15 && VAR24 >= 2 && VAR24 <= 31) {
+                VAR12 = VAR22;
+		        VAR14 = VAR24;
+		        VAR40--;
+            }
+            V11070 = getFIndex(VAR4,VAR12,VAR14);
+            V33074 = getFIndex(VAR4,VAR12,VAR14);
+        }
+        VAR20 = 1;
+        VAR26 = VAR26 + VAR30;
+        if (VAR47) {  // Фонарь горит
+            VAR32--;  // Уменьшаем заряд батарей
+        }
+        VAR2 = VAR2 + Math.floor((IND[3] + IND[4]) / 10);
+        if (VAR26 > 200) {
+            WRITELN('Отдохнуть-бы');
+        }
+        if (VAR26 > 215) {  // Слишком устал
+            IND[2] -= 3;
+            VAR26 = 50;
+        }
+        for (VAR16 = 1; VAR16 <= 4; VAR16++) {
+            if (V33122[VAR16] != ' ') {
+                if ((V33136[VAR16] != VAR12) || (V33146[VAR16] != VAR14)) {
+                    if (VAR12 > V33136[VAR16]) {
+                        VAR22 = V33136[VAR16] + 1;
+                    }
+                    else if (VAR12 < V33136[VAR16]) {
+                        VAR22 = V33136[VAR16] - 1;
+                    }
+                    if (VAR14 > V33146[VAR16]) {
+                        VAR24 = V33146[VAR16] + 1;
+                    }
+                    else if (VAR14 < V33146[VAR16]) {
+                        VAR24 = V33146[VAR16] - 1;
+                    }
+                    var t = getF(VAR4,VAR22,VAR24);
+                    if ((t == '!' || t == '-') && ((V33126[VAR16] & 6) == 4)) {
+                        V33122[VAR16] =' ';
+                    }
+                    else {
+                        setF(VAR4,V33136[VAR16],V33146[VAR16], '.');
+                        CURSORTO(V33136[VAR16],V33146[VAR16]);
+                        WRITE('.');
+                        setF(VAR4,VAR22,VAR24, V33122[VAR16]);
+                        CURSORTO(VAR22,VAR24);
+                        WRITE(V33122[VAR16]);
+                        setF2(VAR4,VAR22,VAR24, V33126[VAR16]);
+                        V33136[VAR16] = VAR22;
+                        V33146[VAR16] = VAR24;
+                        CURSORTO(18,0);
+                        termClearEndOfLine();
+                    }
+                }
+            }
+        }
+        if (IND[2] < 0) {  // Умер от недостатка Энергии
+            VAR16 = RANDOM(10,1000);
+            WRITE('	Вот Вы и стали');
+            WRITE(VAR16.toString(),4);
+            WRITELN('-ой жертвой этого подземелья.');
+            // Выходим из игрового цикла
+            window.setTimeout(gameplayTheEnd, 10);
+            return;
+        }
+        // Энергия пока есть - продолжаем
+        if (VAR4 == 0) {
+            if (VAR46) {
+                if ((VAR12 == 2) && (VAR14 == 2)) {
+                    if (IND[5] >= 0) {  // В банке есть деньги?
+                        WRITELN('Как, Вы вернулись?! Ну и ну !!!');
+                        WRITE('А дальше пойдете? ');
+                        // ожидаем подтверждения перехода к следующему подземелью
+                        termWait('yesno', gameplayNextDungeonConfirm);
+                        return;
+                    }
+                    else {
+                        WRITELN('А расплачиваться кто будет?');
+                    }
+                }
+            }
+        }
+        // конец игрового цикла
+        window.setTimeout(gameplayLoop1, 10);  // Продолжение игрового цикла
+    }
+    function gameplayNextDungeonConfirm() {
+        VAR53 = termWaitKeyPressed;
+        if (VAR53 != 'N') {
+            DUNGEON++;  // следующее подземелье
+            IND[1] += 50;
+            // рестарт игры
+            window.setTimeout(gameplayStart1, 10);
+            return;
+        }
+        // Выходим из игрового цикла
+        window.setTimeout(gameplayTheEnd, 10);
+    }
+    function gameplayTheEnd() {
+        // Расчёт счёта игрока
+        VAR16 = IND[1] + Math.floor((IND[2] + IND[3] + IND[4] + Math.floor(IND[5] / 5)) / 3);
+        WRITE('Ваш счет: ');
+        WRITE(VAR16.toString(), 5);
+        termWait("exit", null);
+    }
+</script>
+    
+<div>
+    <div id="keysetexit" class="keyhints" style="display: none; text-align: right;">
+        <a href="javascript:window.location.reload(false);">&nbsp;Начать заново&nbsp;</a>
+    </div>
+    <div id="keysetany" class="keyhints" style="display: none; text-align: right;">
+        <a class="keylink" href="#">&nbsp;Продолжить&nbsp;</a>
+    </div>
+    <div id="keysetyesno" class="keyhints" style="display: none; text-align: right;">
+        <a class="keylink" href="#">Y - ДА</a>
+        <a class="keylink" href="#">N - НЕТ</a>
+    </div>
+    <div id="keysetdir" class="keyhints" style="display: none;">
+        <div style="float: right; padding-left: 10pt;">
+            <a class="keylink" href="#">7</a>
+            <a class="keylink" href="#">8</a>
+            <a class="keylink" href="#">9</a><br/>
+            <a class="keylink" href="#">4</a>
+            <a class="keylink" href="#">5</a>
+            <a class="keylink" href="#">6</a><br/>
+            <a class="keylink" href="#">1</a>
+            <a class="keylink" href="#">2</a>
+            <a class="keylink" href="#">3</a><br/>
+            <a class="keylink" href="#">5 - Вверх по %</a><br/>
+            <a class="keylink" href="#">. - Вниз по %</a>
+        </div>
+    </div>
+    <div id="keysetall" class="keyhints" style="display: none;">
+        <div style="float: right; padding-left: 10pt;">
+            <a class="keylink" href="#">7</a>
+            <a class="keylink" href="#">8</a>
+            <a class="keylink" href="#">9</a><br/>
+            <a class="keylink" href="#">4</a>
+            <a class="keylink" href="#">5</a>
+            <a class="keylink" href="#">6</a><br/>
+            <a class="keylink" href="#">1</a>
+            <a class="keylink" href="#">2</a>
+            <a class="keylink" href="#">3</a><br/>
+            <a class="keylink" href="#">5 - Вверх по %</a><br/>
+            <a class="keylink" href="#">. - Вниз по %</a><br/>
+            <a class="keylink" href="#">0 - Отдыхать</a><br/>
+            <a class="keylink" href="#">J - Обновить экран</a><br/>
+            <a class="keylink" href="#">H - Помощь</a><br/><br/>
+            <a class="keylink" href="#">X - Закончить</a>
+        </div>
+        <a class="keylink" href="#">A - Купить</a>
+        <a class="keylink" href="#">B - Заменить батареи</a>
+        <a class="keylink" href="#">D - Выбросить предмет</a>
+        <a class="keylink" href="#">E - Поесть</a>
+        <a class="keylink" href="#">F - Приготовиться к сражению</a>
+        <a class="keylink" href="#">I - Надеть кольцо</a>
+        <a class="keylink" href="#">K - Сломать стенку</a>
+        <a class="keylink" href="#">L - Включить фонарь</a>
+        <a class="keylink" href="#">M - Приготовить оружие</a>
+        <a class="keylink" href="#">O - Выключить фонарь</a>
+        <a class="keylink" href="#">P - Надеть доспехи</a>
+        <a class="keylink" href="#">Q - Пить</a>
+        <a class="keylink" href="#">R - Читать папирус</a>
+        <a class="keylink" href="#">S - Свистнуть</a>
+        <a class="keylink" href="#">T - Взять предмет</a>
+        <a class="keylink" href="#">U - Вызвать джинна</a>
+        <a class="keylink" href="#">V - Снять кольцо</a>
+        <a class="keylink" href="#">W - Взмахнуть ВП</a>
+        <a class="keylink" href="#">Y - Зажарить убегающего зверя</a>
+        <a class="keylink" href="#">Z - Перевести деньги в банк</a>
+        <a class="keylink" href="#">/ - Переложить вещи в рюкзаке</a>
+    </div>
+    <div id="keysetruksak" class="keyhints" style="display: none;">
+        <a class="keylink" href="#">. - Ничего</a>
+    </div>
+    <div id="keysetbuy" class="keyhints" style="display: none;">
+    </div>
+</div>
+
+</body>
