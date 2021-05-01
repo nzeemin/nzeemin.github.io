@@ -2,7 +2,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>СТАЛКЕР</title>
+    <title>STALK - nzeemin.github.io</title>
     <style>
         @font-face { font-family: "robotronfontpica"; font-weight: normal; font-style: normal; src: url("robotronfontpica.woff") format('woff'); }
         body {
@@ -11,24 +11,26 @@
             margin: 8px 12px 8px 12px;
         }
         .title {
-            font-family: robotronfontpica; font-size: 24pt;
+            font-family: robotronfontpica; font-size: 20pt;
             color: #AAA;
         }
         .helpsign {
-            position: absolute; left: 640pt; top: 16pt;
+            position: absolute; left: 640pt; top: 12pt;
             color: #AAA;
             cursor: pointer;
         }
         #credits {
             position: absolute; left: 24pt; top: 16pt;
             padding: 12px; margin: 0px;
-            border: 1px solid #080;
+            border: 1px solid #080; border-radius: 8px;
             color: #DDD; background-color: black;
-            width: 640pt;
+            width: 608pt;
+            box-shadow: 10px 10px 80px 40px rgba(0,0,0,0.75);
+            -webkit-box-shadow: 10px 10px 80px 40px rgba(0,0,0,0.75);
         }
         #credits a { color: #88A; }
         .creditsclose {
-            position: absolute; left: 624pt; top: 8pt;
+            position: absolute; left: 592pt; top: 8pt;
             color: white;
             cursor: pointer;
         }
@@ -36,23 +38,29 @@
             font-family: robotronfontpica;
             color: #DDD;
             padding: 12px; margin: 0px;
-            border: 1px solid #080;
-            border-radius: 8px;
+            border: 1px solid #080; border-radius: 8px;
             width: 640pt;
             height: 320pt;
             background-image: radial-gradient(rgba(0, 60, 0, 0.75), black 120%);
         }
         .keyhints {
-            padding: 12px;
-            width: 54em; line-height: 180%;
+            padding: 10pt 0 6pt 0;
+            width: 660pt; line-height: 218%;
+            user-select: none; -webkit-user-select: none; -ms-user-select: none;
+            /* background-color: #111; */
         }
         .keyhints a {
-            color: gray;
-            padding: 2pt 4pt 1pt 4pt;
-            margin: 2pt;
-            border: 1pt solid #444;
+            color: #888;
+            padding: 4pt 4pt 2pt 4pt; margin: 0;
+            border: 1pt solid #333;
+            background-color: #111;
+            font-size: 12pt;
             text-decoration: none;
             white-space: nowrap;
+            cursor: pointer;
+        }
+        .keyhints a.keydigit {
+            padding: 4pt 12pt 2pt 12pt;
         }
         .keyhints a:hover { color: #DDD; background-color: #222; }
     </style>
@@ -62,11 +70,16 @@
     <div class="helpsign" onclick="document.getElementById('credits').style.display='block'">[?]</div>
     <div id="credits" style="display:none">
         <div class="creditsclose" onclick="this.parentElement.style.display='none'">[X]</div>
-        STALK на HTML/JS v0.1<br/>
-        Исходный код на HTML/JS: <a href="https://github.com/nzeemin/nzeemin.github.io/stalk" target="_blank">github.com/nzeemin/nzeemin.github.io/stalk</a><br/>
-        Исходный код на Паскале: <a href="https://github.com/nzeemin/uknc-various/tree/master/STALK-PASCAL" target="_blank">github.com/nzeemin/uknc-various/tree/master/STALK-PASCAL</a><br/>
-        Используемый шрифт: <a href="https://github.com/nzeemin/robotron-dotmatrix-font" target="_blank">github.com/nzeemin/robotron-dotmatrix-font</a><br/>
+        STALK на HTML/JS v0.2<br/>
+        <br/>
+        Ссылки:<br/>
+        * <a href="https://github.com/nzeemin/nzeemin.github.io/tree/master/stalk" target="_blank">Исходный код на HTML/JS</a><br/>
+        * <a href="https://github.com/nzeemin/uknc-various/blob/master/STALK-PASCAL/STALK1.PAS" target="_blank">Исходный код на Паскале</a> - восстановленный из исполнимого файла<br/>
+        * <a href="https://github.com/nzeemin/robotron-dotmatrix-font" target="_blank">Используемый шрифт</a> - Robotron dot matrix PICA<br/>
+        <br/>
         Спасибо участникам форума <a href="https://zx-pk.ru/forums/66-dvk-uknts.html" target="_blank">zx-pk.ru</a> за помощь и поддержку!<br/>
+        Спасибо автору оригинальной игры!<br/>
+        Спасибо DEC за PDP-11!<br/>
     </div>
 <pre id="terminal">
 Загрузка...
@@ -91,57 +104,57 @@
     var termWaitNextHandler = null;
 
     var things = [  // справочник предметов - для торговли и рюкзака
-        { 'key': '%', 'name': 'Лестница' },
-        { 'key': '*', 'name': 'Золото' },
-        { 'key': ',', 'name': 'Волшебная кирка' },
-        { 'key': '$', 'name': 'Бутылка' },
-        { 'key': '+', 'name': 'Бутылка' },
-        { 'key': ' ', 'name': 'Черная дыра' },
-        { 'key': '=', 'name': 'Кольцо' },
+        { 'key': '%', 'name': 'Лестница', 'buy': true },
+        { 'key': '*', 'name': 'Золото', 'buy': true },
+        { 'key': ',', 'name': 'Волшебная кирка', 'buy': true },
+        { 'key': '$', 'name': 'Бутылка', 'buy': true },
+        { 'key': '+', 'name': 'Бутылка', 'buy': true },
+        { 'key': ' ', 'name': 'Черная дыра', 'buy': true },
+        { 'key': '=', 'name': 'Кольцо', 'buy': true },
         { 'key': '^', 'name': 'Ведьмин студень' },
-        { 'key': '(', 'name': 'Доспех' },
-        { 'key': ')', 'name': 'Доспех' },
-        { 'key': '[', 'name': 'Оружие' },
-        { 'key': ']', 'name': 'Оружие' },
-        { 'key': '?', 'name': 'Свисток' },
-        { 'key': ':', 'name': 'Еда' },
-        { 'key': ';', 'name': 'Еда' },
-        { 'key': '/', 'name': 'ВП' },
-        { 'key': '\\', 'name': 'ВП' },
-        { 'key': '<', 'name': 'Батареи' },
-        { 'key': '>', 'name': 'Батареи' },
+        { 'key': '(', 'name': 'Доспех', 'buy': true },
+        { 'key': ')', 'name': 'Доспех', 'buy': true },
+        { 'key': '[', 'name': 'Оружие', 'buy': true },
+        { 'key': ']', 'name': 'Оружие', 'buy': true },
+        { 'key': '?', 'name': 'Свисток', 'buy': true },
+        { 'key': ':', 'name': 'Еда', 'buy': true },
+        { 'key': ';', 'name': 'Еда', 'buy': true },
+        { 'key': '/', 'name': 'ВП', 'buy': true },
+        { 'key': '\\', 'name': 'ВП', 'buy': true },
+        { 'key': '<', 'name': 'Батареи', 'buy': true },
+        { 'key': '>', 'name': 'Батареи', 'buy': true },
         { 'key': '"', 'name': 'Комариная плешь' },
         { 'key': '\'', 'name': 'Комариная плешь' },
-        { 'key': '&', 'name': 'Папирус' },
-        { 'key': 'b', 'name': 'Надпись' },
-        { 'key': 'c', 'name': 'Груда камней' },
-        { 'key': 'd', 'name': 'Метла бабы яги' },
-        { 'key': 'e', 'name': 'Череп' },
-        { 'key': 'f', 'name': 'Странствующий скелет' },
-        { 'key': 'g', 'name': 'Стадо бродячих живых трупов' },
-        { 'key': 'h', 'name': 'Кусочек Ноева ковчега' },
-        { 'key': 'i', 'name': 'Записка' },
-        { 'key': 'j', 'name': 'Черный ящик' },
-        { 'key': 'k', 'name': 'Лужа машинного масла' },
-        { 'key': 'l', 'name': 'Раздолбанный ZX SPECTRUM' },
-        { 'key': 'm', 'name': 'Дохлый морлок' },
-        { 'key': 'n', 'name': 'Зуда' },
-        { 'key': 'o', 'name': 'Пустышка' },
-        { 'key': 'p', 'name': 'Куча сепулек' },
-        { 'key': 'r', 'name': 'Разложившийся труп' },
-        { 'key': 's', 'name': 'Надпись' },
-        { 'key': 't', 'name': 'Отрезанная голова Сталкера' },
-        { 'key': 'u', 'name': 'Зачитанный журнал' },
-        { 'key': 'v', 'name': 'Артефакт' },
-        { 'key': 'w', 'name': 'Надпись' },
-        { 'key': 'x', 'name': 'Окровавленная бензопила' },
-        { 'key': 'y', 'name': 'Что-то очень мерзкое' },
-        { 'key': 'z', 'name': 'Следы пикника' },
-        { 'key': 'q', 'name': 'Кладбище снусмумриков' },
-        { 'key': '~', 'name': 'Черт-те что' },
-        { 'key': '|', 'name': 'Пережаренный зелюк' },
-        { 'key': '`', 'name': 'Мышелот (в собственном соку)' },
-        { 'key': '@', 'name': 'Призрак' },
+        { 'key': '&', 'name': 'Папирус', 'buy': true },
+        { 'key': 'b', 'name': 'Надпись', 'buy': false },
+        { 'key': 'c', 'name': 'Груда камней', 'buy': false },
+        { 'key': 'd', 'name': 'Метла бабы яги', 'buy': false },
+        { 'key': 'e', 'name': 'Череп', 'buy': false },
+        { 'key': 'f', 'name': 'Странствующий скелет', 'buy': false },
+        { 'key': 'g', 'name': 'Стадо бродячих живых трупов', 'buy': false },
+        { 'key': 'h', 'name': 'Кусочек Ноева ковчега', 'buy': false },
+        { 'key': 'i', 'name': 'Записка', 'buy': false },
+        { 'key': 'j', 'name': 'Черный ящик', 'buy': false },
+        { 'key': 'k', 'name': 'Лужа машинного масла', 'buy': false },
+        { 'key': 'l', 'name': 'Раздолбанный ZX SPECTRUM', 'buy': false },
+        { 'key': 'm', 'name': 'Дохлый морлок', 'buy': false },
+        { 'key': 'n', 'name': 'Зуда', 'buy': false },
+        { 'key': 'o', 'name': 'Пустышка', 'buy': false },
+        { 'key': 'p', 'name': 'Куча сепулек', 'buy': false },
+        { 'key': 'r', 'name': 'Разложившийся труп', 'buy': false },
+        { 'key': 's', 'name': 'Надпись', 'buy': false },
+        { 'key': 't', 'name': 'Отрезанная голова Сталкера', 'buy': false },
+        { 'key': 'u', 'name': 'Зачитанный журнал', 'buy': false },
+        { 'key': 'v', 'name': 'Артефакт', 'buy': false },
+        { 'key': 'w', 'name': 'Надпись', 'buy': false },
+        { 'key': 'x', 'name': 'Окровавленная бензопила', 'buy': false },
+        { 'key': 'y', 'name': 'Что-то очень мерзкое', 'buy': false },
+        { 'key': 'z', 'name': 'Следы пикника', 'buy': false },
+        { 'key': 'q', 'name': 'Кладбище снусмумриков', 'buy': false },
+        { 'key': '~', 'name': 'Черт-те что', 'buy': false },
+        { 'key': '|', 'name': 'Пережаренный зелюк', 'buy': false },
+        { 'key': '`', 'name': 'Мышелот (в собственном соку)', 'buy': false },
+        { 'key': '@', 'name': 'Призрак', 'buy': false },
     ];
 
     function termUpdate() {
@@ -262,10 +275,13 @@
             keyset.innerHTML = '';  // remove all children
             for (var i = 0; i < things.length; i++) {
                 var item = things[i];
+                if (item.buy == false)
+                    continue;
                 var elem = createKeylinkElement(item.key + ' - ' + item.name);
                 keyset.appendChild(elem);
                 keyset.append(' ');
             }
+            keyset.appendChild(createKeylinkElement('. - Ничего'));
         }
         // Завершаем подготовку к ожиданию
         keyset.style.display = 'block';
@@ -311,6 +327,13 @@
             return;
         }
 
+        switch (key) {
+            case 'ARROWRIGHT': key = '6'; break;
+            case 'ARROWLEFT': key = '4'; break;
+            case 'ARROWUP': key = '8'; break;
+            case 'ARROWDOWN': key = '2'; break;
+        }
+
         console.log('termKeyPressed: ' + key);
         
         switch (termWaitKeysetName) {
@@ -318,6 +341,7 @@
                 break;
             case 'all':
             case 'ruksak':
+            case 'buy':
                 termWaitKeyPressed = key;
                 break;
             case 'yesno':
@@ -1449,14 +1473,19 @@
     }
     function gameplayAutomatSelect() {
         VAR53 = termWaitKeyPressed;
-        VAR16 = RUKSEEK('.','.');
-        if (VAR16 < 6) {
-            RUKSAK[VAR16] = VAR53;
-            V33106[VAR16] = RANDOM(1,8191);
-            IND[5] -= RANDOM(10,250);
-            termClearEndOfLine();
-            WRITELN('П о л у ч и т е !');
-            F[V11070] = 'k';
+        if (VAR53 == '.') {  // NOTE: Этой проверки нет в оригинале, добавлено для возможности отказаться от покупки
+            CLEARMSG();
+        }
+        else {
+            VAR16 = RUKSEEK('.','.');
+            if (VAR16 < 7) {
+                RUKSAK[VAR16] = VAR53;
+                V33106[VAR16] = RANDOM(1,8191);
+                IND[5] -= RANDOM(10,250);
+                termClearEndOfLine();
+                WRITELN('П о л у ч и т е !');
+                F[V11070] = 'k';
+            }
         }
         // переходим к завершению хода
         window.setTimeout(gameplayLoop3, 10);
@@ -1651,69 +1680,69 @@
         <a href="javascript:window.location.reload(false);">&nbsp;Начать заново&nbsp;</a>
     </div>
     <div id="keysetany" class="keyhints" style="display: none; text-align: right;">
-        <a class="keylink" href="#">&nbsp;Продолжить&nbsp;</a>
+        <a class="keylink">&nbsp;Продолжить&nbsp;</a>
     </div>
     <div id="keysetyesno" class="keyhints" style="display: none; text-align: right;">
-        <a class="keylink" href="#">Y - ДА</a>
-        <a class="keylink" href="#">N - НЕТ</a>
+        <a class="keylink">Y - ДА</a>
+        <a class="keylink">N - НЕТ</a>
     </div>
     <div id="keysetdir" class="keyhints" style="display: none;">
         <div style="float: right; padding-left: 10pt;">
-            <a class="keylink" href="#">7</a>
-            <a class="keylink" href="#">8</a>
-            <a class="keylink" href="#">9</a><br/>
-            <a class="keylink" href="#">4</a>
-            <a class="keylink" href="#">5</a>
-            <a class="keylink" href="#">6</a><br/>
-            <a class="keylink" href="#">1</a>
-            <a class="keylink" href="#">2</a>
-            <a class="keylink" href="#">3</a><br/>
-            <a class="keylink" href="#">5 - Вверх по %</a><br/>
-            <a class="keylink" href="#">. - Вниз по %</a>
+            <a class="keylink keydigit">7</a>
+            <a class="keylink keydigit">8</a>
+            <a class="keylink keydigit">9</a><br/>
+            <a class="keylink keydigit">4</a>
+            <a class="keylink keydigit">5</a>
+            <a class="keylink keydigit">6</a><br/>
+            <a class="keylink keydigit">1</a>
+            <a class="keylink keydigit">2</a>
+            <a class="keylink keydigit">3</a><br/>
+            <a class="keylink">5 - Вверх по %</a><br/>
+            <a class="keylink">. - Вниз по %</a>
         </div>
     </div>
     <div id="keysetall" class="keyhints" style="display: none;">
         <div style="float: right; padding-left: 10pt;">
-            <a class="keylink" href="#">7</a>
-            <a class="keylink" href="#">8</a>
-            <a class="keylink" href="#">9</a><br/>
-            <a class="keylink" href="#">4</a>
-            <a class="keylink" href="#">5</a>
-            <a class="keylink" href="#">6</a><br/>
-            <a class="keylink" href="#">1</a>
-            <a class="keylink" href="#">2</a>
-            <a class="keylink" href="#">3</a><br/>
-            <a class="keylink" href="#">5 - Вверх по %</a><br/>
-            <a class="keylink" href="#">. - Вниз по %</a><br/>
-            <a class="keylink" href="#">0 - Отдыхать</a><br/>
-            <a class="keylink" href="#">J - Обновить экран</a><br/>
-            <a class="keylink" href="#">H - Помощь</a><br/><br/>
-            <a class="keylink" href="#">X - Закончить</a>
+            <a class="keylink keydigit">7</a>
+            <a class="keylink keydigit">8</a>
+            <a class="keylink keydigit">9</a><br/>
+            <a class="keylink keydigit">4</a>
+            <a class="keylink keydigit" style="visibility: hidden;">5</a>
+            <a class="keylink keydigit">6</a><br/>
+            <a class="keylink keydigit">1</a>
+            <a class="keylink keydigit">2</a>
+            <a class="keylink keydigit">3</a><br/>
+            <a class="keylink">5 - Вверх</a>
+            <a class="keylink">. - Вниз</a><br/>
+            <a class="keylink">0 - Отдохнуть</a><br/>
+            <a class="keylink">J - Обновить экран</a><br/>
+            <a class="keylink">H - Помощь</a><br/>
+            <a class="keylink">X - Закончить</a>
         </div>
-        <a class="keylink" href="#">A - Купить</a>
-        <a class="keylink" href="#">B - Заменить батареи</a>
-        <a class="keylink" href="#">D - Выбросить предмет</a>
-        <a class="keylink" href="#">E - Поесть</a>
-        <a class="keylink" href="#">F - Приготовиться к сражению</a>
-        <a class="keylink" href="#">I - Надеть кольцо</a>
-        <a class="keylink" href="#">K - Сломать стенку</a>
-        <a class="keylink" href="#">L - Включить фонарь</a>
-        <a class="keylink" href="#">M - Приготовить оружие</a>
-        <a class="keylink" href="#">O - Выключить фонарь</a>
-        <a class="keylink" href="#">P - Надеть доспехи</a>
-        <a class="keylink" href="#">Q - Пить</a>
-        <a class="keylink" href="#">R - Читать папирус</a>
-        <a class="keylink" href="#">S - Свистнуть</a>
-        <a class="keylink" href="#">T - Взять предмет</a>
-        <a class="keylink" href="#">U - Вызвать джинна</a>
-        <a class="keylink" href="#">V - Снять кольцо</a>
-        <a class="keylink" href="#">W - Взмахнуть ВП</a>
-        <a class="keylink" href="#">Y - Зажарить убегающего зверя</a>
-        <a class="keylink" href="#">Z - Перевести деньги в банк</a>
-        <a class="keylink" href="#">/ - Переложить вещи в рюкзаке</a>
+        <a class="keylink">A - Купить</a>
+        <a class="keylink">B - Заменить батареи</a>
+        <a class="keylink">D - Выбросить предмет</a>
+        <a class="keylink">E - Поесть</a>
+        <a class="keylink">F - Приготовиться к сражению</a>
+        <a class="keylink">I - Надеть кольцо</a>
+        <a class="keylink">K - Сломать стенку киркой</a>
+        <a class="keylink">L - Вкл фонарь</a>
+        <a class="keylink">M - Приготовить оружие</a>
+        <a class="keylink">O - Выкл фонарь</a>
+        <a class="keylink">P - Надеть доспехи</a>
+        <a class="keylink">Q - Пить</a>
+        <a class="keylink">R - Читать папирус</a>
+        <a class="keylink">S - Свистнуть</a>
+        <a class="keylink">T - Взять предмет</a>
+        <a class="keylink">U - Вызвать джинна</a>
+        <a class="keylink">V - Снять кольцо</a>
+        <a class="keylink">W - Взмахнуть ВП</a>
+        <a class="keylink">Y - Зажарить убегающего зверя</a>
+        <a class="keylink">Z - Перевести деньги в банк</a>
+        <a class="keylink">/ - Переложить вещи в рюкзаке</a>
     </div>
     <div id="keysetruksak" class="keyhints" style="display: none;">
-        <a class="keylink" href="#">. - Ничего</a>
+        <a class="keylink">. - Ничего</a>
     </div>
     <div id="keysetbuy" class="keyhints" style="display: none;">
     </div>
