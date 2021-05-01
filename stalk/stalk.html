@@ -35,7 +35,7 @@
             cursor: pointer;
         }
         pre#terminal {
-            font-family: robotronfontpica;
+            font-family: robotronfontpica; font-size: 12pt;
             color: #DDD;
             padding: 12px; margin: 0px;
             border: 1px solid #080; border-radius: 8px;
@@ -44,10 +44,11 @@
             background-image: radial-gradient(rgba(0, 60, 0, 0.75), black 120%);
         }
         .keyhints {
+            font-size: 12pt;
             padding: 10pt 0 6pt 0;
-            width: 660pt; line-height: 218%;
+            width: 660pt;
+            line-height: 28pt;
             user-select: none; -webkit-user-select: none; -ms-user-select: none;
-            /* background-color: #111; */
         }
         .keyhints a {
             color: #888;
@@ -63,6 +64,12 @@
             padding: 4pt 12pt 2pt 12pt;
         }
         .keyhints a:hover { color: #DDD; background-color: #222; }
+        .keyhints span {
+            /* background-color: #000; */
+            padding: 4pt 6pt 2pt 2pt;
+            margin-right: 4pt;
+            border-right: 1px solid #333;
+        }
     </style>
 </head>
 <body>
@@ -70,7 +77,7 @@
     <div class="helpsign" onclick="document.getElementById('credits').style.display='block'">[?]</div>
     <div id="credits" style="display:none">
         <div class="creditsclose" onclick="this.parentElement.style.display='none'">[X]</div>
-        STALK на HTML/JS v0.2<br/>
+        STALK на HTML/JS v0.3<br/>
         <br/>
         Ссылки:<br/>
         * <a href="https://github.com/nzeemin/nzeemin.github.io/tree/master/stalk" target="_blank">Исходный код на HTML/JS</a><br/>
@@ -109,7 +116,7 @@
         { 'key': ',', 'name': 'Волшебная кирка', 'buy': true },
         { 'key': '$', 'name': 'Бутылка', 'buy': true },
         { 'key': '+', 'name': 'Бутылка', 'buy': true },
-        { 'key': ' ', 'name': 'Черная дыра', 'buy': true },
+        { 'key': ' ', 'name': 'Черная дыра', 'buy': false },
         { 'key': '=', 'name': 'Кольцо', 'buy': true },
         { 'key': '^', 'name': 'Ведьмин студень' },
         { 'key': '(', 'name': 'Доспех', 'buy': true },
@@ -123,8 +130,8 @@
         { 'key': '\\', 'name': 'ВП', 'buy': true },
         { 'key': '<', 'name': 'Батареи', 'buy': true },
         { 'key': '>', 'name': 'Батареи', 'buy': true },
-        { 'key': '"', 'name': 'Комариная плешь' },
-        { 'key': '\'', 'name': 'Комариная плешь' },
+        { 'key': '"', 'name': 'Комариная плешь', 'buy': false },
+        { 'key': '\'', 'name': 'Комариная плешь', 'buy': false },
         { 'key': '&', 'name': 'Папирус', 'buy': true },
         { 'key': 'b', 'name': 'Надпись', 'buy': false },
         { 'key': 'c', 'name': 'Груда камней', 'buy': false },
@@ -235,13 +242,21 @@
             termarr[termr] = termarr[termr].substr(0, termc);
         }
     }
-    function createKeylinkElement(text) {
-        var elem = document.createElement('a');
-        elem.className = 'keylink';
-        elem.setAttribute('href', '#');
-        elem.innerText = text;
-        elem.addEventListener('click', keylinkClickHandler);
-        return elem;
+    function createKeylinkElement(text, desc) {
+        var a = document.createElement('a');
+        a.className = 'keylink';
+        //a.setAttribute('href', '#');
+        if (desc) {
+            var span = document.createElement('span');
+            span.innerText = text;
+            a.innerText = desc;
+            a.prepend(span);
+        }
+        else {
+            a.innerText = text;
+        }
+        a.addEventListener('click', keylinkClickHandler);
+        return a;
     }
     function termWait(keysetname, next) {
         var keysets = document.getElementsByClassName('keyhints');
@@ -262,13 +277,12 @@
                             break;
                         }
                     }
-                    var elem = createKeylinkElement(r);
-                    if (item != null) { elem.innerText += ' - ' + item.name; }
+                    var elem = createKeylinkElement(r, (item != null) ? item.name : null);
                     keyset.appendChild(elem);
                     keyset.append(' ');
                 }
             }
-            keyset.appendChild(createKeylinkElement('. - Ничего'));
+            keyset.appendChild(createKeylinkElement('.','Ничего'));
         }
         // Выбор предмета для покупки - показываем все предметы
         else if (keysetname == 'buy') {
@@ -277,11 +291,11 @@
                 var item = things[i];
                 if (item.buy == false)
                     continue;
-                var elem = createKeylinkElement(item.key + ' - ' + item.name);
+                var elem = createKeylinkElement(item.key, item.name);
                 keyset.appendChild(elem);
                 keyset.append(' ');
             }
-            keyset.appendChild(createKeylinkElement('. - Ничего'));
+            keyset.appendChild(createKeylinkElement('.','Ничего'));
         }
         // Завершаем подготовку к ожиданию
         keyset.style.display = 'block';
@@ -341,6 +355,7 @@
                 break;
             case 'all':
             case 'ruksak':
+            case 'dir':
             case 'buy':
                 termWaitKeyPressed = key;
                 break;
@@ -1692,13 +1707,13 @@
             <a class="keylink keydigit">8</a>
             <a class="keylink keydigit">9</a><br/>
             <a class="keylink keydigit">4</a>
-            <a class="keylink keydigit">5</a>
+            <a class="keylink keydigit" style="visibility: hidden;">5</a>
             <a class="keylink keydigit">6</a><br/>
             <a class="keylink keydigit">1</a>
             <a class="keylink keydigit">2</a>
             <a class="keylink keydigit">3</a><br/>
-            <a class="keylink">5 - Вверх по %</a><br/>
-            <a class="keylink">. - Вниз по %</a>
+            <a class="keylink"><span>5</span>Вверх</a>
+            <a class="keylink"><span>.</span>Вниз</a><br/>
         </div>
     </div>
     <div id="keysetall" class="keyhints" style="display: none;">
@@ -1712,37 +1727,37 @@
             <a class="keylink keydigit">1</a>
             <a class="keylink keydigit">2</a>
             <a class="keylink keydigit">3</a><br/>
-            <a class="keylink">5 - Вверх</a>
-            <a class="keylink">. - Вниз</a><br/>
-            <a class="keylink">0 - Отдохнуть</a><br/>
-            <a class="keylink">J - Обновить экран</a><br/>
-            <a class="keylink">H - Помощь</a><br/>
-            <a class="keylink">X - Закончить</a>
+            <a class="keylink"><span>5</span>Вверх</a>
+            <a class="keylink"><span>.</span>Вниз</a><br/>
+            <a class="keylink"><span>0</span>Отдохнуть</a><br/>
+            <a class="keylink"><span>J</span>Обновить экран</a><br/>
+            <a class="keylink"><span>X</span>Закончить</a>
         </div>
-        <a class="keylink">A - Купить</a>
-        <a class="keylink">B - Заменить батареи</a>
-        <a class="keylink">D - Выбросить предмет</a>
-        <a class="keylink">E - Поесть</a>
-        <a class="keylink">F - Приготовиться к сражению</a>
-        <a class="keylink">I - Надеть кольцо</a>
-        <a class="keylink">K - Сломать стенку киркой</a>
-        <a class="keylink">L - Вкл фонарь</a>
-        <a class="keylink">M - Приготовить оружие</a>
-        <a class="keylink">O - Выкл фонарь</a>
-        <a class="keylink">P - Надеть доспехи</a>
-        <a class="keylink">Q - Пить</a>
-        <a class="keylink">R - Читать папирус</a>
-        <a class="keylink">S - Свистнуть</a>
-        <a class="keylink">T - Взять предмет</a>
-        <a class="keylink">U - Вызвать джинна</a>
-        <a class="keylink">V - Снять кольцо</a>
-        <a class="keylink">W - Взмахнуть ВП</a>
-        <a class="keylink">Y - Зажарить убегающего зверя</a>
-        <a class="keylink">Z - Перевести деньги в банк</a>
-        <a class="keylink">/ - Переложить вещи в рюкзаке</a>
+        <a class="keylink"><span>A</span>Купить</a>
+        <a class="keylink"><span>B</span>Заменить батареи</a>
+        <a class="keylink"><span>D</span>Выбросить предмет</a>
+        <a class="keylink"><span>E</span>Поесть</a>
+        <a class="keylink"><span>F</span>Приготовиться к сражению</a>
+        <a class="keylink"><span>H</span>Помощь</a>
+        <a class="keylink"><span>I</span>Надеть кольцо</a>
+        <a class="keylink"><span>K</span>Сломать стенку киркой</a>
+        <a class="keylink"><span>L</span>Вкл фонарь</a>
+        <a class="keylink"><span>M</span>Приготовить оружие</a>
+        <a class="keylink"><span>O</span>Выкл фонарь</a>
+        <a class="keylink"><span>P</span>Надеть доспехи</a>
+        <a class="keylink"><span>Q</span>Пить</a>
+        <a class="keylink"><span>R</span>Читать папирус</a>
+        <a class="keylink"><span>S</span>Свистнуть</a>
+        <a class="keylink"><span>T</span>Взять предмет</a>
+        <a class="keylink"><span>U</span>Вызвать джинна</a>
+        <a class="keylink"><span>V</span>Снять кольцо</a>
+        <a class="keylink"><span>W</span>Взмахнуть ВП</a>
+        <a class="keylink"><span>Y</span>Зажарить убегающего зверя</a>
+        <a class="keylink"><span>Z</span>Перевести деньги в банк</a>
+        <a class="keylink"><span>/</span>Переложить вещи в рюкзаке</a>
     </div>
     <div id="keysetruksak" class="keyhints" style="display: none;">
-        <a class="keylink">. - Ничего</a>
+        <a class="keylink"><span>.</span>Ничего</a>
     </div>
     <div id="keysetbuy" class="keyhints" style="display: none;">
     </div>
