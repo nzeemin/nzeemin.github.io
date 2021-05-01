@@ -77,7 +77,7 @@
     <div class="helpsign" onclick="document.getElementById('credits').style.display='block'">[?]</div>
     <div id="credits" style="display:none">
         <div class="creditsclose" onclick="this.parentElement.style.display='none'">[X]</div>
-        STALK на HTML/JS v0.3<br/>
+        STALK на HTML/JS v0.4<br/>
         <br/>
         Ссылки:<br/>
         * <a href="https://github.com/nzeemin/nzeemin.github.io/tree/master/stalk" target="_blank">Исходный код на HTML/JS</a><br/>
@@ -1270,8 +1270,8 @@
                             }
                         }
                         WRITE('Лестница -');
-				        WRITE(VAR22,4);
-				        WRITE(VAR24,4);
+				        WRITE(VAR22.toString(),4);
+				        WRITE(VAR24.toString(),4);
 				        WRITELN();
                     }
                     else {
@@ -1292,15 +1292,15 @@
                             else {
                                 VAR22++;
                             }
-                            if ((VAR22 == 16) && (VAR24 == 32)) {
-                                WRITELN('Золотой шар украден!')
-                            }
-                            else {
-                                WRITE('Золотой шар - 8');
-					            WRITE(VAR22,4);
-				                WRITE(VAR24,4);
-					            WRITELN;
-                            }
+                        }
+                        if ((VAR22 == 16) && (VAR24 == 32)) {
+                            WRITELN('Золотой шар украден!')
+                        }
+                        else {
+                            WRITE('Золотой шар - 8');
+                            WRITE(VAR22.toString(),4);
+                            WRITE(VAR24.toString(),4);
+                            WRITELN;
                         }
                     }
                 }
@@ -1471,6 +1471,9 @@
         if (VAR53 != 'N') {
             for (VAR16 = 1; VAR16 <= 5; VAR16++) {
                 IND[VAR16] -= RANDOM(0,15);
+            }
+            for (VAR16 = 1; VAR16 <= 6; VAR16++) {
+                RUKSAK[VAR16] = '.';
             }
             VAR12 = RANDOM(2,15);
             VAR14 = RANDOM(2,31);
@@ -1712,8 +1715,8 @@
             <a class="keylink keydigit">1</a>
             <a class="keylink keydigit">2</a>
             <a class="keylink keydigit">3</a><br/>
-            <a class="keylink"><span>5</span>Вверх</a>
-            <a class="keylink"><span>.</span>Вниз</a><br/>
+            <a class="keylink"><span>5</span>Вниз</a>
+            <a class="keylink"><span>.</span>Вверх</a><br/>
         </div>
     </div>
     <div id="keysetall" class="keyhints" style="display: none;">
@@ -1727,8 +1730,8 @@
             <a class="keylink keydigit">1</a>
             <a class="keylink keydigit">2</a>
             <a class="keylink keydigit">3</a><br/>
-            <a class="keylink"><span>5</span>Вверх</a>
-            <a class="keylink"><span>.</span>Вниз</a><br/>
+            <a class="keylink"><span>5</span>Вниз</a>
+            <a class="keylink"><span>.</span>Вверх</a><br/>
             <a class="keylink"><span>0</span>Отдохнуть</a><br/>
             <a class="keylink"><span>J</span>Обновить экран</a><br/>
             <a class="keylink"><span>X</span>Закончить</a>
