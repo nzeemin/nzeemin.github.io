@@ -1,0 +1,152 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Сталкер/Зона/Пикник - nzeemin.github.io</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({ google_ad_client: "ca-pub-5284662784280164", enable_page_level_ads: true });
+    </script>
+</head>
+<body>
+
+    <header>
+        <a class="header-brand" href="/">nzeemin.github.io</a> /
+        Сталкер/Зона/Пикник
+    </header>
+
+    <table class="main-table" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td id="navbar" width="300">
+                    <div class="box box-nobox">
+                        <h2>Сталкер/Зона/Пикник</h2>
+                    </div>
+
+                    <div class="box">
+                        <h2>Содержание</h2>
+                        <ul class="contents">
+                            <li>Оригинальная игра</li>
+                            <li>Дизасм в MACRO-11</li>
+                            <li>Восстановление кода на Паскале</li>
+                            <li>Веб-версия игры на HTML/JavaScript</li>
+                        </ul>
+                    </div>
+                </td><!--navbar end-->
+
+                <td>
+                    <div class="box">
+                        <h2>Оригинальная игра</h2>
+                        <div class="entry">
+                            <p>
+                                <a href="/ukncbtl-wasm/index.html?state=/ukncbtl/stalk.uknc&run=1" target="_blank" class="bigbluebutton"
+                                    >Запустить в онлайн-эмуляторе UKNCBTL</a>
+                            </p>
+                            <p>
+                                Это игра в жанре &laquo;рогалик&raquo; (Rogue-like), бродилка по подземельям,
+                                по мотивам повести Стругацких &laquo;Пикник на обочине&raquo;.
+                                Игра называлась &laquo;Зона&raquo;, &laquo;Сталкер&raquo; или &laquo;Пикник&raquo; &ndash;
+                                файл игры назывался STALK.SAV, PIKNIK.SAV или ZONA.SAV,
+                                и предназначался для советских PDP11-совместимых машин &ndash; таких как ДВК и УКНЦ.
+                            </p>
+                            <p>
+                                По-видимому, игра создана в конце 1980-х, автор &ndash; неизвестный программист из Ульяновска &ndash;
+                                первоначально программа выводила копирайт:<br/>
+                                <code>*** (С)УЛЬЯНОВСК УЛПИ "ГОЛОГРАФИЯ"***</code>
+                            </p>
+                            <p>
+                                На основе оригинала было создано множество вариаций игры, чаще всего они различались только выводимыми сообщениями
+                                &ndash; файл игры редактировался бинарным редактором DESS, логика игры, по-видимому, оставалась почти неизменной.
+                            </p>
+                            <p>
+                                <ul>
+                                    <li><a href="https://zx-pk.ru/threads/29331-igra-quot-zona-quot-na-dvk.html" target="_blank">Обсуждение игры на форуме zx-pk.ru</a></li>
+                                    <li><a href="https://youtu.be/0y7RggMs_Ro" target="_blank">Видео игры, работающей под эмулятором MAME</a></li>
+                                </ul>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <h2>Дизасм в MACRO-11</h2>
+                        <div class="entry">
+                            <p>
+                                За пару недель я получил дизассемблированный исходник игры на MACRO-11, который при компиляции
+                                давал исполнимый файл, совпадающий до байта с оригиналом.
+                                С самого начала было понятно, что оригинал написан на Паскале ДВК (судя по блоку сообщений Паскаля).
+                                Я определил начало паскалевских процедур/функций, отделил данные от кода, определил назначение
+                                части переменных игры.
+                                Эта работа была проделана с середины марта по начало апреля 2021 года.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <h2>Восстановление кода на Паскале</h2>
+                        <div class="entry">
+                            <p>
+                                Используя код на MACRO-11 как основу, я стал восстанавливать код на Паскале ДВК
+                                (этот вариант Паскаля основан на OMSI Pascal).
+                                В результате компиляции с Паскаля, получается файл на MACRO-11, который затем компилируется и
+                                линкуется обычными средствами RT-11 &ndash; через MACRO и LINK.
+                            </p>
+                            <p>
+                                Я продолжал комментировать код игры на ассемблере, выделял в нём паттерны паскалевских конструкций,
+                                и параллельно выписывал исходник на Паскале, компилируя и проверяя, что код получается именно
+                                таким, как в бинарнике игры.
+                                В целом конечно это была довольно большая работа, в которой мне сильно помогли участники форума zx-pk.ru,
+                                особенно Алексей Кислый (Alex_K).
+                                Мы узнали для себя много нового об этом варианте Паскаля, в том числе вещи, выходящие за стандартную
+                                документацию &ndash; например, использование конструкции GOTO.
+                            </p>
+                            <p>
+                                В итоге мне удалось получить исходный код на Паскале ДВК, полностью &laquo;идентичный натуральному&raquo;,
+                                но для этого пришлось ещё написать отдельную программу-&laquo;патчер&raquo; строк на C#.
+                                Дело в том, что использованный мной бинарный файл &laquo;оригинала&raquo; игры был сильно изменён
+                                &ndash; строки были переведены в 8-битную кодировку КОИ-8. Но Паскаль ДВК может работать только
+                                с 7-битной кодировкой КОИ-7. Поэтому, я компилировал паскалевский код в .MAC-файл, который затем
+                                патчил, и уже патченный файл проходил дальнейшую компиляцию.
+                            </p>
+                            <p>
+                                В конце концов, бинарник, получаемый мной при компиляции с Паскаля, стал отличатся от &laquo;оригинала&raquo;
+                                всего на один байт в заголовке файла, что в общем доказывало, что паскалевский исходник полностью
+                                соответствует тому, что было в оригинале. Эту работу я завершил 17 апреля 2021 года.
+                            </p>
+                            <p>
+                                <ul>
+                                    <li><a href="https://github.com/nzeemin/uknc-various/blob/master/STALK-PASCAL/STALK1.PAS" target="_blank">STALK1.PAS &ndash; восстановленный исходник игры на Паскале</a></li>
+                                    <li><a href="http://sandro.pdp-11.ru/misc/stalker/stalk_literate.pas" target="_blank">Исходник на Паскале с осмысленными названиями переменных и комментариями от Александра Тишина (Sandro)</a></li>
+                                    <li><a href="https://github.com/sergev/vak-opensource/blob/master/languages/pascal/game-stalker/stalk1.pas" target="_blank">Исходник, адаптированный для Free Pascal Compiler, от Сергея Вакуленко</a></li>
+                                </ul>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <h2>Веб-версия игры на HTML/JavaScript</h2>
+                        <div class="entry">
+                            <p>
+                                <a href="/stalk/stalk.html" target="_blank" class="bigbluebutton"
+                                    >Запустить веб-версию STALK</a>
+                            </p>
+                            <p>
+                            </p>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-19744382-5', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+</body>

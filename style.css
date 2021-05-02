@@ -45,6 +45,7 @@ table.main-table {
     table-layout: fixed;
     margin: 10px 0;
     width: 100%;
+    max-width: 1500px;
 }
 
     table.main-table tr {
