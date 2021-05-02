@@ -77,7 +77,7 @@
     <div class="helpsign" onclick="document.getElementById('credits').style.display='block'">[?]</div>
     <div id="credits" style="display:none">
         <div class="creditsclose" onclick="this.parentElement.style.display='none'">[X]</div>
-        STALK на HTML/JS v0.4<br/>
+        STALK на HTML/JS v0.5<br/>
         <br/>
         Ссылки:<br/>
         * <a href="https://github.com/nzeemin/nzeemin.github.io/tree/master/stalk" target="_blank">Исходный код на HTML/JS</a><br/>
@@ -340,16 +340,7 @@
         if (!termWaitKeysetName || !termWaitNextHandler) {
             return;
         }
-
-        switch (key) {
-            case 'ARROWRIGHT': key = '6'; break;
-            case 'ARROWLEFT': key = '4'; break;
-            case 'ARROWUP': key = '8'; break;
-            case 'ARROWDOWN': key = '2'; break;
-        }
-
-        console.log('termKeyPressed: ' + key);
-        
+        //console.log('termKeyPressed: ' + key);
         switch (termWaitKeysetName) {
             case 'any':
                 break;
@@ -370,11 +361,22 @@
         termWaitCallNext();
     }
 
-    function termKeyDownHandler(event) {
-        if (event.altKey || event.ctrlKey || event.metaKey || event.repeat) {
+    function termKeyDownHandler(ev) {
+        if (ev.altKey || ev.ctrlKey || ev.metaKey || ev.repeat) {
             return;
         }
-        termKeyPressed(event.key.toUpperCase());
+        //console.log('termKeyDownHandler key=\'' + ev.key + '\', code=' + ev.code)
+        var key = ev.key;
+        switch (key) {
+            case 'Shift': return;
+            case 'ArrowRight': key = '6'; ev.preventDefault(); break;
+            case 'ArrowLeft':  key = '4'; ev.preventDefault(); break;
+            case 'ArrowUp':    key = '8'; ev.preventDefault(); break;
+            case 'ArrowDown':  key = '2'; ev.preventDefault(); break;
+        }
+        if (key.length == 1 && key >= 'a' && key <= 'z') key = key.toUpperCase();
+        else if (key.length == 1 && key >= 'A' && key <= 'Z') key = key.toLowerCase();
+        termKeyPressed(key);
     }
     function keylinkClickHandler(event) {
         var text = event.srcElement.innerText;
@@ -1092,11 +1094,11 @@
                     WRITELN('Еды нет');
                 }
                 break;
-            case 'T':
+            case 'T':  // взять предмет, на котором стоишь
                 VAR16 = RUKSEEK('.','.');  // Ищем место в рюкзаке
                 if (VAR16 < 7) {
                     if (F[V11070] == '"' || F[V11070] == '\'') {
-                        NELZYA;  // Комариную плешь брать нельзя
+                        NELZYA();  // Комариную плешь брать нельзя
                     }
                     else {
                         WRITELN('Берем');
@@ -1138,7 +1140,7 @@
                 VAR47 = false;  // Фонарь не горит
                 WRITELN('Фонарь выключен');
                 break;
-            case 'W':
+            case 'W':  // взмахнуть волшебной палочкой
                 VAR16 = RUKSEEK('/','\\');
                 if (VAR16 < 7) {
                     if (((V33106[VAR16]) & 3) == 3) {
@@ -1148,7 +1150,7 @@
                         for (VAR20 = 2; VAR20 <= 31; VAR20++) {
                             for (VAR22 = 2; VAR22 <= 15; VAR22++) {
                                 CURSORTO(VAR22,VAR20);
-						        WRITE(F[VAR4,VAR22,VAR20]);
+						        WRITE(getF(VAR4,VAR22,VAR20));
 						        setF2(VAR4,VAR22,VAR20, getF2(VAR4,VAR22,VAR20) | 0o100);
                             }
                         }
@@ -1230,7 +1232,7 @@
 				        WRITELN('Батареи заменены');
                     }
 			        else {
-				        ZAKLYATIE;
+				        ZAKLYATIE();
                     }
                 }
                 else {
@@ -1317,7 +1319,7 @@
                         RUKSAK[VAR16] = '.';
                     }
                     else {
-                        ZAKLYATIE;
+                        ZAKLYATIE();
                     }
                 }
                 else {
