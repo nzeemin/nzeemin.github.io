@@ -5,6 +5,9 @@
     <title>STALK - nzeemin.github.io</title>
     <style>
         @font-face { font-family: "robotronfontpica"; font-weight: normal; font-style: normal; src: url("robotronfontpica.woff") format('woff'); }
+        @media screen and (max-device-width: 480px) {
+            body { -webkit-text-size-adjust: 100%; }
+        }
         body {
             font-family: robotronfontpica; font-size: 12pt;
             background-color: black; color: white;
@@ -14,11 +17,14 @@
             font-family: robotronfontpica; font-size: 20pt;
             color: #AAA;
         }
-        .helpsign {
-            position: absolute; left: 640pt; top: 12pt;
+        .title-buttons {
+            position: absolute; left: 508pt; top: 12pt;
             color: #AAA;
+        }
+        .title-buttons span {
             cursor: pointer;
         }
+        .title-buttons span:hover { color: #DDD; background-color: #222; }
         #credits {
             position: absolute; left: 24pt; top: 16pt;
             padding: 12px; margin: 0px;
@@ -74,10 +80,13 @@
 </head>
 <body>
     <div class="title">&nbsp;STALK</div>
-    <div class="helpsign" onclick="document.getElementById('credits').style.display='block'">[?]</div>
+    <div class="title-buttons">
+        <span onclick="toggleDisplayKeysetArea(this);">[Подсказки вкл.]</span>
+        <span onclick="document.getElementById('credits').style.display='block'">[?]</span>
+    </div>
     <div id="credits" style="display:none">
         <div class="creditsclose" onclick="this.parentElement.style.display='none'">[X]</div>
-        STALK на HTML/JS v0.6<br/>
+        STALK на HTML/JS v0.7<br/>
         <br/>
         Ссылки:<br/>
         * <a href="https://github.com/nzeemin/nzeemin.github.io/tree/master/stalk" target="_blank">Исходный код на HTML/JS</a><br/>
@@ -109,6 +118,18 @@
     var termWaitKeysetName = null;
     var termWaitKeyPressed = null;  // key name
     var termWaitNextHandler = null;
+
+    function toggleDisplayKeysetArea(src) {
+        var div = document.getElementById('keysetarea');
+        if (!div.style.display || div.style.display == 'block') {
+            div.style.display = 'none';
+            src.innerText = '[Подсказки выкл]';
+        }
+        else {
+            div.style.display = 'block';
+            src.innerText = '[Подсказки вкл.]';
+        }
+    }
 
     var things = [  // справочник предметов - для торговли и рюкзака
         { 'key': '%', 'name': 'Лестница', 'buy': true },
@@ -335,7 +356,6 @@
         
         window.setTimeout(next, 10);  // executing the next part
     }
-
     function termKeyPressed(key) {
         if (!termWaitKeysetName || !termWaitNextHandler) {
             return;
@@ -360,7 +380,6 @@
         }
         termWaitCallNext();
     }
-
     function termKeyDownHandler(ev) {
         if (ev.altKey || ev.ctrlKey || ev.metaKey || ev.repeat) {
             return;
@@ -464,11 +483,11 @@
         termCursorTo(Y, X * 2);
     }
     function CLEARMSG() {
-	    for (VAR16 = 1; VAR16 <= 7; VAR16++) {
-            CURSORTO(16+VAR16,0);
-		    termClearEndOfLine();
+        for (var t = 17; t <= 23; t++) {
+            termCursorTo(t, 0);
+            termClearEndOfLine();
         }
-	    CURSORTO(17,0);
+        termCursorTo(17,0);
     }
     function L01460(A, B, C) {
         for (var I = -1 ; I <= 1 ; I++ ) {
@@ -564,8 +583,8 @@
         termCursorTo(9,65); WRITE(' Рюкзак:');
         for (VAR16 = 1; VAR16 <= 5; VAR16++) {
             CURSORTO(VAR16, 37);
-		    WRITE(IND[VAR16].toString(), 3);
-		    WRITE(' ');
+            WRITE(IND[VAR16].toString(), 3);
+            WRITE(' ');
         }
         CURSORTO(7,37);
         WRITE(VAR30.toString(), 3);  // Вредность
@@ -588,9 +607,9 @@
         var C = getF(VAR4, VAR12 + DY, VAR14 + DX);
         if (C != '!' && C != '-') {  // Если не стенка
             VAR12 = VAR12 + DY;
-		    VAR14 = VAR14 + DX;
-		    V11070 = getFIndex(VAR4,VAR12,VAR14);
-		    V33074 = getFIndex(VAR4,VAR12,VAR14);
+            VAR14 = VAR14 + DX;
+            V11070 = getFIndex(VAR4,VAR12,VAR14);
+            V33074 = getFIndex(VAR4,VAR12,VAR14);
         }
         else {
             NELZYA();
@@ -598,9 +617,9 @@
     }
     function L05702(A) {
         VAR12 = RANDOM(2,15);
-	    VAR14 = RANDOM(2,31);
-	    setF(VAR4,VAR12,VAR14, A);
-	    setF2(VAR4,VAR12,VAR14, RANDOM(0,32767) & 0o177677);
+        VAR14 = RANDOM(2,31);
+        setF(VAR4,VAR12,VAR14, A);
+        setF2(VAR4,VAR12,VAR14, RANDOM(0,32767) & 0o177677);
     }
     // Начало игры, или рестарт на следующем подземелье
     function gameplayStart1() {
@@ -644,7 +663,7 @@
     }
     function gameplayStart2() {
         termWriteCR();
-        WRITE('		Темный  коридор ...     ');
+        WRITE('        Темный  коридор ...     ');
         for (VAR4 = 1; VAR4 <= 8; VAR4++) {  // цикл по этажам
             VAR20 = RANDOM(2,7);
             while (VAR20 < 32) {
@@ -670,11 +689,11 @@
     }
     function gameplayStart3() {
         termWriteCR();
-        WRITE('		С к е л е т ы . . .   ');
+        WRITE('        С к е л е т ы . . .   ');
         for (VAR20 = 1; VAR20 <= DUNGEON; VAR20++) {
             for (VAR16 = 32; VAR16 <= 127; VAR16++) {
                 VAR4 = RANDOM(0,8);
-		        L05702(String.fromCharCode(VAR16));
+                L05702(String.fromCharCode(VAR16));
             }
         }
         // Пауза перед следующим сообщением
@@ -682,11 +701,11 @@
     }
     function gameplayStart4() {
         termWriteCR();
-        WRITE('	a-a-a-a-a-a-a-a-a-a-a-a-a . . . . . . .');
+        WRITE('    a-a-a-a-a-a-a-a-a-a-a-a-a . . . . . . .');
         for (VAR4 = 0; VAR4 <= 8; VAR4++) {
             L05702('^');
-	        L05702('*');
-	        L05702('%');
+            L05702('*');
+            L05702('%');
         }
         VAR4 = 8;
         L05702('%');
@@ -696,8 +715,8 @@
                 RUKSAK[VAR16] = '.';
             }
             RUKSAK[1] = ']';
-	        RUKSAK[2] = '(';
-	        RUKSAK[3] = '<';
+            RUKSAK[2] = '(';
+            RUKSAK[3] = '<';
             for (VAR16 = 1; VAR16 <= 5; VAR16++) {
                 IND[VAR16] = 0;  // Очищаем индикаторы
             }
@@ -746,16 +765,16 @@
                 switch (F[V11072]) {
                     case '%': WRITE('Лестница.'); break;
                     case '*': WRITE('Золото.'); break;
-        		    case ',':
-				        if (VAR4 == 8) {
-					        WRITE('Золотой шар!!!');
-					        VAR46 = true;
-				        }
+                case ',':
+                        if (VAR4 == 8) {
+                            WRITE('Золотой шар!!!');
+                            VAR46 = true;
+                        }
                         else {
-					        WRITE('Волшебная кирка.');
-			            }
+                            WRITE('Волшебная кирка.');
+                        }
                         break;
-		            case '$':
+                    case '$':
                     case '+':
                         WRITELN('Бутылка с надписью "Drink me!"');
                         break;
@@ -777,7 +796,7 @@
                         }
                         break;
                     case '=':  WRITE( 'Кольцо.' ); break;
-            		case '^':
+                    case '^':
                         if ((VAR16 == 0 ) && ( VAR20 == 0 ) ) {
                             WRITELN('Ведьмин студень!');
                             IND[2] = IND[2] - RANDOM(3,15);
@@ -827,7 +846,7 @@
                             }
                             else if ((F2[V33076] & 6) == 2) {
                                 VAR22 = RANDOM(1,3) - 2 + VAR12;
-					            VAR24 = RANDOM(1,3) - 2 + VAR14;
+                                VAR24 = RANDOM(1,3) - 2 + VAR14;
                                 if (getF(VAR4,VAR22,VAR24) != '!' && getF(VAR4,VAR22,VAR24) != '-') {
                                     VAR53 = F[V11070];
                                     F[V11070] = '.';
@@ -921,15 +940,15 @@
                     case 'q': WRITELN('Кладбище снусмумриков.'); break;
                     case '~': WRITE('Черт-те что.'); break;
                     case '1': case 'A': case 'B': WRITELN('Бродячий торговый автомат'); break;
-                    case '|':	WRITELN('Пережаренный зелюк.'); break;
-                    case '`':	WRITELN('Мышелот (в собственном соку)'); break;
+                    case '|': WRITELN('Пережаренный зелюк.'); break;
+                    case '`': WRITELN('Мышелот (в собственном соку)'); break;
                     case '@':
                         WRITE('Призрак.');
                         VAR22 = RUKSEEK('.','.');
                         if (VAR22 < 7) {
-					        VAR30++;
+                            VAR30++;
                         }
-				        RUKSAK[VAR22] = '@';
+                        RUKSAK[VAR22] = '@';
                         break;
                     default:
                         if (VAR16 == 0 && VAR20 == 0) {
@@ -983,17 +1002,17 @@
         VAR53 = termWaitKeyPressed;
         CLEARMSG();
         switch (VAR53) {
-            case '1':	L05370(1,-1);  break;  // влево-вниз
-            case '2':	L05370(1,0);   break;  // вниз
-            case '3':	L05370(1,1);   break;  // вправо-вниз
-            case '4':	L05370(0,-1);  break;  // влево
-            case '5':	L03362('5');   break;  // вниз по лестнице
-            case '6':	L05370(0,1);   break;  // вправо
-            case '7':	L05370(-1,-1); break;  // влево-вверх
-            case '8':	L05370(-1,0);  break;  // вверх
-            case '9':	L05370(-1,1);  break;  // вправо-вверх
-            case '0':	VAR26 = 0;     break;  // отдохнуть
-            case '.':	L03362('.');   break;  // вверх по лестнице
+            case '1': L05370(1,-1);  break;  // влево-вниз
+            case '2': L05370(1,0);   break;  // вниз
+            case '3': L05370(1,1);   break;  // вправо-вниз
+            case '4': L05370(0,-1);  break;  // влево
+            case '5': L03362('5');   break;  // вниз по лестнице
+            case '6': L05370(0,1);   break;  // вправо
+            case '7': L05370(-1,-1); break;  // влево-вверх
+            case '8': L05370(-1,0);  break;  // вверх
+            case '9': L05370(-1,1);  break;  // вправо-вверх
+            case '0': VAR26 = 0;     break;  // отдохнуть
+            case '.': L03362('.');   break;  // вверх по лестнице
             case 'Q':  // пить
                 VAR16 = RUKSEEK('$','+');
                 if (VAR16 < 7) {
@@ -1050,7 +1069,7 @@
                             for (VAR20 = -2; VAR20 <= 2; VAR20++) {
                                 var a = VAR12 + VAR16, b = VAR14 + VAR20;
                                 if ((a >= 2 && a <= 15) && (b >= 2 && b <= 31)) {
-							        setF(VAR4,VAR12+VAR16,VAR14+VAR20, ' ');
+                                    setF(VAR4,VAR12+VAR16,VAR14+VAR20, ' ');
                                 }
                             }
                         }
@@ -1071,7 +1090,7 @@
                         for (VAR16 = -1; VAR16 <= 1; VAR16++) {
                             for (VAR20 = -1; VAR20 <= 1; VAR20++) {
                                 var t = getF(VAR4,VAR12+VAR16,VAR14+VAR20);
-                                if (t >= 'A' && F <= 'Z') {
+                                if (t >= 'A' && t <= 'Z') {
                                     setF(VAR4,VAR12+VAR16,VAR14+VAR20, '*');
                                 }
                             }
@@ -1086,9 +1105,9 @@
                 VAR16 = RUKSEEK(':',';');
                 if (VAR16 < 7) {
                     IND[2] += 18;  // Энергия
-			        RUKSAK[VAR16] = '.';
-			        VAR30--;
-			        WRITELN('Спасибо!');
+                    RUKSAK[VAR16] = '.';
+                    VAR30--;
+                    WRITELN('Спасибо!');
                 }
                 else {
                     WRITELN('Еды нет');
@@ -1116,11 +1135,11 @@
                 VAR16 = RUKSEEK(')','(');
                 if (VAR16 < 7) {
                     if (((V33106[VAR16]) & 0o2000) == 0) {
-				        RUKSAK[VAR16] = '.';
-				        IND[4] += 11;
-				        WRITELN('Доспехи надеты');
+                        RUKSAK[VAR16] = '.';
+                        IND[4] += 11;
+                        WRITELN('Доспехи надеты');
                     } else {
-				        ZAKLYATIE();
+                        ZAKLYATIE();
                     }
                 }
                 else {
@@ -1144,19 +1163,19 @@
                 VAR16 = RUKSEEK('/','\\');
                 if (VAR16 < 7) {
                     if (((V33106[VAR16]) & 3) == 3) {
-				        WRITELN('Выпустили до госприемки...');
+                        WRITELN('Выпустили до госприемки...');
                     }
                     else if (((V33106[VAR16]) & 3) == 2) {
                         for (VAR20 = 2; VAR20 <= 31; VAR20++) {
                             for (VAR22 = 2; VAR22 <= 15; VAR22++) {
                                 CURSORTO(VAR22,VAR20);
-						        WRITE(getF(VAR4,VAR22,VAR20));
-						        setF2(VAR4,VAR22,VAR20, getF2(VAR4,VAR22,VAR20) | 0o100);
+                                WRITE(getF(VAR4,VAR22,VAR20));
+                                setF2(VAR4,VAR22,VAR20, getF2(VAR4,VAR22,VAR20) | 0o100);
                             }
                         }
                         RUKSAK[VAR16] = '.';
                         CLEARMSG();
-				        WRITELN('"Да будет свет..."');
+                        WRITELN('"Да будет свет..."');
                     }
                     else if (((V33106[VAR16]) & 3) == 1) {
                         if (VAR46) {
@@ -1177,7 +1196,7 @@
                         for (VAR22 = 1; VAR22 <= 3; VAR22++) {
                             if (V33122[VAR22] != ' ') {
                                 V33122[VAR22] = ' ';
-						        setF(VAR4,V33136[VAR22],V33146[VAR22], CHR(RANDOM(36,63)));
+                                setF(VAR4,V33136[VAR22],V33146[VAR22], CHR(RANDOM(36,63)));
                             }
                         }
                     }
@@ -1191,12 +1210,12 @@
                 VAR20 = V33106[6];
                 for (VAR16 = 1; VAR16 <= 6; VAR16++) {
                     RUKSAK[7 - VAR16] = RUKSAK[6 - VAR16];
-			        V33106[7 - VAR16] = V33106[6 - VAR16];
+                    V33106[7 - VAR16] = V33106[6 - VAR16];
                 }
                 RUKSAK[1] = VAR52;
-		        V33106[1] = VAR20;
-		        V33156 = true;
-        		WRITELN('Перестройка в рюкзаке');
+                V33106[1] = VAR20;
+                V33156 = true;
+                WRITELN('Перестройка в рюкзаке');
                 break;
             case 'F':  // приготовиться к сражению
                 VAR50 = true;
@@ -1210,12 +1229,12 @@
                 VAR16 = RUKSEEK('[',']');
                 if (VAR16 < 7) {
                     if ((V33106[VAR16] & 0o2000) == 0) {
-				        RUKSAK[VAR16] = '.';
-				        IND[3] += 15;
-				        WRITELN('Оружие приготовлено');
+                        RUKSAK[VAR16] = '.';
+                        IND[3] += 15;
+                        WRITELN('Оружие приготовлено');
                     }
-			        else {
-				        ZAKLYATIE();
+                    else {
+                        ZAKLYATIE();
                     }
                 }
                 else {
@@ -1226,13 +1245,13 @@
                 VAR16 = RUKSEEK('<','>');
                 if (VAR16 < 7) {
                     if ((V33106[VAR16] & 0o2000) == 0) {
-				        RUKSAK[VAR16] = '.';
-				        VAR30--;
-				        VAR32 = 400;
-				        WRITELN('Батареи заменены');
+                        RUKSAK[VAR16] = '.';
+                        VAR30--;
+                        VAR32 = 400;
+                        WRITELN('Батареи заменены');
                     }
-			        else {
-				        ZAKLYATIE();
+                    else {
+                        ZAKLYATIE();
                     }
                 }
                 else {
@@ -1272,9 +1291,9 @@
                             }
                         }
                         WRITE('Лестница -');
-				        WRITE(VAR22.toString(),4);
-				        WRITE(VAR24.toString(),4);
-				        WRITELN();
+                        WRITE(VAR22.toString(),4);
+                        WRITE(VAR24.toString(),4);
+                        WRITELN();
                     }
                     else {
                         VAR22 = 2;
@@ -1331,8 +1350,8 @@
                     VAR16 = RUKSEEK('.','.');  // ищем место в рюкзаке
                     if (VAR16 < 7) {
                         RUKSAK[VAR16] = '=';
-				        V33106[VAR16] = 0o2000;
-				        VAR51 = false;
+                        V33106[VAR16] = 0o2000;
+                        VAR51 = false;
                     }
                     else {
                         WRITELN('Рюкзак полон');
@@ -1362,7 +1381,7 @@
                     }
                 }
                 else {
-			        WRITELN('Подойди ближе к автомату!');
+                    WRITELN('Подойди ближе к автомату!');
                 }
                 break;
             case 'K':  // сломать стенку киркой
@@ -1419,7 +1438,7 @@
                     RUKSAK[VAR16] = '.';
                     if (F[V11070] != '"' && F[V11070] != '\'') {
                         F[V11070] = VAR53;
-						F2[V33074] = V33106[VAR16];
+                        F2[V33074] = V33106[VAR16];
                     }
                 }
             }
@@ -1437,21 +1456,21 @@
         VAR53 = termWaitKeyPressed;
         CLEARMSG();
         VAR22 = VAR12;
-		VAR24 = VAR14;
+        VAR24 = VAR14;
         switch (VAR53) {
             case '1': VAR22 = VAR12+1; VAR24 = VAR14-1; break;
             case '2': VAR22 = VAR12+1; break;
-			case '3': VAR22 = VAR12+1; VAR24 = VAR14+1; break;
-			case '4': VAR24 = VAR14-1; break;
-			case '5': F[V11070] = ' '; break;
-			case '6': VAR24 = VAR14+1;
-			case '7': VAR22 = VAR12-1; VAR24 = VAR14-1; break;
-			case '8': VAR22 = VAR12-1; break;
-			case '9': VAR22 = VAR12-1; VAR24 = VAR14+1; break;
+            case '3': VAR22 = VAR12+1; VAR24 = VAR14+1; break;
+            case '4': VAR24 = VAR14-1; break;
+            case '5': F[V11070] = ' '; break;
+            case '6': VAR24 = VAR14+1;
+            case '7': VAR22 = VAR12-1; VAR24 = VAR14-1; break;
+            case '8': VAR22 = VAR12-1; break;
+            case '9': VAR22 = VAR12-1; VAR24 = VAR14+1; break;
             case '.':
                 if (VAR4 > 0) {
                     setF(VAR4-1,VAR12,VAR14, ' ');
-					WRITELN('Кусок свода обрушился и раскололся о вашу глупую голову');
+                    WRITELN('Кусок свода обрушился и раскололся о вашу глупую голову');
                 }
                 break;
             default:
@@ -1460,7 +1479,7 @@
         var t = getF(VAR4,VAR22,VAR24);
         if ((VAR22 >= 2 && VAR22 <= 15) && (VAR24 >= 2 && VAR24 <= 31) && (t =='!' || t == '-')) {
             setF(VAR4,VAR22,VAR24, 'c');
-			IND[2]--;
+            IND[2]--;
         }
         else {
             WRITELN('Ну, чего размахался?');
@@ -1547,7 +1566,7 @@
         WRITELN('R - Читать папирус');
         WRITELN('S - Свистнуть');
         WRITELN('T - Взять предмет, на котором стоишь');
-        WRITE('U - Вызвать джинна (только в безнадежном случае!)...	Дальше? ');
+        WRITE('U - Вызвать джинна (только в безнадежном случае!)...    Дальше? ');
         // Ожидаем нажатие любой клавиши и переходим ко второй странице помощи
         termWait('any', gameplayHelpPage2);
     }
@@ -1664,7 +1683,7 @@
         }
         if (IND[2] < 0) {  // Умер от недостатка Энергии
             VAR16 = RANDOM(10,1000);
-            WRITE('	Вот Вы и стали');
+            WRITE('        Вот Вы и стали');
             WRITE(VAR16.toString(),4);
             WRITELN('-ой жертвой этого подземелья.');
             // Выходим из игрового цикла
@@ -1711,8 +1730,8 @@
         termWait("exit", null);
     }
 </script>
-    
-<div>
+
+<div id="keysetarea">
     <div id="keysetexit" class="keyhints" style="display: none; text-align: right;">
         <a href="javascript:window.location.reload(false);">&nbsp;Начать заново&nbsp;</a>
     </div>
