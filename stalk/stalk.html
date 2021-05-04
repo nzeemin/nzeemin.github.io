@@ -45,6 +45,7 @@
             width: 640pt;
             height: 320pt;
             background-image: radial-gradient(rgba(0, 60, 0, 0.75), black 120%);
+            /* text-shadow: 0 0 3px #AAA; */
         }
         .keyhints {
             font-size: 12pt;
@@ -83,7 +84,7 @@
     </div>
     <div id="credits" style="display:none">
         <div class="creditsclose" onclick="this.parentElement.style.display='none'">[X]</div>
-        STALK на HTML/JS v0.8<br/>
+        STALK на HTML/JS v0.9<br/>
         <br/>
         Ссылки:<br/>
         * <a href="https://github.com/nzeemin/nzeemin.github.io/tree/master/stalk" target="_blank">Исходный код на HTML/JS</a><br/>
@@ -183,7 +184,7 @@
     ];
 
     function termUpdate() {
-        termctl.innerText = termarr.join('\r\n').replaceAll('\u007f','\u25ae');
+        termctl.innerText = termarr.join('\r\n');
     }
     function termClear() {
         for (var i = 0; i < termRows; i++) {
@@ -416,7 +417,8 @@
         }
 
         termClear();
-        WRITELN('\u007f\u007f С Т А Л К Е Р \u007f\u007f');
+        var x7f = String.fromCharCode(127);
+        WRITELN(x7f + x7f + ' С Т А Л К Е Р ' + x7f + x7f);
         WRITELN();
         WRITELN('Это игра в жанре "рогалик" (Rogue-like), бродилка по подземельям,');
         WRITELN('по мотивам повести Стругацких "Пикник на обочине". Игра называлась');
