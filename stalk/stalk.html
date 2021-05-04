@@ -5,9 +5,6 @@
     <title>STALK - nzeemin.github.io</title>
     <style>
         @font-face { font-family: "robotronfontpica"; font-weight: normal; font-style: normal; src: url("robotronfontpica.woff") format('woff'); }
-        @media screen and (max-device-width: 480px) {
-            body { -webkit-text-size-adjust: 100%; }
-        }
         body {
             font-family: robotronfontpica; font-size: 12pt;
             background-color: black; color: white;
@@ -18,7 +15,7 @@
             color: #AAA;
         }
         .title-buttons {
-            position: absolute; left: 508pt; top: 12pt;
+            position: absolute; left: 526pt; top: 12pt;
             color: #AAA;
         }
         .title-buttons span {
@@ -81,12 +78,12 @@
 <body>
     <div class="title">&nbsp;STALK</div>
     <div class="title-buttons">
-        <span onclick="toggleDisplayKeysetArea(this);">[Подсказки вкл.]</span>
+        <span onclick="toggleDisplayKeysetArea(this);">[Подсказки +]</span>
         <span onclick="document.getElementById('credits').style.display='block'">[?]</span>
     </div>
     <div id="credits" style="display:none">
         <div class="creditsclose" onclick="this.parentElement.style.display='none'">[X]</div>
-        STALK на HTML/JS v0.7<br/>
+        STALK на HTML/JS v0.8<br/>
         <br/>
         Ссылки:<br/>
         * <a href="https://github.com/nzeemin/nzeemin.github.io/tree/master/stalk" target="_blank">Исходный код на HTML/JS</a><br/>
@@ -123,11 +120,11 @@
         var div = document.getElementById('keysetarea');
         if (!div.style.display || div.style.display == 'block') {
             div.style.display = 'none';
-            src.innerText = '[Подсказки выкл]';
+            src.innerText = '[Подсказки -]';
         }
         else {
             div.style.display = 'block';
-            src.innerText = '[Подсказки вкл.]';
+            src.innerText = '[Подсказки +]';
         }
     }
 
@@ -186,7 +183,7 @@
     ];
 
     function termUpdate() {
-        termctl.innerText = termarr.join('\r\n').replaceAll('\x7f','\u25ae');
+        termctl.innerText = termarr.join('\r\n').replaceAll('\u007f','\u25ae');
     }
     function termClear() {
         for (var i = 0; i < termRows; i++) {
@@ -419,7 +416,7 @@
         }
 
         termClear();
-        WRITELN('\x7f\x7f С Т А Л К Е Р \x7f\x7f');
+        WRITELN('\u007f\u007f С Т А Л К Е Р \u007f\u007f');
         WRITELN();
         WRITELN('Это игра в жанре "рогалик" (Rogue-like), бродилка по подземельям,');
         WRITELN('по мотивам повести Стругацких "Пикник на обочине". Игра называлась');
