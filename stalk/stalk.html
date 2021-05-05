@@ -84,7 +84,7 @@
     </div>
     <div id="credits" style="display:none">
         <div class="creditsclose" onclick="this.parentElement.style.display='none'">[X]</div>
-        STALK на HTML/JS v0.9<br/>
+        STALK на HTML/JS v0.10<br/>
         <br/>
         Ссылки:<br/>
         * <a href="https://github.com/nzeemin/nzeemin.github.io/tree/master/stalk" target="_blank">Исходный код на HTML/JS</a><br/>
@@ -1018,7 +1018,19 @@
                     RUKSAK[VAR16] = '.';
                     VAR30--;
                     if ((V33106[VAR16] & 6) == 0) {
-                        //
+                        for (VAR16 = 2; VAR16 <= 15; VAR16++) {
+                            for (VAR20 = 2; VAR20 <= 31; VAR20++) {
+                                if (getF(VAR4,VAR16,VAR20) != '.') {
+                                    CURSORTO(VAR16,VAR20);
+                                    VAR53 = getF(VAR4,VAR16,VAR20);
+                                    var t = getF(VAR4,VAR16,VAR20);
+                                    if (t != '!' && t != '#' && t != '-' && t != '.') {
+                                        VAR53 = String.fromCharCode(RANDOM(33,126));
+                                    }
+                                    WRITE(VAR53);
+                                }
+                            }
+                        }
                         CLEARMSG();
                     }
                     else if ((V33106[VAR16] & 6) == 2) {
@@ -1027,7 +1039,15 @@
                         WRITELN('Чувствуете прилив сил?');
                     }
                     else if ((V33106[VAR16] & 6) == 4) {
-                        //
+                        for (VAR16 = 2; VAR16 <= 15; VAR16++) {
+                            for (VAR20 = 2; VAR20 <= 31; VAR20++) {
+                                if (getF(VAR4,VAR16,VAR20) != '.') {
+                                    CURSORTO(VAR16,VAR20);
+                                    WRITE(getF(VAR4,VAR16,VAR20));
+                                    setF2(VAR4,VAR16,VAR20, getF2(VAR4,VAR16,VAR20) | 0o100);
+                                }
+                            }
+                        }
                         CLEARMSG();
                     }
                     else {
