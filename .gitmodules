@@ -1,0 +1,3 @@
+[submodule "skoolkit-game-revs"]
+	path = skoolkit-game-revs
+	url = https://github.com/nzeemin/skoolkit-game-revs.git
