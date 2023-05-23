@@ -1,0 +1,89 @@
+﻿<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Эмулятор Союз-Неон онлайн - nzeemin.github.io</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        .grid { margin: 16px; }
+        .grid-item { width: 96px; margin-bottom: 10px; border: 1px solid #888; background: white; color: black; border-radius: 3px; box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.18); }
+        .aboutbox { width: 96px; margin-bottom: 10px; border: none; background: none; color: black; border-radius: 3px; box-shadow: none; }
+        .grid-item--width2 { width: 208px; margin-bottom: 16px; }
+        .grid-item--width3 { width: 320px; margin-bottom: 16px; }
+        .grid-item--width4 { width: 432px; margin-bottom: 16px; }
+        .grid-item h2 { font-size: 1em; font-weight: 800; background: #B5E0FF; color: black; margin: 0; padding: 4px 4px 6px 8px; }
+        .grid-item .entry { margin: 1em; }
+        .grid-item .entryimg { margin: 0; }
+        .grid-item .entryimg img { vertical-align: bottom; }
+        a[target="_blank"]:after { content: none; margin-left: 0; }
+    </style>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({ google_ad_client: "ca-pub-5284662784280164", enable_page_level_ads: true });
+    </script>
+</head>
+<body>
+
+    <script src="/js/masonry.pkgd.min.js"></script>
+
+    <header>
+        <a class="header-brand" href="/">nzeemin.github.io</a> /
+        Эмулятор Союз-Неон онлайн
+    </header>
+
+    <table class="main-table" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td id="navbar" width="300">
+                    <div class="box box-nobox">
+                        <h2>Эмулятор Союз-Неон онлайн</h2>
+                        <p>
+                            <div style="padding-bottom: 12px">Эмулятор NeonBTL на WebAssembly:</div>
+                            <a href="/neonbtl-wasm/index.html?run=1" target="_blank" class="bigbluebutton"
+                                >Эмулятор NeonBTL</a>
+                        </p>
+                        <p>
+                            Скриншоты справа это ссылки на онлайн-эмулятор Союз-Неон с сохранённым состоянием работы эмулятора.
+                        </p>
+                    </div>
+                </td><!--navbar end-->
+
+                <td>
+                    <div class="grid">
+                        <div class="grid-item grid-item--width3">
+                            <h2>Digger</h2>
+                            <div class="entryimg">
+                                <a href="/neonbtl-wasm/index.html?state=/neonbtl/diger1.neonst&run=1" target="_blank">
+                                    <img src="/neonbtl/diger1.png" alt="DIGER1" width="320" height="231"></a>
+                                </div>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        // initialize masonry
+        var msnry = new Masonry( '.grid', {
+            itemSelector: '.grid-item',
+            columnWidth: 96,
+            gutter: 16
+        });
+        // update masonry layout
+        window.onload = function() {
+            msnry.layout();
+        };
+    </script>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-19744382-5', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+</body>
