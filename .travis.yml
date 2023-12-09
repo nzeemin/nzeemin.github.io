@@ -1,8 +1,0 @@
-language: java
-jdk:
- - oraclejdk8  # vnu.jar requires Java 8
-
-install:
- - pip install --user html5validator
-
-script: html5validator
