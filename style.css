@@ -34,7 +34,7 @@ header {
 }
 
 .box .entry {
-    margin: 1em 1em 1.8em 1em;
+    margin: 0.8em 1em 1.8em 1em;
 }
 
 .box .entryimg {
@@ -86,13 +86,6 @@ table.main-table {
     list-style: square;
     padding-left: 1.5em;
     margin: 0.5em;
-}
-
-.ad {
-    border: 1px solid gray;
-    margin: 1em;
-    background: white;
-    color: black;
 }
 
 a {

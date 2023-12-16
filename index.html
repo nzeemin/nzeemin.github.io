@@ -13,7 +13,7 @@
         .grid-item--width4 { width: 432px; margin-bottom: 16px; }
         .grid-item--width5 { width: 544px; margin-bottom: 16px; }
         .grid-item h2 { font-size: 1em; font-weight: 800; background: #B5E0FF; color: black; margin: 0; padding: 4px 4px 6px 8px; }
-        .grid-item .entry { margin: 1em; }
+        .grid-item .entry { margin: 0.8em 1em 1.2em 1em; }
         .grid-item .entryimg { margin: 0; }
         .grid-item .entryimg img { vertical-align: bottom; }
         .aboutbox h2 { font-size: 1em; font-weight: 800; background: none; color: black; margin: 0; padding: 4px 4px 6px 8px; }
@@ -76,6 +76,13 @@
             <h2><a href="/neonbtl-online.html">Эмулятор Союз-Неон онлайн 🖥️</a></h2>
             <div class="entry">
                 Веб-версия эмулятора NeonBTL, работает на WebAssembly.
+            </div>
+        </div>
+
+        <div class="grid-item grid-item--width4">
+            <h2><a href="/neonbtl.html">NeonBTL &ndash; эмулятор Союз-Неон</a></h2>
+            <div class="entry">
+                <img src="images/neonbtl.png" alt="UKNCBTL" width="400" height="358" />
             </div>
         </div>
 
@@ -166,15 +173,13 @@
 
         <div class="grid-item grid-item--width3">
             <h2 style="background: sandybrown">Реклама</h2>
-            <div class="entry" style="min-height: 50px; min-width: 300px;">
-                <!-- Yandex.RTB R-A-4409681-1 -->
-                <div id="yandex_rtb_R-A-4409681-1"></div>
-                <script>
-                    window.yaContextCb.push(()=>{
-                        Ya.Context.AdvManager.render({ "blockId": "R-A-4409681-1", "renderTo": "yandex_rtb_R-A-4409681-1" })
-                    })
-                </script>
-            </div>
+            <!-- Yandex.RTB R-A-4409681-1 -->
+            <div id="yandex_rtb_R-A-4409681-1" style="min-height: 50px; min-width: 300px;"></div>
+            <script>
+                window.yaContextCb.push(()=>{
+                    Ya.Context.AdvManager.render({ "blockId": "R-A-4409681-1", "renderTo": "yandex_rtb_R-A-4409681-1" })
+                })
+            </script>
         </div>
     </div>
 
