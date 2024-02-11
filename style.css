@@ -63,25 +63,14 @@ aside {
 
 div#main {
     -webkit-box-flex: 2;
-    -ms-flex: 2 1200px;
-    flex: 2 1200px;
-    max-width: 1200px;
-}
-
-table.main-table {
-    table-layout: fixed;
-    margin: 10px 0;
-    width: 100%;
-    max-width: 1500px;
-}
-
-table.main-table tr {
-    vertical-align: top;
+    -ms-flex: 2 1000px;
+    flex: 2 1000px;
+    max-width: 1000px;
 }
 
 .box {
     border: 1px solid #888;
-    margin: 1em;
+    margin: 1em 0.5em 1em 1em;
     background: white;
     color: black;
     border-radius: 3px;
