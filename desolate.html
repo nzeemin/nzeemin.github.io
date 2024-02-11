@@ -5,181 +5,214 @@
     <title>Портирование Desolate - nzeemin.github.io</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <!-- Yandex.RTB -->
-    <script>window.yaContextCb=window.yaContextCb||[]</script>
+    <script>window.yaContextCb = window.yaContextCb || []</script>
     <script src="https://yandex.ru/ads/system/context.js" async></script>
 </head>
 <body>
 
-    <header>
-        <a class="header-brand" href="/">nzeemin.github.io</a> /
-        Портирование Desolate
-    </header>
+<header>
+    <a class="header-brand" href="/">nzeemin.github.io</a> /
+    Портирование Desolate
+</header>
 
-    <table class="main-table" cellpadding="0" cellspacing="0">
-        <tbody>
-            <tr>
-                <td id="navbar" width="300">
-                    <div class="box box-nobox">
-                        <h2>Портирование Desolate</h2>
-                    </div>
+<div id="main-container">
+    <aside id="navbar">
+        <div class="box box-nobox">
+            <h2>Портирование Desolate</h2>
+        </div>
 
-                    <div class="box">
-                        <h2>Содержание</h2>
-                        <ul class="contents">
-                            <li>Оригинал на TI-83 Plus</li>
-                            <li>Портирование на ZX Spectrum</li>
-                            <li>Портирование на Вектор-06Ц</li>
-                            <li>Портирование на УКНЦ</li>
-                        </ul>
-                    </div>
+        <div class="box">
+            <h2>Содержание</h2>
+            <ul class="contents">
+                <li>Оригинал на TI-83 Plus</li>
+                <li>Портирование на ZX Spectrum</li>
+                <li>Портирование на Вектор-06Ц</li>
+                <li>Портирование на УКНЦ</li>
+            </ul>
+        </div>
 
-                    <div class="box" style="margin-top: 50px; min-height: 150px">
-                        <h2 style="background: sandybrown">Реклама</h2>
-                        <!-- Yandex.RTB R-A-4409681-2 -->
-                        <div id="yandex_rtb_R-A-4409681-2"></div>
-                        <script>
-                            window.yaContextCb.push(()=>{
-                                Ya.Context.AdvManager.render({ "blockId": "R-A-4409681-2", "renderTo": "yandex_rtb_R-A-4409681-2" })
-                            })
-                        </script>
-                    </div>
-                </td><!--navbar end-->
+        <div class="box" style="margin-top: 20px; min-height: 150px">
+            <h2 style="background: sandybrown">Реклама</h2>
+            <!-- Yandex.RTB R-A-4409681-2 -->
+            <div id="yandex_rtb_R-A-4409681-2"></div>
+            <script>
+                window.yaContextCb.push(() => {
+                    Ya.Context.AdvManager.render({"blockId": "R-A-4409681-2", "renderTo": "yandex_rtb_R-A-4409681-2"})
+                })
+            </script>
+        </div>
+    </aside><!--navbar end-->
 
-                <td>
-                    <div class="box">
-                        <h2>Оригинал на TI-83 Plus</h2>
-                        <div class="entry">
-                            <ul>
-                                <li>Desolate <a href="https://www.ticalc.org/archives/files/fileinfo/331/33153.html" target="_blank">для TI-83</a> и
-                                    <a href="https://www.ticalc.org/archives/files/fileinfo/348/34879.html" target="_blank">для TI-83/84 Plus</a> на ticalc.org</li>
-                                <li><a href="https://youtu.be/5UHqPMxeZnY" target="_blank">Видео геймплея игры</a></li>
-                            </ul>
-                            <p>
-                                Это игра в жанре &laquo;adventure/RPG&raquo;, в научно-фантастическом сеттинге, с видом сверху-вниз.<br />
-                                Автор игры &ndash; Patrick Prendergast (tr1p1ea) &ndash; написал и выпустил её в 2004 году для научных калькуляторов TI-83/84 Plus.<br />
-                                Безусловно, это одна из лучших игр для этих устройств, если не самая лучшая.
-                            </p>
-                            <p><img src="/images/desolate-original-room1.png" alt="" style="max-width:100%;"></p>
-                            <p>
-                                Поиграть в оригинал проще всего с помощью эмулятора, я использовал для этого эмулятор <a href="http://wabbitemu.org/" target="_blank">Wabbitemu</a>.
-                            </p>
-                            <p>Шаги по запуску игры в эмуляторе:
-                                <ul>
-                                    <li>Запустите Wabbitemu, выберите ROM-файл</li>
-                                    <li>File Open, <code>DesData.8xp</code></li>
-                                    <li>MEM, выберите Archive; PRGM, выберите DesData; ENTER</li>
-                                    <li>File Open <code>Desolate.8xp</code></li>
-                                    <li>File Open <code>MIRAGEOS.8xk</code></li>
-                                    <li>APPS, выберите MirageOS</li>
-                                    <li>Выберите Main, Desolate</li>
-                                </ul>
-                            </p>
-                        </div>
-                    </div>
+    <div id="main">
+        <div class="box">
+            <h2>Оригинал на TI-83 Plus</h2>
+            <div class="entry">
+                <ul>
+                    <li>Desolate <a href="https://www.ticalc.org/archives/files/fileinfo/331/33153.html"
+                                    target="_blank">для TI-83</a> и
+                        <a href="https://www.ticalc.org/archives/files/fileinfo/348/34879.html" target="_blank">для
+                            TI-83/84 Plus</a> на ticalc.org
+                    </li>
+                    <li><a href="https://youtu.be/5UHqPMxeZnY" target="_blank">Видео геймплея игры</a></li>
+                </ul>
+                <p>
+                    Это игра в жанре &laquo;adventure/RPG&raquo;, в научно-фантастическом сеттинге, с видом сверху-вниз.<br/>
+                    Автор игры &ndash; Patrick Prendergast (tr1p1ea) &ndash; написал и выпустил её в 2004 году для
+                    научных калькуляторов TI-83/84 Plus.<br/>
+                    Безусловно, это одна из лучших игр для этих устройств, если не самая лучшая.
+                </p>
+                <p><img src="/images/desolate-original-room1.png" alt="" style="max-width:100%;"></p>
+                <p>
+                    Поиграть в оригинал проще всего с помощью эмулятора, я использовал для этого эмулятор <a
+                        href="http://wabbitemu.org/" target="_blank">Wabbitemu</a>.
+                </p>
+                <p>Шаги по запуску игры в эмуляторе:
+                <ul>
+                    <li>Запустите Wabbitemu, выберите ROM-файл</li>
+                    <li>File Open, <code>DesData.8xp</code></li>
+                    <li>MEM, выберите Archive; PRGM, выберите DesData; ENTER</li>
+                    <li>File Open <code>Desolate.8xp</code></li>
+                    <li>File Open <code>MIRAGEOS.8xk</code></li>
+                    <li>APPS, выберите MirageOS</li>
+                    <li>Выберите Main, Desolate</li>
+                </ul>
+                </p>
+            </div>
+        </div>
 
-                    <div class="box">
-                        <h2>Портирование на ZX Spectrum</h2>
-                        <div class="entry">
-                            <ul>
-                                <li><a href="https://github.com/nzeemin/spectrum-desolate" target="_blank">github.com/nzeemin/spectrum-desolate</a> &ndash; репозиторий кода</li>
-                                <li><a href="https://zx-pk.ru/threads/32431-desolate-port-s-ti-83-plus.html" target="_blank">Обсуждение на форуме zx-pk.ru</a></li>
-                                <li><a href="https://spectrumcomputing.co.uk/entry/37651/ZX-Spectrum/Desolate" target="_blank">Desolate</a> в базе данных SpectrumComputing</li>
-                            </ul>
-                            <p>
-                                В октябре 2020 я начал с разбора и комментирования кода оригинальной игры, на это ушло около двух недель.
-                                Затем я занялся подготовкой кода для портированной версии.
-                                Начал с того, что разработал свой пропорциональный шрифт, похожий на тот, что используется на этих научных калькуляторах,
-                                написал код для вывода символов этого шрифта.
-                                Дальше занимался последовательным переносом кода на ассемблер Z80, и конвертацией данных из оригинала.
-                                Так, шаг за шагом, я получил полный код игры.
-                                Затем тестирование и небольшие улучшения по сравнению с оригиналом.
-                                И наконец, последний шаг - упаковал весь массив игры в LZSA1, с тем чтобы уменьшить время загрузки.
-                                В качестве основного редактора использовал VSCode; компиляторы: pasmo и sjasmplus.
-                            </p>
-                            <p>
-                                Скриншоты портированой версии:<br />
-                                <img src="/images/spectrum-desolate-story1.png" alt="" style="max-width:100%;">
-                                <img src="/images/spectrum-desolate-room1.png" alt="" style="max-width:100%;">
-                            </p>
-                            <p>
-                                Видео прохождения (спасибо Pavel Plíva и RZX Archive!):<br />
-                                <iframe width="640" height="480" src="https://www.youtube.com/embed/41zymtzSNes" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            </p>
-                        </div>
-                    </div>
+        <div class="box">
+            <h2>Портирование на ZX Spectrum</h2>
+            <div class="entry">
+                <ul>
+                    <li><a href="https://github.com/nzeemin/spectrum-desolate" target="_blank">github.com/nzeemin/spectrum-desolate</a>
+                        &ndash; репозиторий кода
+                    </li>
+                    <li><a href="https://zx-pk.ru/threads/32431-desolate-port-s-ti-83-plus.html" target="_blank">Обсуждение
+                        на форуме zx-pk.ru</a></li>
+                    <li><a href="https://spectrumcomputing.co.uk/entry/37651/ZX-Spectrum/Desolate" target="_blank">Desolate</a>
+                        в базе данных SpectrumComputing
+                    </li>
+                </ul>
+                <p>
+                    В октябре 2020 я начал с разбора и комментирования кода оригинальной игры, на это ушло около двух
+                    недель.
+                    Затем я занялся подготовкой кода для портированной версии.
+                    Начал с того, что разработал свой пропорциональный шрифт, похожий на тот, что используется на этих
+                    научных калькуляторах,
+                    написал код для вывода символов этого шрифта.
+                    Дальше занимался последовательным переносом кода на ассемблер Z80, и конвертацией данных из
+                    оригинала.
+                    Так, шаг за шагом, я получил полный код игры.
+                    Затем тестирование и небольшие улучшения по сравнению с оригиналом.
+                    И наконец, последний шаг - упаковал весь массив игры в LZSA1, с тем чтобы уменьшить время загрузки.
+                    В качестве основного редактора использовал VSCode; компиляторы: pasmo и sjasmplus.
+                </p>
+                <p>
+                    Скриншоты портированой версии:<br/>
+                    <img src="/images/spectrum-desolate-story1.png" alt="" style="max-width:100%;">
+                    <img src="/images/spectrum-desolate-room1.png" alt="" style="max-width:100%;">
+                </p>
+                <p>
+                    Видео прохождения (спасибо Pavel Plíva и RZX Archive!):<br/>
+                    <iframe width="640" height="480" src="https://www.youtube.com/embed/41zymtzSNes" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                </p>
+            </div>
+        </div>
 
-                    <div class="box">
-                        <h2>Портирование на Вектор-06Ц</h2>
-                        <div class="entry">
-                            <ul>
-                                <li><a href="https://github.com/nzeemin/vector06c-desolate" target="_blank">github.com/nzeemin/vector06c-desolate</a> &ndash; репозиторий кода</li>
-                                <li><a href="https://zx-pk.ru/threads/32499-portirovanie-desolate-na-vektor-06ts.html" target="_blank">Обсуждение на форуме zx-pk.ru</a></li>
-                                <li><a href="http://sensi.org/scalar/ware/912" target="_blank">Desolate</a> в каталоге ПО для Вектора, там же игру можно запустить в онлайн-эмуляторе</li>
-                            </ul>
-                            <p>
-                                Делать порт под Вектор-06Ц я вообще-то не собирался,
-                                но когда я стал задавать вопросы про разработку под Вектор на форуме, мне быстро и подробно отвечали,
-                                так что оказалось, что эту работу относительно просто сделать.
-                                Код для Z80 пришлось адаптировать для процессора КР580ВМ80А, по сути это урезание до более слабой системы команд.
-                                Плюс конечно переделка вывода на экран, ввода с клавиатуры, и ещё таких вещей как например генерация случайных чисел.
-                                В целом на этот порт ушла примерно неделя работы, может чуть больше.
-                            </p>
-                            <p>
-                                Скриншоты портированой версии:<br />
-                                <img src="/images/vector06c-desolate-room1.png" alt="" style="max-width:100%;">
-                                <img src="/images/vector06c-desolate-doorlock.png" alt="" style="max-width:100%;">
-                            </p>
-                        </div>
-                    </div>
+        <div class="box">
+            <h2>Портирование на Вектор-06Ц</h2>
+            <div class="entry">
+                <ul>
+                    <li><a href="https://github.com/nzeemin/vector06c-desolate" target="_blank">github.com/nzeemin/vector06c-desolate</a>
+                        &ndash; репозиторий кода
+                    </li>
+                    <li><a href="https://zx-pk.ru/threads/32499-portirovanie-desolate-na-vektor-06ts.html"
+                           target="_blank">Обсуждение на форуме zx-pk.ru</a></li>
+                    <li><a href="http://sensi.org/scalar/ware/912" target="_blank">Desolate</a> в каталоге ПО для
+                        Вектора, там же игру можно запустить в онлайн-эмуляторе
+                    </li>
+                </ul>
+                <p>
+                    Делать порт под Вектор-06Ц я вообще-то не собирался,
+                    но когда я стал задавать вопросы про разработку под Вектор на форуме, мне быстро и подробно
+                    отвечали,
+                    так что оказалось, что эту работу относительно просто сделать.
+                    Код для Z80 пришлось адаптировать для процессора КР580ВМ80А, по сути это урезание до более слабой
+                    системы команд.
+                    Плюс конечно переделка вывода на экран, ввода с клавиатуры, и ещё таких вещей как например генерация
+                    случайных чисел.
+                    В целом на этот порт ушла примерно неделя работы, может чуть больше.
+                </p>
+                <p>
+                    Скриншоты портированой версии:<br/>
+                    <img src="/images/vector06c-desolate-room1.png" alt="" style="max-width:100%;">
+                    <img src="/images/vector06c-desolate-doorlock.png" alt="" style="max-width:100%;">
+                </p>
+            </div>
+        </div>
 
-                    <div class="box">
-                        <h2>Портирование на УКНЦ</h2>
-                        <div class="entry">
-                            <p>
-                                <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/desolate.uknc&run=1" target="_blank" class="bigbluebutton"
-                                    >Запустить в онлайн-эмуляторе UKNCBTL</a>
-                            </p>
-                            <ul>
-                                <li><a href="https://github.com/nzeemin/uknc-desolate" target="_blank">github.com/nzeemin/uknc-desolate</a> &ndash; репозиторий кода</li>
-                                <li><a href="https://zx-pk.ru/threads/32566.html" target="_blank">Обсуждение на форуме zx-pk.ru</a></li>
-                            </ul>
-                            <p>
-                                После того как я детально разобрался с устройством оригинальной игры и практически завершил порт на ZX Spectrum,
-                                появилось желание сделать порт на УКНЦ. Основная сложность здесь была в конвертации кода для 8-разрядного процессора Z80
-                                на совершенно другую архитектуру  &ndash; DEC PDP-11, а точнее, под советский процессор К1801ВМ2.
-                                Подобную работу я уже проводил раньше, для игры <a href="highwayencounter.html">Highway Encounter</a>.
-                                На полную конвертацию кода в этот раз ушло ровно две недели (~4230 строк исходного кода для Z80 преобразованы в ~3580 строк кода на MACRO-11),
-                                затем ещё несколько дней на поиск и устранение ошибок, плюс небольшие доработки.<br/>
-                                Всю эту работу я провёл в декабре 2020 года, релиз выложил 27 декабря 2020.
-                            </p>
-                            <p>
-                                На основе кода этой версии Desolate, Александ Тишин (Sandro) делает
-                                <a href="https://zx-pk.ru/threads/32872-port-igry-desolate-na-bk.html" target="_blank">порт игры для компьютера БК-0011М</a>.
-                            </p>
-                            <p>
-                                Скриншоты портированой версии:<br />
-                                <img src="/images/uknc-desolate-story1.png" alt="" style="max-width:100%;">
-                                <img src="/images/uknc-desolate-room1.png" alt="" style="max-width:100%;">
-                            </p>
-                            <p>
-                                Проверено, что игра запускается и работает на реальной машине (спасибо BlaireCas и hobot с форума zx-pk.ru):<br>
-                            </p>
-                            <img src="/images/uknc-desolate-room1-real.jpg" alt="" style="max-width:100%;">
-                        </div>
-                    </div>
+        <div class="box">
+            <h2>Портирование на УКНЦ</h2>
+            <div class="entry">
+                <p>
+                    <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/desolate.uknc&run=1"
+                       target="_blank" class="bigbluebutton"
+                    >Запустить в онлайн-эмуляторе UKNCBTL</a>
+                </p>
+                <ul>
+                    <li><a href="https://github.com/nzeemin/uknc-desolate" target="_blank">github.com/nzeemin/uknc-desolate</a>
+                        &ndash; репозиторий кода
+                    </li>
+                    <li><a href="https://zx-pk.ru/threads/32566.html" target="_blank">Обсуждение на форуме zx-pk.ru</a>
+                    </li>
+                </ul>
+                <p>
+                    После того как я детально разобрался с устройством оригинальной игры и практически завершил порт на
+                    ZX Spectrum,
+                    появилось желание сделать порт на УКНЦ. Основная сложность здесь была в конвертации кода для
+                    8-разрядного процессора Z80
+                    на совершенно другую архитектуру &ndash; DEC PDP-11, а точнее, под советский процессор К1801ВМ2.
+                    Подобную работу я уже проводил раньше, для игры <a href="highwayencounter.html">Highway
+                    Encounter</a>.
+                    На полную конвертацию кода в этот раз ушло ровно две недели (~4230 строк исходного кода для Z80
+                    преобразованы в ~3580 строк кода на MACRO-11),
+                    затем ещё несколько дней на поиск и устранение ошибок, плюс небольшие доработки.<br/>
+                    Всю эту работу я провёл в декабре 2020 года, релиз выложил 27 декабря 2020.
+                </p>
+                <p>
+                    На основе кода этой версии Desolate, Александ Тишин (Sandro) делает
+                    <a href="https://zx-pk.ru/threads/32872-port-igry-desolate-na-bk.html" target="_blank">порт игры для
+                        компьютера БК-0011М</a>.
+                </p>
+                <p>
+                    Скриншоты портированой версии:<br/>
+                    <img src="/images/uknc-desolate-story1.png" alt="" style="max-width:100%;">
+                    <img src="/images/uknc-desolate-room1.png" alt="" style="max-width:100%;">
+                </p>
+                <p>
+                    Проверено, что игра запускается и работает на реальной машине (спасибо BlaireCas и hobot с форума
+                    zx-pk.ru):<br>
+                </p>
+                <img src="/images/uknc-desolate-room1-real.jpg" alt="" style="max-width:100%;">
+            </div>
+        </div>
 
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    </div><!-- main -->
+</div><!-- container -->
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9B3N2FNN5F"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-9B3N2FNN5F');
-    </script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9B3N2FNN5F"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'G-9B3N2FNN5F');
+</script>
 
 </body>

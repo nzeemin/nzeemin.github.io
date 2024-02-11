@@ -5,55 +5,53 @@
     <title>Утилиты для эмулятора УКНЦ - nzeemin.github.io</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <!-- Yandex.RTB -->
-    <script>window.yaContextCb=window.yaContextCb||[]</script>
+    <script>window.yaContextCb = window.yaContextCb || []</script>
     <script src="https://yandex.ru/ads/system/context.js" async></script>
 </head>
 <body>
 
-    <header>
-        <a class="header-brand" href="/">nzeemin.github.io</a> /
-        Утилиты для эмулятора УКНЦ
-    </header>
+<header>
+    <a class="header-brand" href="/">nzeemin.github.io</a> /
+    Утилиты для эмулятора УКНЦ
+</header>
 
-    <table class="main-table" cellpadding="0" cellspacing="0">
-        <tbody>
-            <tr>
-                <td id="navbar" width="300">
-                    <div class="box box-nobox">
-                        <h2>Утилиты для эмулятора УКНЦ</h2>
-                    </div>
+<div id="main-container">
+    <aside id="navbar">
+        <div class="box box-nobox">
+            <h2>Утилиты для эмулятора УКНЦ</h2>
+        </div>
 
-                    <div class="box">
-                        <h2>Содержание</h2>
-                        <ul class="contents">
-                            <li>rt11dsk</li>
-                            <li>ESCParser</li>
-                            <li>sav2wav</li>
-                            <li>Sav2Cartridge</li>
-                            <li>UkncComSender</li>
-                        </ul>
-                    </div>
+        <div class="box">
+            <h2>Содержание</h2>
+            <ul class="contents">
+                <li>rt11dsk</li>
+                <li>ESCParser</li>
+                <li>sav2wav</li>
+                <li>Sav2Cartridge</li>
+                <li>UkncComSender</li>
+            </ul>
+        </div>
 
-                    <div class="box" style="margin-top: 50px; min-height: 150px">
-                        <h2 style="background: sandybrown">Реклама</h2>
-                        <!-- Yandex.RTB R-A-4409681-2 -->
-                        <div id="yandex_rtb_R-A-4409681-2"></div>
-                        <script>
-                            window.yaContextCb.push(()=>{
-                                Ya.Context.AdvManager.render({ "blockId": "R-A-4409681-2", "renderTo": "yandex_rtb_R-A-4409681-2" })
-                            })
-                        </script>
-                    </div>
-                </td><!--navbar end-->
+        <div class="box" style="margin-top: 20px; min-height: 150px">
+            <h2 style="background: sandybrown">Реклама</h2>
+            <!-- Yandex.RTB R-A-4409681-2 -->
+            <div id="yandex_rtb_R-A-4409681-2"></div>
+            <script>
+                window.yaContextCb.push(() => {
+                    Ya.Context.AdvManager.render({"blockId": "R-A-4409681-2", "renderTo": "yandex_rtb_R-A-4409681-2"})
+                })
+            </script>
+        </div>
+    </aside><!--navbar end-->
 
-                <td>
-                    <div class="box">
-                        <h2>rt11dsk</h2>
-                        <div class="entry">
-                            <p>
-                            	Утилита командной строки для работы с образами дисков УКНЦ.
-                            </p>
-                            <pre>
+    <div id="main">
+        <div class="box">
+            <h2>rt11dsk</h2>
+            <div class="entry">
+                <p>
+                    Утилита командной строки для работы с образами дисков УКНЦ.
+                </p>
+                <pre>
 Использование:
 Команды работы с образом дискеты:
     rt11dsk l &lt;ImageFile&gt;  - показать содержимое диска, подобно команде DIR
@@ -78,64 +76,64 @@
 Опции:
     -oXXXXX  Использовать смещение XXXXXX от начала образа, по умолчанию 0
                             </pre>
-                        </div>
-                    </div>
+            </div>
+        </div>
 
-                    <div class="box">
-                        <h2>ESCParser</h2>
-                        <div class="entry">
-                            <p>
-                            	ESCParser &ndash; это утилита с интерфейсом командной строки, эмулятор принтера с системой
-                                команд ESC/P. Текущая реализация ближе всего к принтеру Robotron CM 6329.01M (в свою очередь,
-                                его система команд основана на Epson LX-800 с некоторыми командами FX-800).
-                                Для печати символов используется шрифт, полученный из ПЗУ этого принтера.
-                            </p>
-                            <pre>
+        <div class="box">
+            <h2>ESCParser</h2>
+            <div class="entry">
+                <p>
+                    ESCParser &ndash; это утилита с интерфейсом командной строки, эмулятор принтера с системой
+                    команд ESC/P. Текущая реализация ближе всего к принтеру Robotron CM 6329.01M (в свою очередь,
+                    его система команд основана на Epson LX-800 с некоторыми командами FX-800).
+                    Для печати символов используется шрифт, полученный из ПЗУ этого принтера.
+                </p>
+                <pre>
 Использование:
     ESCParser [опции] InputFile &gt; OutputFile
-Опуции:
+Опции:
     -ps     Выдать PostScript, с поддержкой многостраничной печати
     -svg    Выдать SVG, без поддержки многостраничной печати
     -pdf    Выдать PDF, с поддержкой многостраничной печати
                             </pre>
-                            <p>
-                            	Результат прогона тестового примера:<br />
-                            	<img src="https://github.com/nzeemin/ukncbtl-utils/raw/master/ESCParser/ESCParser.png" />
-                            </p>
-                        </div>
-                    </div>
+                <p>
+                    Результат прогона тестового примера:<br/>
+                    <img src="https://github.com/nzeemin/ukncbtl-utils/raw/master/ESCParser/ESCParser.png"/>
+                </p>
+            </div>
+        </div>
 
-                    <div class="box">
-                        <h2>sav2wav</h2>
-                        <div class="entry">
-                            <p>
-                            	Утилита командной строки для преобразования .SAV-файлов RT-11 в .WAV-файлы, которые можно
-                                загрузить через магнитофонный вход УКНЦ.
-                                Конечно, загруженные таким образом программы смогут нормально работать, только если работают
-                                с ресурсами машины напрямую, и не пользуются системными вызовами операционной системы.
-                            </p>
-                            <pre>
+        <div class="box">
+            <h2>sav2wav</h2>
+            <div class="entry">
+                <p>
+                    Утилита командной строки для преобразования .SAV-файлов RT-11 в .WAV-файлы, которые можно
+                    загрузить через магнитофонный вход УКНЦ.
+                    Конечно, загруженные таким образом программы смогут нормально работать, только если работают
+                    с ресурсами машины напрямую, и не пользуются системными вызовами операционной системы.
+                </p>
+                <pre>
 Использование:
     sav2wav &lt;inputfile.SAV&gt; &lt;outputfile.WAV&gt;
                             </pre>
-                            <p>
-                                Первоначально эта утилита была написана Александром Александровым на Delphi.
-                                Я сконвертировал её на C++.
-                            </p>
-                        </div>
-                    </div>
+                <p>
+                    Первоначально эта утилита была написана Александром Александровым на Delphi.
+                    Я сконвертировал её на C++.
+                </p>
+            </div>
+        </div>
 
-                    <div class="box">
-                        <h2>Sav2Cartridge</h2>
-                        <div class="entry">
-                            <p>
-                                Утилита командной строки, позволяющая сделать из .SAV-файла RT-11 образ картриджа УКНЦ.
-                                Картридж для УКНЦ имеет размер 24 Кб = 24576 байт. Это &laquo;естественное&raquo; ограничение
-                                на размер файла, который можно преобразовать в формат картриджа.
-                                Если .SAV-файл оказывается слишком большой для картриджа, то утилита пытается сжать этот файл
-                                с помощью алгоритмов сжатия.
-                            </p>
-                            <pre>
+        <div class="box">
+            <h2>Sav2Cartridge</h2>
+            <div class="entry">
+                <p>
+                    Утилита командной строки, позволяющая сделать из .SAV-файла RT-11 образ картриджа УКНЦ.
+                    Картридж для УКНЦ имеет размер 24 Кб = 24576 байт. Это &laquo;естественное&raquo; ограничение
+                    на размер файла, который можно преобразовать в формат картриджа.
+                    Если .SAV-файл оказывается слишком большой для картриджа, то утилита пытается сжать этот файл
+                    с помощью алгоритмов сжатия.
+                </p>
+                <pre>
 Использование:
     Sav2Cart [опции] &lt;inputfile.SAV&gt; &lt;outputfile.BIN&gt;
 Опции:
@@ -147,34 +145,37 @@
     /lzsa2 - попробовать сжатие LZSA2
     (без опций сжатия) - пробовать одно за другим, пока не влезет
                             </pre>
-                            <p>
-                                См. также обсуждение <a href="http://zx-pk.ru/threads/26703-utilita-sav2cart.html" target="_blank">zx-pk.ru - Утилита SAV2CART</a>
-                            </p>
-                        </div>
-                    </div>
+                <p>
+                    См. также обсуждение <a href="http://zx-pk.ru/threads/26703-utilita-sav2cart.html" target="_blank">zx-pk.ru
+                    - Утилита SAV2CART</a>
+                </p>
+            </div>
+        </div>
 
-                    <div class="box">
-                        <h2>UkncComSender</h2>
-                        <div class="entry">
-                            <p>
-                            	Экспериментальная утилита, позволяющая загрузиться в эмуляторе УКНЦ с последовательного порта
-                                (Стык С2).
-                            </p>
-                        </div>
-                    </div>
+        <div class="box">
+            <h2>UkncComSender</h2>
+            <div class="entry">
+                <p>
+                    Экспериментальная утилита, позволяющая загрузиться в эмуляторе УКНЦ с последовательного порта
+                    (Стык С2).
+                </p>
+            </div>
+        </div>
 
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    </div><!-- main -->
+</div><!-- container -->
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9B3N2FNN5F"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-9B3N2FNN5F');
-    </script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9B3N2FNN5F"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'G-9B3N2FNN5F');
+</script>
 
 </body>

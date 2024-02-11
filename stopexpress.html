@@ -5,169 +5,194 @@
     <title>Портирование Stop the Express - nzeemin.github.io</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <!-- Yandex.RTB -->
-    <script>window.yaContextCb=window.yaContextCb||[]</script>
+    <script>window.yaContextCb = window.yaContextCb || []</script>
     <script src="https://yandex.ru/ads/system/context.js" async></script>
 </head>
 <body>
 
-    <header>
-        <a class="header-brand" href="/">nzeemin.github.io</a> /
-        Портирование Stop the Express
-    </header>
+<header>
+    <a class="header-brand" href="/">nzeemin.github.io</a> /
+    Портирование Stop the Express
+</header>
 
-    <table class="main-table" cellpadding="0" cellspacing="0">
-        <tbody>
-            <tr>
-                <td id="navbar" width="300">
-                    <div class="box box-nobox">
-                        <h2>Портирование Stop the Express</h2>
-                    </div>
+<div id="main-container">
+    <aside id="navbar">
+        <div class="box box-nobox">
+            <h2>Портирование Stop the Express</h2>
+        </div>
 
-                    <div class="box">
-                        <h2>Содержание</h2>
-                        <ul class="contents">
-                            <li>Оригинал на ZX Spectrum</li>
-                            <li>Stop the Express на Электроника МС 0515</li>
-                            <li>Портирование на УКНЦ</li>
-                            <li>Портирование на БК-0010</li>
-                        </ul>
-                    </div>
+        <div class="box">
+            <h2>Содержание</h2>
+            <ul class="contents">
+                <li>Оригинал на ZX Spectrum</li>
+                <li>Stop the Express на Электроника МС 0515</li>
+                <li>Портирование на УКНЦ</li>
+                <li>Портирование на БК-0010</li>
+            </ul>
+        </div>
 
-                    <div class="box" style="margin-top: 50px; min-height: 150px">
-                        <h2 style="background: sandybrown">Реклама</h2>
-                        <!-- Yandex.RTB R-A-4409681-2 -->
-                        <div id="yandex_rtb_R-A-4409681-2"></div>
-                        <script>
-                            window.yaContextCb.push(()=>{
-                                Ya.Context.AdvManager.render({ "blockId": "R-A-4409681-2", "renderTo": "yandex_rtb_R-A-4409681-2" })
-                            })
-                        </script>
-                    </div>
-                </td><!--navbar end-->
+        <div class="box" style="margin-top: 20px; min-height: 150px">
+            <h2 style="background: sandybrown">Реклама</h2>
+            <!-- Yandex.RTB R-A-4409681-2 -->
+            <div id="yandex_rtb_R-A-4409681-2"></div>
+            <script>
+                window.yaContextCb.push(() => {
+                    Ya.Context.AdvManager.render({"blockId": "R-A-4409681-2", "renderTo": "yandex_rtb_R-A-4409681-2"})
+                })
+            </script>
+        </div>
+    </aside><!--navbar end-->
 
-                <td>
-                    <div class="box">
-                        <h2>Оригинал на ZX Spectrum</h2>
-                        <div class="entry">
-                            <p>
-                                <a href="http://www.worldofspectrum.org/infoseekid.cgi?id=0004916" target="_blank">"Stop the Express" на World of Spectrum</a>
-                            </p>
-                            <p>
-                                Как игра устроена внутри.<br/>
-                                Игровой экран имеет размер 32&times;24 тайла, тайлы 8x8 пикселей плюс атрибут. Т.е. экран 256&times;192 = экран Спектрума.
-                                В памяти мы храним экран в виде индексов тайлов два раза, я их назвал &laquo;экран план&raquo; и &laquo;экран факт&raquo;.
-                                Если мы хотим что-то вывести на экран &ndash; меняем всегда только экран план. Допустим хотим вывести строку &ndash;
-                                просто копируем символы этой строки на экран план.
-                                Регулярно выполняется процедура актуализации экрана. Она бежит по экрану план, для каждого тайла сравнивает
-                                есть ли различие с тайлом экран факт.
-                                Только если различие есть, то делаем изменение на экране, и обновляем номер тайла в экране факт.
-                                Сами тайлы это 9 байт &ndash; 8 байт на пиксели плюс один байт на атрубут, всего 256 тайлов.
-                                Если обратите внимание, большинство строк на экране в горизонтальном направлении почти одинаковы.
-                                Поэтому даже когда выполняется вроде бы большое скроллирование (поезд уезжает), реально изменений на экране не так уж и много.
-                            </p>
-                        </div>
-                    </div>
+    <div id="main">
+        <div class="box">
+            <h2>Оригинал на ZX Spectrum</h2>
+            <div class="entry">
+                <p>
+                    <a href="http://www.worldofspectrum.org/infoseekid.cgi?id=0004916" target="_blank">"Stop the
+                        Express" на World of Spectrum</a>
+                </p>
+                <p>
+                    Как игра устроена внутри.<br/>
+                    Игровой экран имеет размер 32&times;24 тайла, тайлы 8x8 пикселей плюс атрибут. Т.е. экран 256&times;192
+                    = экран Спектрума.
+                    В памяти мы храним экран в виде индексов тайлов два раза, я их назвал &laquo;экран план&raquo; и
+                    &laquo;экран факт&raquo;.
+                    Если мы хотим что-то вывести на экран &ndash; меняем всегда только экран план. Допустим хотим
+                    вывести строку &ndash;
+                    просто копируем символы этой строки на экран план.
+                    Регулярно выполняется процедура актуализации экрана. Она бежит по экрану план, для каждого тайла
+                    сравнивает
+                    есть ли различие с тайлом экран факт.
+                    Только если различие есть, то делаем изменение на экране, и обновляем номер тайла в экране факт.
+                    Сами тайлы это 9 байт &ndash; 8 байт на пиксели плюс один байт на атрубут, всего 256 тайлов.
+                    Если обратите внимание, большинство строк на экране в горизонтальном направлении почти одинаковы.
+                    Поэтому даже когда выполняется вроде бы большое скроллирование (поезд уезжает), реально изменений на
+                    экране не так уж и много.
+                </p>
+            </div>
+        </div>
 
-                    <div class="box">
-                        <h2>Stop the Express на Электроника МС 0515</h2>
-                        <div class="entry">
-                            <p>
-                                В начале 1990-х во Львове на компьютер &laquo;Электроника МС 0515&raquo; был портирован ряд программ с компьютера
-                                ZX Spectrum, в частности, игра &laquo;Stop the Express&raquo;
-                                (мне неизвестно кто именно выполнил эту работу, есть только подпись &laquo;Lwow Soft&raquo;).
-                                &laquo;Электроника МС 0515&raquo; имеет организацию экрана, сходную с экраном ZX Spectrum, но совершенно другой
-                                процессор &ndash; 16-разрядный, с системой команд PDP-11.
-                                Поэтому такое портирование скорее представляло собой полное дизассемблирование и по-командное переписывание кода игры.
-                            </p>
-                            <ul>
-                                <li>
-                                    <a href="https://github.com/nzeemin/uknc-stopexpress/blob/master/original/expres.lst" target="_blank">expres.lst</a>
-                                    &ndash; восстановленный комментированный код игры
-                                </li>
-                            </ul>
-                            <p>
-                                Скриншот экрана &laquo;Электроника МС 0515&raquo; &ndash; до пиксела совпадает с версией для ZX Spectrum:
-                            </p>
-                            <img src="https://github.com/nzeemin/uknc-stopexpress/raw/master/screenshot/original-ms0515.png" alt="" style="max-width:100%;">
-                        </div>
-                    </div>
+        <div class="box">
+            <h2>Stop the Express на Электроника МС 0515</h2>
+            <div class="entry">
+                <p>
+                    В начале 1990-х во Львове на компьютер &laquo;Электроника МС 0515&raquo; был портирован ряд программ
+                    с компьютера
+                    ZX Spectrum, в частности, игра &laquo;Stop the Express&raquo;
+                    (мне неизвестно кто именно выполнил эту работу, есть только подпись &laquo;Lwow Soft&raquo;).
+                    &laquo;Электроника МС 0515&raquo; имеет организацию экрана, сходную с экраном ZX Spectrum, но
+                    совершенно другой
+                    процессор &ndash; 16-разрядный, с системой команд PDP-11.
+                    Поэтому такое портирование скорее представляло собой полное дизассемблирование и по-командное
+                    переписывание кода игры.
+                </p>
+                <ul>
+                    <li>
+                        <a href="https://github.com/nzeemin/uknc-stopexpress/blob/master/original/expres.lst"
+                           target="_blank">expres.lst</a>
+                        &ndash; восстановленный комментированный код игры
+                    </li>
+                </ul>
+                <p>
+                    Скриншот экрана &laquo;Электроника МС 0515&raquo; &ndash; до пиксела совпадает с версией для ZX
+                    Spectrum:
+                </p>
+                <img src="https://github.com/nzeemin/uknc-stopexpress/raw/master/screenshot/original-ms0515.png" alt=""
+                     style="max-width:100%;">
+            </div>
+        </div>
 
-                    <div class="box">
-                        <h2>Портирование на УКНЦ (незакочено)</h2>
-                        <div class="entry">
-                            <p>
-                                <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/stopexpress.uknc&run=1" target="_blank" class="bigbluebutton"
-                                    >Запустить в онлайн-эмуляторе UKNCBTL</a>
-                            </p>
-                            <ul>
-                                <li><a href="https://github.com/nzeemin/uknc-stopexpress" target="_blank">github.com/nzeemin/uknc-stopexpress</a> &ndash; репозиторий кода</li>
-                                <li><a href="http://zx-pk.ru/threads/27446-portirovanie-stop-the-express.html" target="_blank">Обсуждение на форуме zx-pk.ru</a></li>
-                            </ul>
-                            <p>
-                            	Портирование выполнено в марте 2017 года.
-                            </p>
-                            <p>
-                                Скриншоты портированой версии:<br />
-                                <img src="https://github.com/nzeemin/uknc-stopexpress/raw/master/screenshot/demoscreen.png" alt="" style="max-width:100%;">
-                                <br />
-                                <img src="https://github.com/nzeemin/uknc-stopexpress/raw/master/screenshot/demoscreen2.png" alt="" style="max-width:100%;">
-                            </p>
-                            <p>
-                                Демо-режим:<br />
-                                <iframe width="560" height="315" src="https://www.youtube.com/embed/66ETuJ9uO6s" frameborder="0" allowfullscreen></iframe>
-                            </p>
-                            <p>
-                                На реальном УКНЦ (спасибо hobot с форума zx-pk.ru):<br />
-                                <iframe width="560" height="315" src="https://www.youtube.com/embed/sc0jTqVKd_8" frameborder="0" allowfullscreen></iframe>
-                            </p>
-                        </div>
-                    </div>
+        <div class="box">
+            <h2>Портирование на УКНЦ (незакочено)</h2>
+            <div class="entry">
+                <p>
+                    <a href="/ukncbtl-wasm/index.html?state=https://nzeemin.github.io/ukncbtl/stopexpress.uknc&run=1"
+                       target="_blank" class="bigbluebutton"
+                    >Запустить в онлайн-эмуляторе UKNCBTL</a>
+                </p>
+                <ul>
+                    <li><a href="https://github.com/nzeemin/uknc-stopexpress" target="_blank">github.com/nzeemin/uknc-stopexpress</a>
+                        &ndash; репозиторий кода
+                    </li>
+                    <li><a href="http://zx-pk.ru/threads/27446-portirovanie-stop-the-express.html" target="_blank">Обсуждение
+                        на форуме zx-pk.ru</a></li>
+                </ul>
+                <p>
+                    Портирование выполнено в марте 2017 года.
+                </p>
+                <p>
+                    Скриншоты портированой версии:<br/>
+                    <img src="https://github.com/nzeemin/uknc-stopexpress/raw/master/screenshot/demoscreen.png" alt=""
+                         style="max-width:100%;">
+                    <br/>
+                    <img src="https://github.com/nzeemin/uknc-stopexpress/raw/master/screenshot/demoscreen2.png" alt=""
+                         style="max-width:100%;">
+                </p>
+                <p>
+                    Демо-режим:<br/>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/66ETuJ9uO6s" frameborder="0"
+                            allowfullscreen></iframe>
+                </p>
+                <p>
+                    На реальном УКНЦ (спасибо hobot с форума zx-pk.ru):<br/>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/sc0jTqVKd_8" frameborder="0"
+                            allowfullscreen></iframe>
+                </p>
+            </div>
+        </div>
 
-                    <div class="box">
-                        <h2>Портирование на БК-0010 (незакочено)</h2>
-                        <ul>
-                                <li><a href="https://github.com/nzeemin/bk0010-stopexpress" target="_blank">github.com/nzeemin/bk0010-stopexpress</a> &ndash; репозиторий кода</li>
-                                <li><a href="https://zx-pk.ru/threads/29555-portirovanie-stop-the-express-na-bk-0010.html" target="_blank">Обсуждение на форуме zx-pk.ru</a></li>
-                            </ul>
-                        <div class="entry">
-                            <p>
-                                Портирование начато в сентябре 2018 года.
-                            </p>
-                            <p>
-                                Доступной памяти под программу у БК-0010 всего 16 КБ, поэтому многое убрано:
-                                <ul>
-                                    <li>убрана последовательность демо-режима, поэтому в демо главный герой просто стоит;</li>
-                                    <li>большинство тайлов имеют размер 8x4 пикселов, 4 цвета; тайлы символов и цифр 8x5 в 4 цвета;</li>
-                                    <li>убран блок тайлов и сами тайлы локомотива, это используется после прохождения уровней;</li>
-                                    <li>экран описания показывается только один раз в начале игры, потом это место используется;</li>
-                                    <li>нет звука.</li>
-                                </ul>
-                            </p>
-                            <p>
-                                Скриншоты портированой версии:<br />
-                                <img src="/images/bk0010-stopexpress-titlescreen.png" alt="" style="max-width:100%;">
-                                <br />
-                                <img src="/images/bk0010-stopexpress-demoscreen.png" alt="" style="max-width:100%;">
-                            </p>
-                            <p>
-                                Видео портированной версии, снято с помощью эмулятора:<br />
-                                <iframe width="560" height="315" src="https://www.youtube.com/embed/9KMgSoCDFYo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            </p>
-                        </div>
-                    </div>
+        <div class="box">
+            <h2>Портирование на БК-0010 (незакочено)</h2>
+            <ul>
+                <li><a href="https://github.com/nzeemin/bk0010-stopexpress" target="_blank">github.com/nzeemin/bk0010-stopexpress</a>
+                    &ndash; репозиторий кода
+                </li>
+                <li><a href="https://zx-pk.ru/threads/29555-portirovanie-stop-the-express-na-bk-0010.html"
+                       target="_blank">Обсуждение на форуме zx-pk.ru</a></li>
+            </ul>
+            <div class="entry">
+                <p>
+                    Портирование начато в сентябре 2018 года.
+                </p>
+                <p>
+                    Доступной памяти под программу у БК-0010 всего 16 КБ, поэтому многое убрано:
+                <ul>
+                    <li>убрана последовательность демо-режима, поэтому в демо главный герой просто стоит;</li>
+                    <li>большинство тайлов имеют размер 8x4 пикселов, 4 цвета; тайлы символов и цифр 8x5 в 4 цвета;</li>
+                    <li>убран блок тайлов и сами тайлы локомотива, это используется после прохождения уровней;</li>
+                    <li>экран описания показывается только один раз в начале игры, потом это место используется;</li>
+                    <li>нет звука.</li>
+                </ul>
+                </p>
+                <p>
+                    Скриншоты портированой версии:<br/>
+                    <img src="/images/bk0010-stopexpress-titlescreen.png" alt="" style="max-width:100%;">
+                    <br/>
+                    <img src="/images/bk0010-stopexpress-demoscreen.png" alt="" style="max-width:100%;">
+                </p>
+                <p>
+                    Видео портированной версии, снято с помощью эмулятора:<br/>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/9KMgSoCDFYo" frameborder="0"
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                </p>
+            </div>
+        </div>
 
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    </div><!-- main -->
+</div><!-- container -->
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9B3N2FNN5F"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-9B3N2FNN5F');
-    </script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9B3N2FNN5F"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'G-9B3N2FNN5F');
+</script>
 
 </body>
