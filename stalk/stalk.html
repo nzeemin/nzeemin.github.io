@@ -528,7 +528,7 @@
                 for ( VAR20 = 1; VAR20 <= 3; VAR20++ ) {
                     VAR16++;
                     if (V33122[VAR16] == ' ') {
-                        return;
+                        break;
                     }
                 }
                 V33122[VAR16] = FV;
@@ -1215,7 +1215,7 @@
                         for (VAR22 = 1; VAR22 <= 3; VAR22++) {
                             if (V33122[VAR22] != ' ') {
                                 V33122[VAR22] = ' ';
-                                setF(VAR4,V33136[VAR22],V33146[VAR22], CHR(RANDOM(36,63)));
+                                setF(VAR4,V33136[VAR22],V33146[VAR22], String.fromCharCode(RANDOM(36,63)));
                             }
                         }
                     }
