@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Конвертор мнемоник из i8080 в Z80 - nzeemin.github.io</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <!-- Yandex.RTB -->
+    <script>window.yaContextCb = window.yaContextCb || []</script>
+    <script src="https://yandex.ru/ads/system/context.js" async></script>
+</head>
+<body>
+
+<header>
+    <a class="header-brand" href="/">nzeemin.github.io</a> /
+    Конвертор мнемоник из i8080 в Z80
+</header>
+
+<div id="main-container">
+    <aside id="navbar">
+        <div class="box box-nobox">
+            <h2>Конвертор мнемоник из i8080 в Z80</h2>
+        </div>
+
+        <!--<div class="box">
+            <h2>Содержание</h2>
+            <ul class="contents">
+            </ul>
+        </div>-->
+
+        <div class="box" style="margin-top: 20px; min-height: 150px">
+            <h2 style="background: sandybrown">Реклама</h2>
+            <!-- Yandex.RTB R-A-4409681-2 -->
+            <div id="yandex_rtb_R-A-4409681-2"></div>
+            <script>
+                window.yaContextCb.push(() => {
+                    Ya.Context.AdvManager.render({"blockId": "R-A-4409681-2", "renderTo": "yandex_rtb_R-A-4409681-2"})
+                })
+            </script>
+        </div>
+    </aside><!--navbar end-->
+
+    <div id="main">
+        <div class="box">
+            <h2>Конвертор мнемоник</h2>
+
+            <table style="width: 100%">
+                <tbody>
+                    <tr>
+                        <th>i8080</th>
+                        <th>Z80</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <textarea id="text8080" rows="50" type="text" style="width: 98%"></textarea>
+                        </td>
+                        <td>
+                            <textarea id="textz80" rows="50" type="text" style="width: 98%"></textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div><!-- main -->
+</div><!-- container -->
+
+<script>
+    let area = document.getElementById('text8080');
+    if (area.addEventListener) {
+        area.addEventListener('input', text8080_changed, false);
+    } else if (area.attachEvent) {
+        area.attachEvent('onpropertychange', text8080_changed);
+    }
+
+    function text8080_changed() {
+        let area8080 = document.getElementById('text8080');
+        const lines = area8080.value.split('\n');
+        let result = '';
+        for (let i = 0; i < lines.length; i++) {
+            let line = lines[i];
+            // Skip lines with no instruction
+            const regexSkipArr = [
+                /^\s*$/,                // empty line
+                /^\s*;/,                // ;comment
+                /^\s*\w[\w\d]*:\s*$/,   // label:
+                /^\s*\w[\w\d]*:\s*;/,   // label: ;comment
+                /^\s*[.#]\w+/,          // meta-instruction like .org or #ifdef
+                /^\s*\w[\w\d]*:\s*[.#]\w+/,  // label: meta-instr
+                /^\s*\w[\w\d]*\s+[.#]\w+/,  // label meta-instr -- like "something equ something"
+            ];
+            let skip = false;
+            for (let j = 0; j < regexSkipArr.length; j++) {
+                const match = line.match(regexSkipArr[j]);
+                if (match) {
+                    skip = true;
+                    break;
+                }
+            }
+            if (skip) {
+                result += line + '\n';
+                continue;
+            }
+            // Split to prefix, instruction, postfix
+            const regexArr = [
+                /^(\s*\w[\w\d]*:\s*)(\w+[^;]*)(\s*)$/,      // label: instr
+                /^(\s*\w[\w\d]*:\s*)(\w+[^;]*)(\s*;.*)$/,   // label: instr ;comment
+                /^(\s+)(\w+)(\s*)$/,                        // instr
+                /^(\s+)(\w+)(\s*;.*)$/,                     // instr ;comment
+                /^(\s+)(\w+\s+[^;\s]+)(\s*)$/,              // instr op
+                /^(\s+)(\w+\s+[^;,\s]+)(\s*;.*)$/,           // instr op ;comment
+                /^(\s+)(\w+\s+[^;,\s]+\s*,\s*[^;,\s]+)(\s*)$/,  // instr op, op
+                /^(\s+)(\w+\s+[^;,\s]+\s*,\s*[^;,\s]+)(\s*;.*)$/,  // instr op, op ;comment
+            ];
+            let prefix = '', instruction = '', postfix = '';
+            for (let j = 0; j < regexArr.length; j++) {
+                const match = line.match(regexArr[j]);
+                if (match)
+                {
+                    prefix = match[1];
+                    instruction = match[2];
+                    postfix = match[3];
+                    break;
+                }
+            }
+            if (!instruction) {  // back up if we not found any match
+                const regex = /^(\s*)(\S+.*)(\s*)$/;  // trim
+                const match = line.match(regex);
+                if (match) {
+                    prefix = match[1];
+                    instruction = match[2];
+                    postfix = match[3];
+                }
+                else
+                    instruction = line.trim();
+            }
+
+            let resline = convert8080toz80(instruction);
+            if (resline === null)
+                resline = 'unknown: ' + instruction;
+            result += prefix + resline + postfix + '\n';
+        }
+        let areaz80 = document.getElementById('textz80');
+        areaz80.value = result;
+    }
+
+    const convTable = [
+        { 'i8080': 'ADC r',   'z80': 'ADC A,r' },  // r = A,B,C,D,E,H,L, M
+        { 'i8080': 'ACI n',   'z80': 'ADC A,n' },
+        //{ 'i8080': null,      'z80': 'ADC A,(ii+n)' },
+        //{ 'i8080': null,      'z80': 'ADC HL,rr' },
+        //
+        { 'i8080': 'ADD r',   'z80': 'ADD A,r' },  // r = A,B,C,D,E,H,L, M
+        { 'i8080': 'ADI n',   'z80': 'ADD A,n' },
+        //{ 'i8080': null,      'z80': 'ADD A,(ii+n)' },
+        { 'i8080': 'DAD rr',   'z80': 'ADD HL,rr' },
+        //
+        { 'i8080': 'ANA r',   'z80': 'AND A,r' },  // r = A,B,C,D,E,H,L, M
+        { 'i8080': 'ANI n',   'z80': 'AND A,n' },
+        //
+        { 'i8080': 'CALL nn', 'z80': 'CALL nn' },
+        //
+        { 'i8080': 'CC nn',   'z80': 'CALL C,nn' },
+        { 'i8080': 'CM nn',   'z80': 'CALL M,nn' },
+        { 'i8080': 'CNC nn',  'z80': 'CALL NC,nn' },
+        { 'i8080': 'CNZ nn',  'z80': 'CALL NZ,nn' },
+        { 'i8080': 'CP nn',   'z80': 'CALL P,nn' },
+        { 'i8080': 'CPE nn',  'z80': 'CALL PE,nn' },
+        { 'i8080': 'CPO nn',  'z80': 'CALL PO,nn' },
+        { 'i8080': 'CZ nn',   'z80': 'CALL Z,nn' },
+        { 'i8080': 'CMC',     'z80': 'CCF' },
+        { 'i8080': 'CPM r',   'z80': 'CP r' },          // r = A,B,C,D,E,H,L, M
+        { 'i8080': 'CPI n',   'z80': 'CP n' },
+        //
+        { 'i8080': 'CMA',     'z80': 'CPL' },
+        { 'i8080': 'DAA',     'z80': 'DAA' },
+        { 'i8080': 'DCR r',   'z80': 'DEC r' },         // r = A,B,C,D,E,H,L, M
+        // DCM M ??
+        { 'i8080': 'DCX rr',  'z80': 'DEC rr' },
+        //
+        { 'i8080': 'DI',      'z80': 'DI' },
+        //
+        { 'i8080': 'EI',      'z80': 'EI' },
+        //
+        { 'i8080': 'XCHG',    'z80': 'EX DE,HL' },
+        { 'i8080': 'XTHL',    'z80': 'EX (SP),HL' },
+        //
+        //{ 'i8080': null,      'z80': 'EXX' },
+        { 'i8080': 'HLT',     'z80': 'HALT' },
+        //
+        { 'i8080': 'IN n',    'z80': 'IN A,(n)' },
+        //
+        { 'i8080': 'INR r',   'z80': 'INC r' },         // r = A,B,C,D,E,H,L, M
+        { 'i8080': 'INX rr',  'z80': 'INC rr' },
+        //
+        { 'i8080': 'JMP nn',  'z80': 'JP nn' },
+        { 'i8080': 'JC nn',   'z80': 'JP C,nn' },
+        { 'i8080': 'JM nn',   'z80': 'JP M,nn' },
+        { 'i8080': 'JNC nn',  'z80': 'JP NC,nn' },
+        { 'i8080': 'JP nn',   'z80': 'JP P,nn' },
+        { 'i8080': 'JNZ nn',  'z80': 'JP NZ,nn' },
+        { 'i8080': 'JPE nn',  'z80': 'JP PE,nn' },
+        { 'i8080': 'JPO nn',  'z80': 'JP PO,nn' },
+        { 'i8080': 'JZ nn',   'z80': 'JP Z,nn' },
+        //{ 'i8080': null,      'z80': 'JP cc,nn' },
+        { 'i8080': 'PCHL',    'z80': 'JP (HL)' },
+        //
+        { 'i8080': 'MOV r,r', 'z80': 'LD r,r' },        // r = A,B,C,D,E,H,L, M
+        { 'i8080': 'MVI r,n', 'z80': 'LD r,n' },        // r = A,B,C,D,E,H,L, M
+        //
+        { 'i8080': 'LDAX rr', 'z80': 'LD A,(rr)' },     // rr = BE, DE
+        { 'i8080': 'LDA nn',  'z80': 'LD A,(nn)' },
+        { 'i8080': 'STAX rr', 'z80': 'LD (rr),A' },     // rr = BE, DE
+        { 'i8080': 'STA nn',  'z80': 'LD (nn),A' },
+        //
+        { 'i8080': 'LXI rr,nn', 'z80': 'LD rr,nn' },
+        //
+        { 'i8080': 'LHLD nn', 'z80': 'LD HL,(nn)' },
+        //
+        { 'i8080': 'SHLD nn', 'z80': 'LD (nn),HL' },
+        //
+        { 'i8080': 'SPHL nn', 'z80': 'LD SP,HL' },
+        //
+        { 'i8080': 'NOP',     'z80': 'NOP' },
+        { 'i8080': 'ORA r',   'z80': 'OR r' },          // r = A,B,C,D,E,H,L, M
+        { 'i8080': 'ORI n',   'z80': 'OR n' },
+        //
+        { 'i8080': 'OUT n',    'z80': 'OUT (n),A' },
+        //
+        { 'i8080': 'POP rr',   'z80': 'POP rr' },
+        { 'i8080': 'PUSH rr',  'z80': 'PUSH rr' },
+        //
+        { 'i8080': 'RET',     'z80': 'RET' },
+        //{ 'i8080': null,      'z80': 'RET cc' },
+        { 'i8080': 'RC',      'z80': 'RET C' },
+        { 'i8080': 'RM',      'z80': 'RET M' },
+        { 'i8080': 'RNC',     'z80': 'RET NC' },
+        { 'i8080': 'RNZ',     'z80': 'RET NZ' },
+        { 'i8080': 'RP',      'z80': 'RET P' },
+        { 'i8080': 'RPE',     'z80': 'RET PE' },
+        { 'i8080': 'RPO',     'z80': 'RET PO' },
+        { 'i8080': 'RZ',      'z80': 'RET Z' },
+        //{ 'i8080': null,      'z80': 'RETI' },
+        //{ 'i8080': null,      'z80': 'RETN' },
+        //
+        { 'i8080': 'RAL',     'z80': 'RLA' },
+        //
+        { 'i8080': 'RLC',     'z80': 'RLCA' },
+        //
+        { 'i8080': 'RAR',     'z80': 'RRA' },
+        //
+        { 'i8080': 'RRC',     'z80': 'RRCA' },
+        //
+        { 'i8080': 'RST nn',  'z80': 'RST nn' },
+        { 'i8080': 'SBB r',   'z80': 'SBC A,r' },       // r = A,B,C,D,E,H,L, M
+        { 'i8080': 'SBI n',   'z80': 'SBC A,n' },
+        //
+        { 'i8080': 'STC',     'z80': 'SCF' },
+        //
+        { 'i8080': 'SUB r',   'z80': 'SUB A,r' },       // r = A,B,C,D,E,H,L, M
+        { 'i8080': 'SUI n',   'z80': 'SUB A,n' },
+        //
+        { 'i8080': 'XRA r',   'z80': 'XOR A,r' },       // r = A,B,C,D,E,H,L, M
+        { 'i8080': 'XRI n',   'z80': 'XOR A,n' },
+    ];
+
+    function findByI8080Instr0(instr) {
+        for (let i = 0; i < convTable.length; i++) {
+            let c = convTable[i];
+            if (c.i8080 === null) continue;
+            if (c.i8080.includes(' ')) continue;
+            if (c.i8080.toUpperCase() === instr.toUpperCase())
+                return c;
+        }
+        return null;
+    }
+
+    function findByI8080Instr1(instr) {
+        for (let i = 0; i < convTable.length; i++) {
+            let c = convTable[i];
+            if (c.i8080 === null) continue;
+            if (!c.i8080.includes(' ') || c.i8080.includes(',')) continue;
+            if (c.i8080.toUpperCase().startsWith(instr.toUpperCase() + ' '))
+                return c;
+        }
+        return null;
+    }
+
+    function findByI8080Instr2(instr) {
+        for (let i = 0; i < convTable.length; i++) {
+            let c = convTable[i];
+            if (c.i8080 === null) continue;
+            if (!c.i8080.includes(' ') || !c.i8080.includes(',')) continue;
+            if (c.i8080.toUpperCase().startsWith(instr.toUpperCase() + ' '))
+                return c;
+        }
+        return null;
+    }
+
+    function extendRegisterPair(oper) {
+        switch (oper.toUpperCase()) {
+            case 'B': return 'BC';
+            case 'D': return 'DE';
+            case 'H': return 'HL';
+            case 'PSW': return 'AF';
+            default: return oper;
+        }
+    }
+
+    // Convert one line
+    // line not null/undefined/empty, trimmed
+    function convert8080toz80(line)
+    {
+        const regex0 = /^\w+$/;  // instruction with no operands
+        const regex1 = /^(\w+)\s+([^\s,]+)$/;  // instruction with one operand
+        const regex2 = /^(\w+)\s+([^\s,]+)\s*,\s*([^\s,]+)$/;  // instruction with one operand
+
+        const match0 = line.match(regex0);
+        if (match0) {  // no operands
+            let conv = findByI8080Instr0(line);
+            if (!conv) return null;  // not found
+            return conv.z80;
+        }
+
+        const match1 = line.match(regex1);
+        if (match1) {  // one operand
+            const instr = match1[1];
+            const oper = match1[2];
+            let conv = findByI8080Instr1(instr);
+            if (!conv) return null;  // not found
+            let result = conv.z80;
+            if (result.includes('rr'))
+                return result.replace('rr', extendRegisterPair(oper));
+            if (result.includes('r')) {
+                if (oper.toUpperCase() === 'M')
+                    return result.replace('r', '(HL)');
+                return result.replace('r', oper);
+            }
+            if (result.includes('nn'))
+                return result.replace('nn', oper);
+            if (result.includes('n'))
+                return result.replace('n', oper);
+            //TODO
+            return 'match1: ' + instr + ' ' + oper + ' = ' + result;
+        }
+
+        const match2 = line.match(regex2);
+        if (match2) {  // two operands
+            const instr = match2[1];
+            const oper1 = match2[2];
+            const oper2 = match2[3];
+            let conv = findByI8080Instr2(instr);
+            if (!conv) return null;  // not found
+            let result = conv.z80;
+            // 1st operand
+            if (result.includes('rr,'))
+                result = result.replace('rr,', extendRegisterPair(oper1) + ',');
+            else if (result.includes('r,')) {
+                if (oper1.toUpperCase() === 'M')
+                    result = result.replace('r,', '(HL),');
+                else
+                    result = result.replace('r,', oper1 + ',');
+            }
+            // 2nd operand
+            if (result.includes(',r')) {
+                if (oper2.toUpperCase() === 'M')
+                    result = result.replace(',r', ',(HL)');
+                else
+                    result = result.replace(',r', ',' + oper2);
+            }
+            else if (result.includes(',nn'))
+                result = result.replace(',nn', ',' + oper2);
+            else if (result.includes(',n'))
+                result = result.replace(',n', ',' + oper2);
+            //
+            return result;
+        }
+
+        return null;
+    }
+
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9B3N2FNN5F"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'G-9B3N2FNN5F');
+</script>
+
+</body>
+</html>
