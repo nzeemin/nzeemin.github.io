@@ -66,15 +66,16 @@
 </div><!-- container -->
 
 <script>
-    let area = document.getElementById('text8080');
-    if (area.addEventListener) {
-        area.addEventListener('input', text8080_changed, false);
-    } else if (area.attachEvent) {
-        area.attachEvent('onpropertychange', text8080_changed);
+    const area8080 = document.getElementById('text8080');
+    const areaz80 = document.getElementById('textz80');
+
+    if (area8080.addEventListener) {
+        area8080.addEventListener('input', text8080_changed, false);
+    } else if (area8080.attachEvent) {
+        area8080.attachEvent('onpropertychange', text8080_changed);
     }
 
     function text8080_changed() {
-        let area8080 = document.getElementById('text8080');
         const lines = area8080.value.split('\n');
         let result = '';
         for (let i = 0; i < lines.length; i++) {
@@ -89,15 +90,8 @@
                 /^\s*\w[\w\d]*:\s*[.#]\w+/,  // label: meta-instr
                 /^\s*\w[\w\d]*\s+[.#]\w+/,  // label meta-instr -- like "something equ something"
             ];
-            let skip = false;
-            for (let j = 0; j < regexSkipArr.length; j++) {
-                const match = line.match(regexSkipArr[j]);
-                if (match) {
-                    skip = true;
-                    break;
-                }
-            }
-            if (skip) {
+            const shouldSkip = regexSkipArr.some(regex => regex.test(line));
+            if (shouldSkip) {
                 result += line + '\n';
                 continue;
             }
@@ -131,16 +125,25 @@
                     instruction = match[2];
                     postfix = match[3];
                 }
-                else
+                else {
                     instruction = line.trim();
+                }
             }
+            // detect if the instruction word in lowercase
+            const instructionLower =
+                instruction && instruction.length > 0 && instruction[0] >= 'a' && instruction[0] <= 'z';
 
             let resline = convert8080toz80(instruction);
-            if (resline === null)
+            if (resline === null) {
                 resline = 'unknown: ' + instruction;
+            }
+            else {
+                if (instructionLower) {  // convert the instruction word to lowercase
+                    resline = resline.replace(/^\S+/, firstWord => firstWord.toLowerCase());
+                }
+            }
             result += prefix + resline + postfix + '\n';
         }
-        let areaz80 = document.getElementById('textz80');
         areaz80.value = result;
     }
 
@@ -155,8 +158,8 @@
         //{ 'i8080': null,      'z80': 'ADD A,(ii+n)' },
         { 'i8080': 'DAD rr',   'z80': 'ADD HL,rr' },
         //
-        { 'i8080': 'ANA r',   'z80': 'AND A,r' },  // r = A,B,C,D,E,H,L, M
-        { 'i8080': 'ANI n',   'z80': 'AND A,n' },
+        { 'i8080': 'ANA r',   'z80': 'AND r' },  // r = A,B,C,D,E,H,L, M
+        { 'i8080': 'ANI n',   'z80': 'AND n' },
         //
         { 'i8080': 'CALL nn', 'z80': 'CALL nn' },
         //
@@ -256,11 +259,11 @@
         //
         { 'i8080': 'STC',     'z80': 'SCF' },
         //
-        { 'i8080': 'SUB r',   'z80': 'SUB A,r' },       // r = A,B,C,D,E,H,L, M
-        { 'i8080': 'SUI n',   'z80': 'SUB A,n' },
+        { 'i8080': 'SUB r',   'z80': 'SUB r' },       // r = A,B,C,D,E,H,L, M
+        { 'i8080': 'SUI n',   'z80': 'SUB n' },
         //
-        { 'i8080': 'XRA r',   'z80': 'XOR A,r' },       // r = A,B,C,D,E,H,L, M
-        { 'i8080': 'XRI n',   'z80': 'XOR A,n' },
+        { 'i8080': 'XRA r',   'z80': 'XOR r' },       // r = A,B,C,D,E,H,L, M
+        { 'i8080': 'XRI n',   'z80': 'XOR n' },
     ];
 
     function findByI8080Instr0(instr) {
@@ -297,11 +300,12 @@
     }
 
     function extendRegisterPair(oper) {
+        const operLower = oper && oper.length > 0 && oper[0] >= 'a' && oper[0] <= 'z';
         switch (oper.toUpperCase()) {
-            case 'B': return 'BC';
-            case 'D': return 'DE';
-            case 'H': return 'HL';
-            case 'PSW': return 'AF';
+            case 'B': return operLower ? 'bc' : 'BC';
+            case 'D': return operLower ? 'de' : 'DE';
+            case 'H': return operLower ? 'hl' : 'HL';
+            case 'PSW': return operLower ? 'af' : 'AF';
             default: return oper;
         }
     }
