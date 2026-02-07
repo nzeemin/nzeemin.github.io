@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>WASM Test</title>
+    <title>BKBTL WASM</title>
     <style>
         html {
             overflow-y: scroll;
@@ -15,6 +15,7 @@
             max-width: 100%;
             overflow-x: hidden;
             margin: 0;
+            background-color: #f0f0f0;
         }
 
         .emscripten {
@@ -55,7 +56,7 @@
 
         /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
         canvas.emscripten {
-            border: 0px none;
+            border: 0 none;
             background-color: black;
             width: 512px;
             height: 256px;
@@ -74,6 +75,7 @@
             height: 150px;
             margin: 4px;
             padding: 0 0 0 0;
+            display: none;
         }
 
         .spinner {
@@ -84,12 +86,12 @@
             -moz-animation: rotation .8s linear infinite;
             -o-animation: rotation .8s linear infinite;
             animation: rotation 0.8s linear infinite;
-            border-left: 10px solid rgb(0,150,240);
-            border-right: 10px solid rgb(0,150,240);
-            border-bottom: 10px solid rgb(0,150,240);
-            border-top: 10px solid rgb(100,0,200);
+            border-left: 10px solid rgb(0, 150, 240);
+            border-right: 10px solid rgb(0, 150, 240);
+            border-bottom: 10px solid rgb(0, 150, 240);
+            border-top: 10px solid rgb(100, 0, 200);
             border-radius: 100%;
-            background-color: rgb(200,100,250);
+            background-color: rgb(200, 100, 250);
         }
 
         @-webkit-keyframes rotation {
@@ -134,7 +136,10 @@
     </style>
 </head>
 <body>
-    <figure style="overflow:visible;" id="spinner"><div class="spinner"></div><center style="margin-top:0.5em"><strong>emscripten</strong></center></figure>
+    <figure style="overflow:visible;" id="spinner">
+        <div class="spinner"></div>
+        <center style="margin-top:0.5em"><strong>emscripten</strong></center>
+    </figure>
     <div class="emscripten" id="status">Downloading...</div>
     <div class="emscripten">
         <progress value="0" max="100" id="progress" hidden=1></progress>
@@ -153,9 +158,10 @@
             </span>
         </div>
         <div class="emupanel-main">
-            <canvas class="emscripten" id="canvas" width="512" height="256" oncontextmenu="event.preventDefault()" style="height: 384px;"></canvas>
+            <canvas class="emscripten" id="canvas" width="512" height="256" oncontextmenu="event.preventDefault()"
+                    style="height: 384px;"></canvas>
             <div class="emupanel-keyboard">
-                <img src="keyboard.png" width="551" usemap="#keyboard" />
+                <img src="keyboard.png" width="551" usemap="#keyboard"/>
             </div>
             <map name="keyboard">
                 <!-- Top row -->
@@ -257,8 +263,7 @@
                     self.canvasImageData = self.canvasContext.getImageData(0, 0, 512, 256);
                 }
             ],
-            postRun: [
-            ],
+            postRun: [],
             print: (function () {
                 var element = document.getElementById('output');
                 if (element) element.value = ''; // clear browser cache
@@ -295,7 +300,7 @@
                 return canvas;
             })(),
             setStatus: function (text) {
-                if (!Module.setStatus.last) Module.setStatus.last = { time: Date.now(), text: '' };
+                if (!Module.setStatus.last) Module.setStatus.last = {time: Date.now(), text: ''};
                 if (text === Module.setStatus.text) return;
                 var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
                 var now = Date.now();
@@ -401,6 +406,7 @@
         function emulatorKeyPress(scan) {
             Module.emulatorKeyEvent(scan, true);
         }
+
         function emulatorKeyRelease(scan) {
             Module.emulatorKeyEvent(scan, false);
         }
