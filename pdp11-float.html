@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>PDP-11 - Конвертер плавающих чисел</title>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <style>
+    #bitContainer button {
+      background-color: #f0f0a0;
+      opacity: 0.2;
+      border: none;
+    }
+    table.table-info {
+      border-collapse: collapse;
+    }
+    table.table-info td, table.table-info th {
+      border: 1px solid grey;
+      padding: 3pt;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="header-brand" href="/">nzeemin.github.io</a> /
+  PDP-11 - Конвертер плавающих чисел
+</header>
+<div id="main-container">
+  <aside id="navbar">
+    <div class="box box-nobox">
+      <h2>Конвертер плавающих чисел одинарной точности</h2>
+    </div>
+
+  </aside><!--navbar end-->
+  <div id="main">
+    <div class="box">
+      <h2>Конвертер плавающих чисел одинарной точности для PDP-11 float</h2>
+      <div class="entry">
+
+        <div class="entry-content">
+          <p></p>
+          <div align="center" style="background-color: white;">
+            <div align="center" id="jsconverter" style="display: inline;">
+              <div id="convnumeric">
+                <table id="numbertable" style="border-collapse: collapse;">
+                  <tbody><tr>
+                    <td style="text-align: left;   padding: 0 1em;">
+                    </td>
+                    <td style="text-align: center; padding: 0.5em 0.5em; font-weight: bold; background-color: #d2d2e7;">
+                      Знак
+                    </td>
+                    <td style="text-align: center; padding: 0.5em 0.5em; font-weight: bold; background-color: #c0ddc2;">
+                      Экспонента
+                    </td>
+                    <td style="text-align: center; padding: 0.5em 0.5em; font-weight: bold; background-color: #ddd0c4;">
+                      Мантисса
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right; padding: 0 0.5em">
+                      Значение:
+                    </td>
+                    <td style="text-align: center; padding: 0 0.5em; background-color: #d2d2e7;">
+                      <span id="sign_value">+1</span>
+                    </td>
+                    <td style="text-align: center; padding: 0 0.5em; background-color: #c0ddc2;">
+                      2<span id="exponent_value" style="vertical-align: super;">0</span>
+                    </td>
+                    <td style="text-align: center; padding: 0 0.5em; background-color: #ddd0c4;">
+                      <span id="mantissa_value">0</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right; padding: 0 0.5em">
+                      Кодируется:
+                    </td>
+                    <td style="text-align: center; padding: 0 0.5em; background-color: #d2d2e7;">
+                      <span id="actual_sign">0</span>
+                    </td>
+                    <td style="text-align: center; padding: 0 0.5em; background-color: #c0ddc2;">
+                      <span id="actual_exponent">0</span>
+                    </td>
+                    <td style="text-align: center; padding: 0.3em 0.5em; background-color: #ddd0c4;">
+                      <span id="actual_mantissa">0</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right; padding: 0.3em 0.5em; margin-right: 0.5em">
+                      Двоичное:
+                    </td>
+                    <td style="text-align: center; padding: 0 0.2em; margin-right: 0.5em; background-color: #d2d2e7;">
+                      <form>
+                        <input type="checkbox" class="floatdigit" id="cbsign">
+                      </form>
+                    </td>
+                    <td style="text-align: center; padding: 0 0.2em; margin-right: 0.5em; background-color: #c0ddc2;">
+                      <form>
+                        <div style="display: flex; flex-wrap: wrap;">
+                          <div style="display: flex; margin-right: 0.5em;">
+                            <input type="checkbox" class="floatdigit" id="cbexp0">
+                            <input type="checkbox" class="floatdigit" id="cbexp1">
+                            <input type="checkbox" class="floatdigit" id="cbexp2">
+                            <input type="checkbox" class="floatdigit" id="cbexp3"> &nbsp;
+                            <input type="checkbox" class="floatdigit" id="cbexp4">
+                            <input type="checkbox" class="floatdigit" id="cbexp5">
+                            <input type="checkbox" class="floatdigit" id="cbexp6"> &nbsp;|&nbsp;
+                            <input type="checkbox" class="floatdigit" id="cbexp7">
+                          </div>
+                        </div>
+                      </form>
+                    </td>
+                    <td style="text-align: center; padding: 0 0.2em; margin-right: 0.5em; background-color: #ddd0c4;">
+                      <form>
+                        <div style="display: flex; flex-wrap: wrap;">
+                          <div style="display: flex; margin-right: 0.5em; text-wrap: none">
+                            <input type="checkbox" class="floatdigit" id="cbmant0">
+                            <input type="checkbox" class="floatdigit" id="cbmant1">
+                            <input type="checkbox" class="floatdigit" id="cbmant2"> &nbsp;
+                            <input type="checkbox" class="floatdigit" id="cbmant3">
+                            <input type="checkbox" class="floatdigit" id="cbmant4">
+                            <input type="checkbox" class="floatdigit" id="cbmant5">
+                            <input type="checkbox" class="floatdigit" id="cbmant6"> &nbsp;|&nbsp;
+                            <input type="checkbox" class="floatdigit" id="cbmant7">
+                            <input type="checkbox" class="floatdigit" id="cbmant8">
+                            <input type="checkbox" class="floatdigit" id="cbmant9">
+                            <input type="checkbox" class="floatdigit" id="cbmant10"> &nbsp;
+                            <input type="checkbox" class="floatdigit" id="cbmant11">
+                            <input type="checkbox" class="floatdigit" id="cbmant12">
+                            <input type="checkbox" class="floatdigit" id="cbmant13">
+                            <input type="checkbox" class="floatdigit" id="cbmant14"> &nbsp;|&nbsp;
+                            <input type="checkbox" class="floatdigit" id="cbmant15">
+                            <input type="checkbox" class="floatdigit" id="cbmant16">
+                            <input type="checkbox" class="floatdigit" id="cbmant17">
+                            <input type="checkbox" class="floatdigit" id="cbmant18"> &nbsp;
+                            <input type="checkbox" class="floatdigit" id="cbmant19">
+                            <input type="checkbox" class="floatdigit" id="cbmant20">
+                            <input type="checkbox" class="floatdigit" id="cbmant21">
+                            <input type="checkbox" class="floatdigit" id="cbmant22">
+                          </div>
+                        </div>
+                      </form>
+                    </td>
+                  </tr>
+                  </tbody></table>
+              </div>
+              <div id="convtext" style="padding: 1em 0">
+                <table>
+                  <tbody>
+                  <tr>
+                    <td style="width: 8em">Octal</td>
+                    <td style="width: 32em"><form>
+                        <input type="text" size="10" id="tboctal1" autocomplete="off">
+                        <input type="text" size="10" id="tboctal2" autocomplete="off">
+                      </form></td>
+                  </tr>
+                  <tr>
+                    <td>Binary</td>
+                    <td><form><input type="text" size="34" id="tbbinary"></form></td>
+                  </tr>
+                  <tr>
+                    <td>Hex</td>
+                    <td><form><input type="text" size="10" id="tbhex"></form></td>
+                  </tr>
+                  <tr>
+                    <td>Плавающее:</td>
+                    <td style="font-weight: bold"><span id="spdecimaldesc"></span></td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 2em 0"></td>
+                    <td>
+                      <button onclick="handleChange(0,0,0); return false;" >0</button>
+                      <button onclick="handleChange(0,129,0); return false;" >1</button>
+                      <button onclick="handleChange(0,130,0); return false;" >2</button>
+                      <button onclick="handleChange(0,130,4194304); return false;" >3</button>
+                      <button onclick="handleChange(0,131,0); return false;" >4</button>
+                      <button onclick="handleChange(0,131,2097152); return false;" >5</button>
+                      <button onclick="handleChange(0,132,2097152); return false;" >10</button>
+                      <button onclick="handleChange(0,130,4788187); return false;" >PI</button>
+                      <button onclick="handleChange(0,129,4788187); return false;" >PI/2</button>
+                      <button onclick="handleChange(0,129,395922); return false;" >PI/3</button>
+                      <button onclick="handleChange(0,128,395922); return false;" >PI/6</button>
+                      <br>
+                      <button onclick="handleChange(0,255,8388607); return false;" >MAX X = 1.701411E+38</button>
+                    </td>
+                  </tr>
+                  </tbody></table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // const tbdecimal = document.getElementById('tbdecimal');
+  // tbdecimal.addEventListener('input', handleDecimalChange);
+  const tboctal1 = document.getElementById('tboctal1');
+  tboctal1.value = '040200';
+  const tboctal2 = document.getElementById('tboctal2');
+  tboctal2.value = '000000';
+  const tbhex = document.getElementById('tbhex');
+  tbhex.addEventListener('input', handleHexChange);
+  const tbbinary = document.getElementById('tbbinary');
+  tbbinary.addEventListener('input', handleBinaryChange);
+  tboctal1.addEventListener('input', handleOctalChange);
+  tboctal2.addEventListener('input', handleOctalChange);
+  const spdecimaldesc = document.getElementById('spdecimaldesc');
+  document.getElementById('cbsign').addEventListener('click', handleCheckChange);
+  for (let i = 0; i < 8; i++) {
+    let cb = document.getElementById('cbexp' + i.toString());
+    cb.addEventListener('click', handleCheckChange);
+  }
+  for (let i = 0; i < 23; i++) {
+    let cb = document.getElementById('cbmant' + i.toString());
+    cb.addEventListener('click', handleCheckChange);
+  }
+
+  handleOctalChange();
+
+  function handleOctalChange() {
+    var int1 = parseInt(tboctal1.value, 8);
+    var int2 = parseInt(tboctal2.value, 8);
+    var sign = int1 >>> 15;
+    const exp = (int1 >>> 7) & 0xFF;
+    const mant = ((int1 & 0x007F) << 16) | (int2 >>> 0);
+    handleChange(sign, exp, mant, 'octal');
+  }
+  function handleHexChange() {
+    var hex = parseInt(tbhex.value, 16);
+    var int1 = hex >>> 16;
+    var int2 = hex & 0xFFFF;
+    var sign = int1 >>> 15;
+    const exp = (int1 >>> 7) & 0xFF;
+    const mant = ((int1 & 0x007F) << 16) | (int2 >>> 0);
+    handleChange(sign, exp, mant, 'hex');
+  }
+  function handleBinaryChange() {
+    var hex = parseInt(tbbinary.value, 2);
+    var int1 = hex >>> 16;
+    var int2 = hex & 0xFFFF;
+    var sign = int1 >>> 15;
+    const exp = (int1 >>> 7) & 0xFF;
+    const mant = ((int1 & 0x007F) << 16) | (int2 >>> 0);
+    handleChange(sign, exp, mant, 'binary');
+  }
+  function handleCheckChange() {
+    const sign = document.getElementById('cbsign').checked ? 1 : 0;
+    let exp = 0;
+    for (let i = 0; i < 8; i++) {
+      let cb = document.getElementById('cbexp' + i.toString());
+      if (cb.checked) exp |= 1 << (7 - i);
+    }
+    let mant = 0;
+    for (let i = 0; i < 23; i++) {
+      let cb = document.getElementById('cbmant' + i.toString());
+      if (cb.checked) mant |= 1 << (22 - i);
+    }
+    handleChange(sign, exp, mant, 'check');
+  }
+
+  function handleChange(sign, exp, mant, source) {
+    var int1 = (sign << 15) | (exp << 7) | (mant >> 16);
+    var int2 = mant & 0xFFFF;
+    var int = (int1 >>> 0 << 16) | (int2 >>> 0);
+    var exponent = exp - 128;
+    var m = 0.5;
+    var mantissa = m;
+    if (mant === 0 && exp === 0)
+      mantissa = 0.0;
+    else {
+      for (var i = 0; i < 23; i++) {
+        var mbit = (mant >>> (23 - i)) & 1;
+        if (mbit !== 0) mantissa += m;
+        m = m / 2.0;
+      }
+    }
+    var float = Math.pow(2.0, exponent) * mantissa * (sign === 0 ? 1.0 : -1.0);
+    spdecimaldesc.innerText = float.toString();
+
+    document.getElementById('sign_value').innerText = sign === 0 ? '+1' : '-1';
+    document.getElementById('actual_sign').innerText = sign.toString();
+    document.getElementById('exponent_value').innerText = exponent.toString();
+    document.getElementById('actual_exponent').innerText = exp.toString();
+    document.getElementById('mantissa_value').innerText = mantissa.toString();
+    document.getElementById('actual_mantissa').innerText = mant.toString();
+
+    if (source !== 'octal') {
+      tboctal1.value = int1.toString(8).padStart(6, '0');
+      tboctal2.value = int2.toString(8).padStart(6, '0');
+    }
+    if (source !== 'hex')
+      tbhex.value = decimalToPaddedHexString(int, 32);
+    if (source !== 'binary')
+      tbbinary.value = (int >>> 0).toString(2).padStart(32, '0');
+    if (source !== 'check') {
+      document.getElementById('cbsign').checked = (sign === 1);
+      for (let i = 0; i < 8; i++) {
+        let cb = document.getElementById('cbexp' + i.toString());
+        cb.checked = ((exp >>> (7 - i)) & 1) !== 0;
+      }
+      for (let i = 0; i < 23; i++) {
+        let cb = document.getElementById('cbmant' + i.toString());
+        cb.checked = ((mant >>> (22 - i)) & 1) !== 0;
+      }
+    }
+  }
+
+  function decimalToPaddedHexString(number, bitsize)
+  {
+    let byteCount = Math.ceil(bitsize / 8);
+    let maxBinValue = Math.pow(2, bitsize)-1;
+    if (bitsize > 32)
+      throw "number above maximum value";
+    if (number < 0)
+      number = maxBinValue + number + 1;
+    return (number >>> 0).toString(16).toUpperCase().padStart(byteCount * 2, '0');
+  }
+</script>
+</body>
+</html>
