@@ -297,9 +297,9 @@
       mantissa = 0.0;
     else {
       for (var i = 0; i < 23; i++) {
-        var mbit = (mant >>> (23 - i)) & 1;
-        if (mbit !== 0) mantissa += m;
         m = m / 2.0;
+        var mbit = (mant >>> (22 - i)) & 1;
+        if (mbit !== 0) mantissa += m;
       }
     }
     var float = Math.pow(2.0, exponent) * mantissa * (sign === 0 ? 1.0 : -1.0);
