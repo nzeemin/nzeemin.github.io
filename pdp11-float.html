@@ -293,7 +293,7 @@
     var exponent = exp - 128;
     var m = 0.5;
     var mantissa = m;
-    if (mant === 0 && exp === 0)
+    if (exp === 0)
       mantissa = 0.0;
     else {
       for (var i = 0; i < 23; i++) {
